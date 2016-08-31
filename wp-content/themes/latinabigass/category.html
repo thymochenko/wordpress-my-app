@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 3: Layouts</title>
+
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+body {
+ 
+  background-color: black;
+}
+
+.starter-template {
+  padding: 45px 5px;
+  text-align: center;
+  background-color:#ccc;
+}
+
+.box {
+  display: inline-block;
+  width: 220px;
+  height: 120px;
+  margin: 1em;
+  background-color:#ccc;
+  color: #999;
+}
+
+.box img {
+  width: 220px;
+  height: 120px;
+}
+
+.img-responsive1 {
+  display: inline-block;
+  width: 500px;
+  height: 320px;
+  background-color:#ccc;
+  margin-right:510px;
+  margin-top:-45px;
+}
+
+.box-sub-nav1{
+ background-color:#f4f4f4;
+}
+
+.container-controll {
+	margin-left: 6%;
+}
+
+footer {background-color:#eee;
+padding-top: 15px;
+ padding-bottom: 15px;
+ background-color: #f5f5f5;
+ background-color: rgba(86,61,124,.15);
+ border: 1px solid #ddd;
+ border: 1px solid rgba(86,61,124,.2);
+ text-align: center;
+
+}
+.clearfix { overflow:auto; float:right; bbackground-color:#eee; margin-right:16%; margin-top:8px;}
+
+#principalTitle {
+	width:260px;
+	height:35px;
+	padding-top:6px;
+	color:#999;
+	margin-left:15px;
+	background-color:#333;
+	border-radius: 7px 20px;
+	font-size:1.2em;
+}
+</style>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#the-menu">
+        <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+	    <span class="icon-bar"></span>
+      </button>
+<a class="navbar-brand brand" href="/index.html"><span class="label label-default">MegaLatinaAss</span></a>
+</div>
+<div class="collapse navbar-collapse" id="the-menu">
+<ul class="nav navbar-nav">
+<li class="active">
+<a href="/index.html"><span class="glyphicon glyphicon-home"></span> Home</a></li> 
+<li><a href="/contact.html"><span class="glyphicon glyphicon-earphone"></span> Contact Us</a></li>
+<li><a href="/contact.html"><span class="glyphicon glyphicon-heart-empty"></span> most viewers</a></li>
+</ul>
+<form class="navbar-form navbar-right visible-md-inline visible-lg-inline">
+<div class="form-group" style="margin-top: 4px">
+<label class="sr-only" for="keyword">Keyword</label>
+<input type="text" class="form-control input-sm"id="keyword" placeholder="Enter Search keyword" />
+</div>
+</form>
+<ul class="nav navbar-nav navbar-left">
+							<li class="dropdown">
+								<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Best Category&nbsp;<span class="caret"></span></a> 
+								<ul class="dropdown-menu">
+									<li><a href="#"><span class="glyphicon glyphicon-tag"></span>&nbsp;My Cart&nbsp;<span class="badge">4</span></a></li>
+									<li class="divider"></li>
+									<li><a href="#"><span class="glyphicon glyphicon-tag"></span>&nbsp;My Profile<span class="badge">401</span></a></li>
+									<li class="divider"></li>
+									<li><a href="#"><span class="glyphicon glyphicon-tag"></span>&nbsp;Order History<span class="badge">884</span></a></li>
+									<li class="divider"></li>
+									<li><a href="#"><span class="glyphicon glyphicon-tag"></span>&nbsp;Notifications<span class="badge">874</span></a></li>
+								</ul>				
+							</li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown">
+								<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-star-empty"></span>&nbsp;&nbsp;Partnes&nbsp;<span class="caret"></span></a> 
+								<ul class="dropdown-menu">
+									<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp;HentaiHunters&nbsp;</a></li>
+									<li class="divider"></li>
+									<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp;AsianTeenForMe</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp;EbonyQueens</a></li>
+									<li><a href="#"><span class="glyphicon glyphicon-log-in"></span>&nbsp;DildosHot</a></li>
+								</ul>				
+							</li>
+						</ul>
+</div>
+</div>
+</nav>
+    
+
+<div class="container">
+	<div class="container-controll">
+
+<section style="padding-top:30px;" class="title"><h2 id="principalTitle"><span class="glyphicon glyphicon-circle-arrow-up"></span> Category</h2>
+<div class="box"><a href="file:///home/peres/Desktop/Process.Execution/sprint1/positioning-css/categoryview.html"><img width="350" height="40" class="img-responsive" src="img/LINDA22.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></a></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda23.jpeg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda24.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda25.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/LINDA22.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda23.jpeg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda24.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda25.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/LINDA22.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda23.jpeg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda24.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+<div class="box"><img width="350" height="40" class="img-responsive" src="img/linda25.jpg">Best Latina sheik big Ass now  50.451 views<b> 89%</b></div>
+</section>
+
+    </div><!-- /.container -->
+<footer>
+<div class="box"><img class="img-responsive" src="img/bigass.gif"></div>
+          <p>&copy; 2015 Company, Inc. <br>
+		  <a href="#">Home</a> | <a href="">Category</a> | <a href="">Contact</a> 
+    </footer>
+
+</div><!-- /.container controll-->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
