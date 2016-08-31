@@ -1,7 +1,4 @@
-api/
-landingpage/
-phpci/
-wp-v1/
+
 # -----------------------------------------------------------------
 # .gitignore for WordPress
 # Bare Minimum Git
@@ -102,3 +99,11 @@ wp-content/themes/twenty*/
 
 # ignore node/grunt dependency directories
 node_modules/
+#api é um projeto paralelo
+api/
+#projeto paralelo
+landingpage/
+#projeto paralelo
+phpci/
+#projeto paralelo
+wp-v1/
