@@ -1,4 +1,4 @@
-  <?php
+<?php
   //register menus
   function register_my_menus() {
     register_nav_menus(
@@ -463,6 +463,5 @@ wp_reset_query();
      LIKE "image/%" AND p.ID = m.post_ID
     *
     */
-
 
   ?>

@@ -38,6 +38,41 @@ class wfUtils {
 			}
 		}
 	}
+	public static function makeDuration($secs, $createExact = false) {
+		$components = array();
+		
+		$months = floor($secs / (86400 * 30)); $secs -= $months * 86400 * 30;
+		$days = floor($secs / 86400); $secs -= $days * 86400;
+		$hours = floor($secs / 3600); $secs -= $hours * 3600;
+		$minutes = floor($secs / 60); $secs -= $minutes * 60;
+		
+		if ($months) {
+			$components[] = self::pluralize($months, 'month');
+			if (!$createExact) {
+				$hours = $minutes = $secs = 0;
+			}
+		}
+		if ($days) {
+			$components[] = self::pluralize($days, 'day');
+			if (!$createExact) {
+				$minutes = $secs = 0;
+			}
+		}
+		if ($hours) {
+			$components[] = self::pluralize($hours, 'hour');
+			if (!$createExact) {
+				$secs = 0;
+			}
+		}
+		if ($minutes) {
+			$components[] = self::pluralize($minutes, 'minute');
+		}
+		if ($secs) {
+			$components[] = self::pluralize($secs, 'second');
+		}
+		
+		return implode(' ', $components);
+	}
 	public static function pluralize($m1, $t1, $m2 = false, $t2 = false) {
 		if($m1 != 1) {
 			$t1 = $t1 . 's';
@@ -99,13 +134,17 @@ class wfUtils {
 				return false;
 			}
 		}
-
-		// Convert human readable addresses to 128 bit (IPv6) binary strings
-		// Note: self::inet_pton converts IPv4 addresses to IPv6 compatible versions
-		$binary_network = str_pad(wfHelperBin::bin2str(self::inet_pton($network)), 128, '0', STR_PAD_LEFT);
-		$binary_ip = str_pad(wfHelperBin::bin2str(self::inet_pton($ip)), 128, '0', STR_PAD_LEFT);
-
-		return 0 === substr_compare($binary_ip, $binary_network, 0, $prefix);
+		
+		$bin_network = substr(self::inet_pton($network), 0, ceil($prefix / 8));
+		$bin_ip = substr(self::inet_pton($ip), 0, ceil($prefix / 8));
+		if ($prefix % 8 != 0) { //Adjust the last relevant character to fit the mask length since the character's bits are split over it
+			$pos = intval($prefix / 8);
+			$adjustment = chr(((0xff << (8 - ($prefix % 8))) & 0xff));
+			$bin_network[$pos] = ($bin_network[$pos] & $adjustment);
+			$bin_ip[$pos] = ($bin_ip[$pos] & $adjustment);
+		}
+		
+		return ($bin_network === $bin_ip);
 	}
 
 	/**
@@ -531,6 +570,7 @@ class wfUtils {
 				if(strpos($item, $char) !== false){
 					$sp = explode($char, $item);
 					foreach($sp as $j){
+						$j = trim($j);
 						if (!self::isValidIP($j)) {
 							$j = preg_replace('/:\d+$/', '', $j); //Strip off port
 						}
@@ -612,15 +652,13 @@ class wfUtils {
 				return self::getCleanIPAndServerVar(array($connectionIP));
 			} else {
 				$ipsToCheck = array(
-					array($_SERVER[$howGet], $howGet),
+					array((isset($_SERVER[$howGet]) ? $_SERVER[$howGet] : ''), $howGet),
 					$connectionIP,
 				);
 				return self::getCleanIPAndServerVar($ipsToCheck);
 			}
 		} else {
-			$ipsToCheck = array(
-				$connectionIP,
-			);
+			$ipsToCheck = array($connectionIP);
 			if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 				$ipsToCheck[] = array($_SERVER['HTTP_X_FORWARDED_FOR'], 'HTTP_X_FORWARDED_FOR');
 			}
@@ -798,12 +836,15 @@ class wfUtils {
 
 	public static function endProcessingFile() {
 		wfConfig::set('scanFileProcessing', null);
+		if (wfConfig::get('lowResourceScansEnabled')) {
+			usleep(10000); //10 ms
+		}
 	}
 
 	public static function getScanLock(){
 		//Windows does not support non-blocking flock, so we use time.
 		$scanRunning = wfConfig::get('wf_scanRunning');
-		if($scanRunning && time() - $scanRunning < WORDFENCE_MAX_SCAN_TIME){
+		if($scanRunning && time() - $scanRunning < WORDFENCE_MAX_SCAN_LOCK_TIME){
 			return false;
 		}
 		wfConfig::set('wf_scanRunning', time());
@@ -818,7 +859,7 @@ class wfUtils {
 	}
 	public static function isScanRunning(){
 		$scanRunning = wfConfig::get('wf_scanRunning');
-		if($scanRunning && time() - $scanRunning < WORDFENCE_MAX_SCAN_TIME){
+		if($scanRunning && time() - $scanRunning < WORDFENCE_MAX_SCAN_LOCK_TIME){
 			return true;
 		} else {
 			return false;
@@ -922,7 +963,7 @@ class wfUtils {
 		if (!$host) {
 			// This function works for IPv4 or IPv6
 			if (function_exists('gethostbyaddr')) {
-				$host = gethostbyaddr($IP);
+				$host = @gethostbyaddr($IP);
 			}
 			if (!$host) {
 				$ptr = false;
@@ -1051,7 +1092,8 @@ class wfUtils {
 		}
 	}
 	public static function doNotCache(){
-		header("Cache-Control: no-cache, must-revalidate");
+		header("Pragma: no-cache");
+		header("Cache-Control: no-cache, must-revalidate, private");
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); //In the past
 		if(! defined('DONOTCACHEPAGE')){ define('DONOTCACHEPAGE', true); }
 		if(! defined('DONOTCACHEDB')){ define('DONOTCACHEDB', true); }
@@ -1239,7 +1281,7 @@ class wfUtils {
 
 	public static function htaccessAppend($code)
 	{
-		$htaccess = ABSPATH . '/.htaccess';
+		$htaccess = wfCache::getHtaccessPath();
 		$content  = self::htaccess();
 		if (wfUtils::isNginx() || !is_writable($htaccess)) {
 			return false;
@@ -1252,10 +1294,27 @@ class wfUtils {
 
 		return true;
 	}
+	
+	public static function htaccessPrepend($code)
+	{
+		$htaccess = wfCache::getHtaccessPath();
+		$content  = self::htaccess();
+		if (wfUtils::isNginx() || !is_writable($htaccess)) {
+			return false;
+		}
+		
+		if (strpos($content, $code) === false) {
+			// make sure we write this once
+			file_put_contents($htaccess, trim($code) . "\n" . $content, LOCK_EX);
+		}
+		
+		return true;
+	}
 
 	public static function htaccess() {
-		if (is_readable(ABSPATH . '/.htaccess') && !wfUtils::isNginx()) {
-			return file_get_contents(ABSPATH . '/.htaccess');
+		$htaccess = wfCache::getHtaccessPath();
+		if (is_readable($htaccess) && !wfUtils::isNginx()) {
+			return file_get_contents($htaccess);
 		}
 		return "";
 	}
@@ -1274,6 +1333,74 @@ class wfUtils {
 		}
 		$keys[$index] = $newKey;
 		return array_combine($keys, array_values($array));
+	}
+	
+	/**
+	 * Takes a string that may have characters that will be interpreted as invalid UTF-8 byte sequences and translates them into a string of the equivalent hex sequence.
+	 * 
+	 * @param $string
+	 * @param bool $inline
+	 * @return string
+	 */
+	public static function potentialBinaryStringToHTML($string, $inline = false) {
+		$output = '';
+		
+		if (!defined('ENT_SUBSTITUTE')) {
+			define('ENT_SUBSTITUTE', 0);
+		}
+		
+		$span = '<span class="wf-hex-sequence">';
+		if ($inline) {
+			$span = '<span style="color:#587ECB">';
+		}
+		
+		for ($i = 0; $i < strlen($string); $i++) {
+			$c = $string[$i];
+			$b = ord($c);
+			if ($b < 0x20) {
+				$output .= $span . '\x' . str_pad(dechex($b), 2, '0', STR_PAD_LEFT) . '</span>';
+			}
+			else if ($b < 0x80) {
+				$output .= htmlspecialchars($c, ENT_QUOTES, 'UTF-8');
+			}
+			else { //Assume multi-byte UTF-8
+				$bytes = 0;
+				$test = $b;
+				
+				while (($test & 0x80) > 0) {
+					$bytes++;
+					$test = (($test << 1) & 0xff);
+				}
+				
+				$brokenUTF8 = ($i + $bytes > strlen($string) || $bytes == 1);
+				if (!$brokenUTF8) { //Make sure we have all the bytes
+					for ($n = 1; $n < $bytes; $n++) {
+						$c2 = $string[$i + $n];
+						$b2 = ord($c2);
+						if (($b2 & 0xc0) != 0x80) {
+							$brokenUTF8 = true;
+							$bytes = $n;
+							break;
+						}
+					}
+				}
+				
+				if ($brokenUTF8) {
+					$bytes = min($bytes, strlen($string) - $i);
+					for ($n = 0; $n < $bytes; $n++) {
+						$c2 = $string[$i + $n];
+						$b2 = ord($c2);
+						$output .= $span . '\x' . str_pad(dechex($b2), 2, '0', STR_PAD_LEFT) . '</span>';
+					}
+					$i += ($bytes - 1);
+				}
+				else {
+					$output .= htmlspecialchars(substr($string, $i, $bytes), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+					$i += ($bytes - 1);
+				}
+			}
+		}
+		return $output;
 	}
 }
 
