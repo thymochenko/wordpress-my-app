@@ -29,10 +29,15 @@
         <img style="margin-left:25px;"src="http://localhost/wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg" width="500" height="300"/>
       </div>
 			<div style="margin-top:-35px;" class="modal-body">
-        <form name="" id="" method="post" action="">
+        <form id="modal-sqz-pg" name="_modal-sqz-pg"  method="post" action="http://localhost/wp-content/themes/omega/contactForm.php">
         <input style="margin-left:75px;" type="text" name="email" size="37"/><br>
-        <input style="margin-left:75px;"  size="41" type="buttom" name="lead-ebook-docker" class="btn btn-default" data-dismiss="modal" value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL">
+        <input style="margin-left:75px;"  size="41" type="submit" name="lead-ebook-docker" class="btn btn-default" value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL">
       </form>
+      <br>
+      <div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
+<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
+<div id="preload"><img src="http://localhost/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
+
       </div>
     </div>
   </div>
@@ -41,11 +46,118 @@
 
 
 <script>
-$(function() {
-	$("#mymodal").modal('show');
-});
+
+		$(function() {
+      $("#mymodal").modal('show');
+      $('#sucess').hide();
+      $('#error').hide();
+      $('#preload').hide();
+      $('#_sucess').hide();
+      $('#_error').hide();
+      $('#_preload').hide();
+      $.validator.addMethod("simpleCaptcha", function(value, element) {
+        if(value == 13){
+          return true;
+        }
+      }, "A soma esta errada!");
+
+			$('#myContactForm').validate({
+						rules: {
+								name: {
+										required: true,
+										minlength: 2
+								},
+								email: {
+										required: true,
+										email: true
+								},
+								captcha: {
+										simpleCaptcha : true
+								}
+						},
+						messages: {
+								name: {
+										required: "O campo nome é um campo que deve ser preenchido",
+										minlength: "Você deve digitar 2 caracteres no minimo"
+								},
+								email: {
+										required: "o campo email deve ser digitado"
+								},
+								msg: {
+										required: "O campo mensagem deve ser preenchido",
+										minlength: "tudo isso?"
+								},
+                captcha: {
+                  required: "O campo captcha deve ser preenchido",
+                  minlength: "tudo isso?"
+                }
+						},
+						submitHandler: function(form) {
+								$(form).ajaxSubmit({
+										type:"POST",
+                    url:"http://localhost/wp-content/themes/omega/contactForm.php",
+										data: $(form).serialize(),
+                    beforeSend: function (){
+											$("#_preload").fadeIn();
+										},
+										success: function() {
+													//  $('#contact').fadeTo( "slow", 0.15, function() {
+														$(this).find(':input').attr('disabled', 'disabled');
+														$('#_sucess').fadeIn();
+														$('#_preload').hide();
+												//});
+										},
+										error: function() {
+												//$('#contact').fadeTo( "slow", 0.15, function() {
+												    $('#_error').fadeIn();
+												//});
+										}
+								});
+						}
+				});
+
+
+
+        			$('#modal-sqz-pg').validate({
+        						rules: {
+        								email: {
+        										required: true,
+        										email: true
+        								}
+        						},
+        						messages: {
+        								email: {
+        										required: "Coloque o seu melhor email"
+        								}
+        						},
+        						submitHandler: function(form) {
+        								$(form).ajaxSubmit({
+        										type:"POST",
+        										data: $(form).serialize(),
+        										url:"http://localhost/wp-content/themes/omega/contactForm.php",
+                            beforeSend: function (){
+        											$("#preload").fadeIn();
+        										},
+        										success: function() {
+        													//  $('#contact').fadeTo( "slow", 0.15, function() {
+        														$(this).find(':input').attr('disabled', 'disabled');
+        														$('#sucess').fadeIn();
+        														$('#preload').hide();
+        												//});
+        										},
+        										error: function() {
+        												//$('#contact').fadeTo( "slow", 0.15, function() {
+        												    $('#error').fadeIn();
+        												//});
+        										}
+        								});
+        						}
+        				});
+
+		});
 
 </script>
+
 <div class="<?php echo omega_apply_atomic( 'site_container_class', 'site-container' );?>">
 	<?php
 	do_action( 'omega_before_header' );
