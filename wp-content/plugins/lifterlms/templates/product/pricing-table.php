@@ -10,7 +10,7 @@ $purchaseable = $product->is_purchasable();
 $has_free = $product->has_free_access_plan();
 $free_only = ( $has_free && ! $purchaseable );
 ?>
-
+<!-- se não estiver matriculado e for um produto comprável ou produto gratuito : mostra os planos de acesso passando um id -->
 <?php if ( ! $is_enrolled && ( $purchaseable || $has_free ) ) : ?>
 
 	<?php do_action( 'lifterlms_before_access_plans', $product->get( 'id' ) ); ?>
@@ -18,7 +18,6 @@ $free_only = ( $has_free && ! $purchaseable );
 	<section class="llms-access-plans cols-<?php echo $product->get_pricing_table_columns_count( $free_only ) ?>">
 
 		<?php do_action( 'lifterlms_before_access_plans_loop', $product->get( 'id' ) ); ?>
-
 		<?php foreach ( $product->get_access_plans( $free_only ) as $i => $plan ) : ?>
 
 			<div class="llms-access-plan<?php echo $plan->is_featured() ? ' featured' : ''; ?><?php echo $plan->is_on_sale() ? ' on-sale' : '' ?>" id="llms-access-plan-<?php echo $plan->get( 'id' ); ?>">
@@ -82,6 +81,7 @@ $free_only = ( $has_free && ! $purchaseable );
 				<div class="llms-access-plan-footer">
 
 					<div class="llms-access-plan-pricing trial">
+
 						<?php if ( $plan->has_trial() ) : ?>
 							<div class="llms-access-plan-price">
 								<em class="stamp"><?php _e( 'TRIAL', 'lifterlms' ); ?></em>
@@ -108,7 +108,7 @@ $free_only = ( $has_free && ! $purchaseable );
 	<?php do_action( 'lifterlms_after_access_plans', $product->get( 'id' ) ); ?>
 
 <?php elseif ( ! $is_enrolled ) : ?>
-
+		
 	<?php do_action( 'lifterlms_product_not_purchasable', $product->get( 'id' ) ); ?>
 
 	<?php if ( 'course' === $product->get( 'type' ) ) : $course = new LLMS_Course( $product->post ); ?>
@@ -125,3 +125,4 @@ $free_only = ( $has_free && ! $purchaseable );
 	<?php endif; ?>
 
 <?php endif; ?>
+

@@ -1,0 +1,683 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Ad Mag- lite\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-23 03:10-0700\n"
+"PO-Revision-Date: 2015-07-22 20:53-0700\n"
+"Last-Translator: admin <kiem.dinh@kopasoft.com>\n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.2\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Textdomain-Support: yes\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:11
+msgid "404"
+msgstr ""
+
+#: 404.php:14
+msgid "Page not found..."
+msgstr ""
+
+#: 404.php:15
+msgid ""
+"We're sorry, but we can't find the page you were looking for. It's probably "
+"some thing we've done wrong but now we know about it we'll try to fix it. In "
+"the meantime, try one of this options:"
+msgstr ""
+
+#: 404.php:17
+msgid "Go back to previous page"
+msgstr ""
+
+#: 404.php:18
+msgid "Go to homepage"
+msgstr ""
+
+#: comments.php:3
+msgid "Please do not load this page directly. Thanks!"
+msgstr ""
+
+#: comments.php:12
+msgid "No Comment"
+msgstr ""
+
+#: comments.php:12
+msgid "1 Comment"
+msgstr ""
+
+#: comments.php:12
+msgid "% Comments"
+msgstr ""
+
+#: comments.php:34
+msgid "Previous"
+msgstr ""
+
+#: comments.php:35
+msgid "Next"
+msgstr ""
+
+#: comments.php:74 comments.php:85
+msgid "Pingback"
+msgstr ""
+
+#: comments.php:81 comments.php:116
+msgid "Edit"
+msgstr ""
+
+#: comments.php:150
+msgid "Name *"
+msgstr ""
+
+#: comments.php:155
+msgid "Email *"
+msgstr ""
+
+#: comments.php:160
+msgid "Website"
+msgstr ""
+
+#: comments.php:180 comments.php:205
+#, php-format
+msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
+msgstr ""
+
+#: comments.php:181
+#, php-format
+msgid ""
+"Logged in as <a href=\"%1$s\">%2$s</a>. <a href=\"%3$s\" title=\"Log out of "
+"this account\">Log out?</a>"
+msgstr ""
+
+#: comments.php:182
+msgid "Your email address will not be published. Required fields are marked *"
+msgstr ""
+
+#: comments.php:186
+msgid "POST YOUR COMMENTS"
+msgstr ""
+
+#: comments.php:187
+#, php-format
+msgid "POST YOUR COMMENTS TO %s"
+msgstr ""
+
+#: comments.php:188
+msgid "(Cancel)"
+msgstr ""
+
+#: comments.php:189
+msgid "Post Comment"
+msgstr ""
+
+#: functions.php:25
+msgid "Top Menu"
+msgstr ""
+
+#: functions.php:26
+msgid "Main Menu"
+msgstr ""
+
+#: functions.php:27
+msgid "Bottom Menu"
+msgstr ""
+
+#: functions.php:93
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: functions.php:155
+msgid "SEND"
+msgstr ""
+
+#: functions.php:156
+msgid "SENDING..."
+msgstr ""
+
+#: functions.php:159
+msgid "Please enter your name."
+msgstr ""
+
+#: functions.php:160 functions.php:168 functions.php:172
+msgid "At least {0} characters required."
+msgstr ""
+
+#: functions.php:163
+msgid "Please enter your email."
+msgstr ""
+
+#: functions.php:164
+msgid "Please enter a valid email."
+msgstr ""
+
+#: functions.php:167
+msgid "Please enter a comment."
+msgstr ""
+
+#: functions.php:171
+msgid "Please enter a message."
+msgstr ""
+
+#: header.php:111
+msgid "Menu"
+msgstr ""
+
+#: lib/includes/ajax.php:9 lib/includes/ajax.php:69
+msgid "Sorry an error has occurred."
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:6
+msgid "General Settings"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:10
+msgid "Logo"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:11
+msgid "Upload your logo image."
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:19
+msgid "Favicon icon"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:20
+msgid "Upload your favicon image."
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:28
+msgid "Apple icon"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:29
+msgid "Upload your apple icon image."
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:37
+msgid "Socials"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:38
+msgid "Facebook"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:47
+msgid "Twitter"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:56
+msgid "Google +"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:65
+msgid "Linkedin"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:74
+msgid "Tumblr"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:83
+msgid "Pinterest"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:92
+msgid "RSS (enter HIDE if want to hide)"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:100
+msgid "Copyright"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:101
+msgid "Your copyright information on footer."
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:109
+msgid "Blog layout"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:113
+msgid "Blog-1"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:114
+msgid "Blog-2"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:115
+msgid "Blog-3"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:116
+msgid "Blog-4"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:123
+msgid "Custom css"
+msgstr ""
+
+#: lib/includes/panels/general-settings.php:124
+msgid "Your custom css"
+msgstr ""
+
+#: lib/includes/sidebars.php:13
+msgid "Left Sidebar"
+msgstr ""
+
+#: lib/includes/sidebars.php:16
+msgid "Center Sidebar"
+msgstr ""
+
+#: lib/includes/sidebars.php:19
+msgid "Right Sidebar"
+msgstr ""
+
+#: lib/includes/sidebars.php:22
+msgid "Footer 1st"
+msgstr ""
+
+#: lib/includes/sidebars.php:25
+msgid "Footer 2nd"
+msgstr ""
+
+#: lib/includes/sidebars.php:28
+msgid "Footer 3rd"
+msgstr ""
+
+#: lib/includes/sidebars.php:31
+msgid "Footer 4th"
+msgstr ""
+
+#: lib/includes/util.php:203
+msgid "Breaking News"
+msgstr ""
+
+#: lib/includes/util.php:207
+msgid "----SELECT----"
+msgstr ""
+
+#: lib/includes/util.php:256
+msgid "Home"
+msgstr ""
+
+#: lib/includes/util.php:266
+msgid "Blog"
+msgstr ""
+
+#: lib/includes/util.php:399
+#, php-format
+msgid "<span class=\"%1$s\">Your search for \"%2$s\""
+msgstr ""
+
+#: lib/includes/util.php:404
+#, php-format
+msgid "Posts created by %1$s"
+msgstr ""
+
+#: lib/includes/util.php:408
+msgid "Error 404"
+msgstr ""
+
+#: lib/includes/widgets/advertisement/widget-advertisement.php:10
+msgid "To upload image for advertisement"
+msgstr ""
+
+#: lib/includes/widgets/advertisement/widget-advertisement.php:12
+msgid "(AdMag) Advertisement"
+msgstr ""
+
+#: lib/includes/widgets/advertisement/widget-advertisement.php:47
+msgid "Title"
+msgstr ""
+
+#: lib/includes/widgets/advertisement/widget-advertisement.php:51
+msgid "Link"
+msgstr ""
+
+#: lib/includes/widgets/advertisement/widget-advertisement.php:61
+msgid "Upload Image"
+msgstr ""
+
+#: lib/includes/widgets/comment/widget-comments.php:12
+msgid "Show recent comments"
+msgstr ""
+
+#: lib/includes/widgets/comment/widget-comments.php:14
+msgid "(AdMag) Comments"
+msgstr ""
+
+#: lib/includes/widgets/comment/widget-comments.php:73
+#: lib/includes/widgets/others/widget-editor.php:72
+#: lib/includes/widgets/others/widget-follow.php:130
+#: lib/includes/widgets/others/widget-quote.php:59
+#: lib/includes/widgets/post/widget-article-list.php:1122
+msgid "Title:"
+msgstr ""
+
+#: lib/includes/widgets/comment/widget-comments.php:78
+msgid "Number of comments:"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:12
+msgid "Show user in role with avatar"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:14
+msgid "(AdMag) Editor"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:52
+msgid "No user in role"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:77
+msgid "Role"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:79
+msgid "Editor"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:80
+msgid "Author"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:81
+msgid "Contributor"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:82
+msgid "Subscriber"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-editor.php:87
+msgid "Number to show:"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-follow.php:12
+msgid "Display social link"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-follow.php:14
+msgid "(AdMag) Follow"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-quote.php:12
+msgid "Show quote"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-quote.php:14
+msgid "(AdMag) Quote"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-quote.php:64
+msgid "Content:"
+msgstr ""
+
+#: lib/includes/widgets/others/widget-quote.php:69
+msgid "Description:"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:12
+msgid "Article list widget"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:14
+msgid "(AdMag) Article List"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:138
+msgid "view more"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:402
+msgid "view all"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:671
+msgid "more view"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1126
+msgid "Categories"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1128
+#: lib/includes/widgets/post/widget-article-list.php:1150
+msgid "--Select--"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1141
+msgid "Relation"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1143
+msgid "OR"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1144
+msgid "AND"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1148
+msgid "Tags"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1164
+msgid "Order"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1167
+msgid "ASC"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1168
+msgid "DESC"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1181
+msgid "Orderby"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1184
+msgid "Date"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1185
+msgid "Random"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1186
+msgid "Number of comments"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1199
+msgid "Number of post:"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1204
+msgid "Posts per page:"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1209
+msgid "Custom excerpt length:"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1214
+msgid "Style:"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1218
+msgid "Style 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1219
+msgid "Style 2 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1220
+msgid "Style 3 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1221
+msgid "Style 4 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1222
+msgid "Style 5 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1223
+msgid "Style 6 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1224
+msgid "Style 7 Home 1 "
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1225
+msgid "Style 8 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1226
+msgid "Style 9 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1227
+msgid "Style 10 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1228
+msgid "Style 11 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1229
+msgid "Style 12 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1230
+msgid "Style 13 Home 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1231
+msgid "Style 14 Home 2"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1232
+msgid "Style 15 Home 2"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1233
+msgid "Style 16 Blog 1"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1234
+msgid "Style 16 Home 2"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1235
+msgid "Style 17 Home 3"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1236
+msgid "Style 18 Home 4"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1237
+msgid "Style 19 Home 4"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1238
+msgid "Style 20 Home 4"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1239
+msgid "Style 21 Home 4"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1240
+msgid "Style 22 Home 4"
+msgstr ""
+
+#: lib/includes/widgets/post/widget-article-list.php:1253
+msgid "View more URL:"
+msgstr ""
+
+#: module/blog-1.php:30
+msgid "latest <span>articles</span>"
+msgstr ""
+
+#: module/blog-1.php:32
+msgid "Search"
+msgstr ""
+
+#: module/blog-1.php:77 module/blog-2.php:92 module/blog-3.php:84
+#: module/blog-4.php:67
+msgid "Sorry, no posts matched your criteria."
+msgstr ""
+
+#: module/blog-2.php:96
+msgid "load more"
+msgstr ""
+
+#: module/template-about-author.php:12
+msgid "ABOUT THE AUTHOR"
+msgstr ""
+
+#: module/template-other-posts.php:28
+msgid "PREVIOUS POST"
+msgstr ""
+
+#: module/template-other-posts.php:50
+msgid "NEXT POST"
+msgstr ""
+
+#: module/template-page-navigation.php:6
+msgid "Page %CURRENT_PAGE% of %TOTAL_PAGES%"
+msgstr ""
+
+#: module/template-page-navigation.php:9
+msgid "&laquo; First"
+msgstr ""
+
+#: module/template-page-navigation.php:10
+msgid "Last &raquo;"
+msgstr ""
+
+#: module/template-page-navigation.php:11
+msgid "&laquo; Prev"
+msgstr ""
+
+#: module/template-page-navigation.php:12
+msgid "Next &raquo;"
+msgstr ""
+
+#: module/template-page-navigation.php:13
+#: module/template-page-navigation.php:14
+msgid "..."
+msgstr ""
+
+#: page-full-width.php:35 page.php:40
+msgid "Next page"
+msgstr ""
+
+#: page-full-width.php:36 page.php:41
+msgid "Previous page"
+msgstr ""
+
+#: searchform.php:5
+msgid "Search..."
+msgstr ""

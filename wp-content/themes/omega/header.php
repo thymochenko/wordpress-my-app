@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
+  <style>
+  #mymodal{
+    background-color:rgba(221, 221, 221, 0.9);
+  }
+  </style>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <!-- theme -->
 <link rel="stylesheet" href="style.css">
@@ -18,12 +23,12 @@
 <body <?php body_class(); ?> <?php omega_attr( 'body' ); ?>>
 <?php do_action( 'omega_before' ); ?>
 
-<div class="modal fade bs-example-modal-sm" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade bs-example-modal-lg" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">BAIXE AGORA EBOOK GRATUITO: Docker e WordPress</h4>
+        <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
       </div>
       <div class="modal-body">
         <img style="margin-left:25px;"src="http://localhost/wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg" width="500" height="300"/>
@@ -52,9 +57,7 @@
       $('#sucess').hide();
       $('#error').hide();
       $('#preload').hide();
-      $('#_sucess').hide();
-      $('#_error').hide();
-      $('#_preload').hide();
+
       $.validator.addMethod("simpleCaptcha", function(value, element) {
         if(value == 13){
           return true;

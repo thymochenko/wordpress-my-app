@@ -9,7 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 ?>
 
 <form action="" class="llms-checkout llms-checkout-cols-<?php echo $cols; ?>" method="POST" id="llms-product-purchase-form">
-
 	<?php do_action( 'lifterlms_before_checkout_form' ); ?>
 
 	<div class="llms-checkout-col llms-col-1">

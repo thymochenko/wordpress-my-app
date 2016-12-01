@@ -7,10 +7,12 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 global $wp_query;
+//$c = new LLMS_Course($courses['results'][0]);
+//var_dump($c);
 ?>
 
 <div class="llms-sd-section llms-my-courses">
-	<h3 class="llms-sd-section-title"><?php echo apply_filters( 'lifterlms_my_courses_title', __( 'Courses In-Progress', 'lifterlms' ) ); ?></h3>
+	<h3 class="llms-sd-section-title"><?php echo apply_filters( 'lifterlms_my_courses_title', __( 'Cursos em progresso', 'lifterlms' ) ); ?></h3>
 
 	<?php if ( ! $courses['results'] ) : ?>
 		<p><?php _e( 'You are not enrolled in any courses.', 'lifterlms' ); ?></p>

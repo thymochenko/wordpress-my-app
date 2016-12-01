@@ -1,0 +1,63 @@
+.kopa_shortcode_icons{
+    padding: 5px 0px;
+}
+
+.kopa_shortcode_icons li{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+}
+
+.kopa_shortcode_icons > li > a{
+    display: block;    
+    width: 20px;
+    height: 20px;
+    background-position: center center;    
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+.kopa-one-half,
+.kopa-one-third,
+.kopa-two-third,
+.kopa-one-fourth,
+.kopa-three-fourth{
+    float:left;
+    margin-right:2%;
+}
+
+.kopa-one-half.last,
+.kopa-one-third.last,
+.kopa-two-third.last,
+.kopa-one-fourth.last,
+.kopa-three-fourth.last{
+    margin-right: 0px;
+}
+
+.kopa-one-half {width:49%;}
+.kopa-one-third {width:32%;}
+.kopa-two-third {width:66%;}
+.kopa-one-forth {width:23.5%;}
+.kopa-three-forth {width:74.5%;}
+
+.kopa-clear {  
+    clear: both;  
+    display: block;  
+    overflow: hidden;  
+    visibility: hidden;  
+    width: 0;  
+    height: 0;
+}
+.kopa_adv_upload_image{
+    height: 30px;
+    line-height: 30px;
+    width: 412px;
+    margin: 0px 2px 0 0;
+}
+.left{
+    float: left;
+}

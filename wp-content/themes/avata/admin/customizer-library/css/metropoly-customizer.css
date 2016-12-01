@@ -1,0 +1,7 @@
+#accordion-section-avata-sections-order .accordion-section-title:after,
+#accordion-section-avata-pricing-table .accordion-section-title:after,
+#accordion-section-avata-portfolios .accordion-section-title:after,
+#accordion-section-avata-contact .accordion-section-title:after,
+#accordion-section-avata-recent-products .accordion-section-title:after{
+    content: "\f160";
+}
