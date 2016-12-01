@@ -8,12 +8,18 @@
  * @since       1.0.0
  * @version     3.0.0 - refactored for sanity's sake
  */
-
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-
+//$product = new LLMS_Product('product');
+//$is_enrolled = llms_is_user_enrolled( get_current_user_id(), $product->has_free_access_plan()[1]->get_product()->get('id') );
 $locked = llms_is_page_restricted( $lesson->get( 'id' ), get_current_user_id() );
-?>
+//foreach($product->has_free_access_plan() as $plan){
 
+//var_dump($lesson->is_free());
+
+    if($lesson->is_free() && get_current_user_id() < 1):
+	return ;
+    else :
+?>
 <div class="llms-lesson-preview<?php echo $lesson->get_preview_classes(); ?>">
 	<a class="llms-lesson-link<?php echo $locked ? ' llms-lesson-link-locked' : ''; ?>" href="<?php echo ( ! $locked ) ? get_permalink( $lesson->get( 'id' ) ) : '#llms-lesson-locked'; ?>">
 
@@ -43,3 +49,8 @@ $locked = llms_is_page_restricted( $lesson->get( 'id' ), get_current_user_id() )
 		<div class="clear"></div>
 	</a>
 </div>
+<?php
+    endif;
+?>
+
+

@@ -4,7 +4,6 @@
  * @property obj $product WP_Product object
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; } // Exit if accessed directly
-
 $is_enrolled = llms_is_user_enrolled( get_current_user_id(), $product->get( 'id' ) );
 $purchaseable = $product->is_purchasable();
 $has_free = $product->has_free_access_plan();
