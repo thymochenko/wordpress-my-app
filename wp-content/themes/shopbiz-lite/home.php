@@ -11,8 +11,8 @@
 <link rel='dns-prefetch' href='//maps.googleapis.com' />
 <link rel='dns-prefetch' href='//fonts.googleapis.com' />
 <link rel='dns-prefetch' href='//s.w.org' />
-<link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Feed" href="https://themeansar.com/demo/wp/shopbiz/default/feed/" />
-<link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Comments Feed" href="https://themeansar.com/demo/wp/shopbiz/default/comments/feed/" />
+<!-- <link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Feed" href="https://themeansar.com/demo/wp/shopbiz/default/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Comments Feed" href="https://themeansar.com/demo/wp/shopbiz/default/comments/feed/" />-->
 		<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/themeansar.com\/demo\/wp\/shopbiz\/default\/wp-includes\/js\/wp-emoji-release.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec"}};
 			!function(a,b,c){function d(a){var c,d,e,f,g,h=b.createElement("canvas"),i=h.getContext&&h.getContext("2d"),j=String.fromCharCode;if(!i||!i.fillText)return!1;switch(i.textBaseline="top",i.font="600 32px Arial",a){case"flag":return i.fillText(j(55356,56806,55356,56826),0,0),!(h.toDataURL().length<3e3)&&(i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,65039,8205,55356,57096),0,0),c=h.toDataURL(),i.clearRect(0,0,h.width,h.height),i.fillText(j(55356,57331,55356,57096),0,0),d=h.toDataURL(),c!==d);case"diversity":return i.fillText(j(55356,57221),0,0),e=i.getImageData(16,16,1,1).data,f=e[0]+","+e[1]+","+e[2]+","+e[3],i.fillText(j(55356,57221,55356,57343),0,0),e=i.getImageData(16,16,1,1).data,g=e[0]+","+e[1]+","+e[2]+","+e[3],f!==g;case"simple":return i.fillText(j(55357,56835),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode8":return i.fillText(j(55356,57135),0,0),0!==i.getImageData(16,16,1,1).data[0];case"unicode9":return i.fillText(j(55358,56631),0,0),0!==i.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity","unicode9"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
@@ -86,13 +86,13 @@ Skip to content</a>
       <div class="row">
         <div class="col-md-6 col-xs-12 col-sm-6">
           <ul class="info-left">
-                        <li><a><i class="fa fa-clock-o "></i>Open-Hours:10 am to 7pm</a></li>
-            <li><a href="mailto:info@themeansar.com" title="Mail Me"><i class="fa fa-envelope"></i> info@themeansar.com</a></li>
+                        <li><a><i class="fa fa-clock-o "></i>Horário comercial:9 as 17:30 pm</a></li>
+            <li><a href="mailto:timocabralcarvalho@gmail.com" title="Mande-me um email"><i class="fa fa-envelope"></i>timocabralcarvalho@gmail.com</a></li>
           </ul>
         </div>
         <div class="col-md-6 col-xs-12 col-sm-6">
-          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="https://themeansar.com/demo/wp/shopbiz/default/cart/">Cart</a></li>
-<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="https://themeansar.com/demo/wp/shopbiz/default/my-account/">My Account</a></li>
+          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="http://localhost/index.php/my-courses/">Meus Cursos</a></li>
+<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="http://localhost/index.php/purchase/?plan=203">Minha Conta</a></li>
 </ul>        </div>
       </div>
     </div>
@@ -109,32 +109,34 @@ Skip to content</a>
 
         <!-- Navigation -->
         <div class="collapse navbar-collapse" id="navbar-wp">
-          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="https://themeansar.com/demo/wp/shopbiz/default/">Home</a></li>
-<li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="https://themeansar.com/demo/wp/shopbiz/default/about/">About</a></li>
-<li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="https://themeansar.com/demo/wp/shopbiz/default/services/">Services</a></li>
-<li id="menu-item-216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-216 dropdown"><a title="Portfolio" href="#">Portfolio <span class="caret"></span></a>
+          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="http://localhost/">Home</a></li>
+<li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="http://localhost/index.php/sobre-mim/">Sobre mim</a></li>
+<li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="http://localhost/index.php/blog/">Blog</a></li>
+<!--<li id="menu-item-216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-216 dropdown"><a title="Portfolio" href="#">Portfolio <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-215" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-215"><a title="Portfolio Two Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-two-column/">Portfolio Two Column</a></li>
 	<li id="menu-item-214" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-214"><a title="Portfolio Three Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-three-column/">Portfolio Three Column</a></li>
 	<li id="menu-item-213" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-213"><a title="Portfolio Four Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-four-column/">Portfolio Four Column</a></li>
 </ul>
-</li>
-<li id="menu-item-108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-108"><a title="Pricing" href="https://themeansar.com/demo/wp/shopbiz/default/pricing/">Pricing</a></li>
-<li id="menu-item-183" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-183 dropdown"><a title="Blog">Blog <span class="caret"></span></a>
+</li>-->
+<li id="menu-item-108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-108"><a title="Pricing" href="http://localhost/index.php/materiais/">Materiais Gratuitos</a></li>
+<!-- <li id="menu-item-183" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-183 dropdown"><a title="Blog">Blog <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-186"><a title="Blog Full width" href="https://themeansar.com/demo/wp/shopbiz/default/blog-full-width/">Blog Full width</a></li>
 	<li id="menu-item-127" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-127"><a title="Blog Left Sidebar" href="https://themeansar.com/demo/wp/shopbiz/default/blog-left-sidebar/">Blog Left Sidebar</a></li>
 	<li id="menu-item-128" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-128"><a title="Blog Right Sidebar" href="https://themeansar.com/demo/wp/shopbiz/default/blog-right-sidebar/">Blog Right Sidebar</a></li>
 </ul>
-</li>
-<li id="menu-item-107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-107 dropdown"><a title="Shop" href="https://themeansar.com/demo/wp/shopbiz/default/shop/">Shop <span class="caret"></span></a>
+</li>-->
+<!-- <li id="menu-item-107" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-107 dropdown"><a title="Shop" href="https://themeansar.com/demo/wp/shopbiz/default/shop/">Shop <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-182" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-182"><a title="Cart" href="https://themeansar.com/demo/wp/shopbiz/default/cart/">Cart</a></li>
 	<li id="menu-item-181" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-181"><a title="Checkout" href="https://themeansar.com/demo/wp/shopbiz/default/checkout/">Checkout</a></li>
 	<li id="menu-item-180" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-180"><a title="My Account" href="https://themeansar.com/demo/wp/shopbiz/default/my-account/">My Account</a></li>
 </ul>
-</li>
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="https://themeansar.com/demo/wp/shopbiz/default/contact/">Contact</a></li>
+</li>-->
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/contato/">Consultoria</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/course/">Cursos</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/contato/">Contato</a></li>
 </ul>        </div>
         <!-- /Navigation -->
       </div>
@@ -152,18 +154,18 @@ Skip to content</a>
           <div class="inner-table-cell">
             <div class="slide-caption center">
               <h1>
-                We are <span>Shopbiz</span> and we love our work              </h1>
+                 Pensando a  <span>Frente </span> sobre Tecnologia               </h1>
               <div class="description">
-                <p>If you don&#8217;t drive your business, you will be driven out of business.</p>
+                <p>Ensinando, Desenvolvendo e Inovando pensando em você</p>
               </div>
-                            <a class="btn btn-tislider" href="#" > Read More</a>
-                            <a class="btn btn-tislider-two" href="#" > Buy Now! </a>
+                            <a class="btn btn-tislider" href="#" > Saiba mais </a>
+                            <a class="btn btn-tislider-two" href="#" > veja nossos cursos! </a>
                           </div>
           </div>
         </div>
       </div>
     </div>
-        <div class="item ">
+      <!--  <div class="item ">
       <figure>
         <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider2-1.jpg" class="img-responsive wp-post-image" alt="slider2" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider2-1.jpg 1600w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider2-1-300x113.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider2-1-768x288.jpg 768w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider2-1-1024x384.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />      </figure>
       <div class="ta-slider-inner" style="background:rgba(0,0,0,0.4)">
@@ -198,7 +200,7 @@ Skip to content</a>
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
         </div>
 </section>
 <div class="clearfix"></div>
@@ -218,9 +220,9 @@ Skip to content</a>
     <div class="row">
       <div class="col-md-12 wow fadeInDown animated padding-bottom-50 text-center">
         <div class="ta-heading">
-          <h3 class="ta-heading-inner">Our Services</h3>        </div>
+          <h3 class="ta-heading-inner">Nossos Serviços</h3>        </div>
 
-				<p style="color:  ;">laoreet ipsum eu laoreet. ugiignissimat Vivamus dignissim feugiat erat sit amet convallis.</p>
+				<p style="color:  ;">O tempo inteiro nos dedicamos para produzir conteudo, software e consultoria para você</p>
 
 			      </div>
     </div>
@@ -232,8 +234,8 @@ Skip to content</a>
 
                 <img class="img-responsive" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sservice1.jpg" />
                 <div class="ta-service-inner">
-				<h3 class="widgettitle">Investment Planning</h3>                    <p>Lorem ipsum dolor sit amet iure laboriosam</p>
-                                <a class="btn btn-theme margin-bottom-20"  href="#" target="_self">Read More</a>
+				<h3 class="widgettitle">Consultoria</h3>                    <p>Consultoria em projetos WordPress/PHP/Woocommerce</p>
+                                <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/consultoria/" target="_self">Saiba Mais</a>
 
 
             </div>
@@ -247,8 +249,8 @@ Skip to content</a>
 
                 <img class="img-responsive" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sservice2.jpg" />
                 <div class="ta-service-inner">
-				<h3 class="widgettitle">Financial Planning</h3>                    <p>Lorem ipsum dolor sit amet iure laboriosam</p>
-                                <a class="btn btn-theme margin-bottom-20"  href="#" target="_self">Read More</a>
+				<h3 class="widgettitle">Cursos</h3>                    <p>Criamos cursos estratégicos e inovadores para você</p>
+                                <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/course/" target="_self">Saiba Mais</a>
 
 
             </div>
@@ -262,8 +264,8 @@ Skip to content</a>
 
                 <img class="img-responsive" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sservice3.jpg" />
                 <div class="ta-service-inner">
-				<h3 class="widgettitle">Business Advisor</h3>                    <p>Lorem ipsum dolor sit amet iure laboriosam</p>
-                                <a class="btn btn-theme margin-bottom-20"  href="#" target="_self">Read More</a>
+				<h3 class="widgettitle">Eventos</h3>                    <p>Nossos eventos semestrais podem estar ai na sua cidade</p>
+                                <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/eventos" target="_self">Saiba Mais</a>
 
 
             </div>
@@ -273,34 +275,6 @@ Skip to content</a>
         </div>    </div>
   </div>
 </section>
-<style>
-.ta-calltoaction-box-icon i, .ta-calltoaction-box-info h5, .ta-calltoaction-box-info p {
-color: ;
-}
-</style>
-<!--==================== CALL TO ACTION SECTION ====================-->
-<section class="ta-calltoaction wow fadeIn animated">
-    <div class="overlay" style="background-color:">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-9">
-          <div class="ta-calltoaction-box-info">
-            <h5>We will help you to grow your business</h5>            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit Pellentesque</p>          </div>
-        </div>
-        <div class="col-md-2"> <a href="#" target='_blank'  class="btn btn-theme"> Get in Touch </a> </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-.ta-products {
-  background: ;
-}
-.ta-products h3.ta-heading-inner, .ta-products p {
-  color: ;
-}
-</style>
 
 <!--==================== product SECTION ====================-->
 <section id="product" class="ta-section ta-products">
@@ -308,8 +282,8 @@ color: ;
     <div class="row">
       <div class="col-md-12 wow fadeInDown animated padding-bottom-50 text-center">
         <div class="ta-heading">
-          <h3 class="ta-heading-inner">Featured Products</h3>        </div>
-        <p>laoreet ipsum eu laoreet. ugiignissimat Vivamus dignissim feugiat erat sit amet convallis.</p>      </div>
+          <h3 class="ta-heading-inner">Materiais Gratuitos</h3>        </div>
+        <p>Baixe agora vários materiais gratuitos de altíssima qualidade para decolar em sua carreira ou negócios</p>      </div>
     </div>
     	<div class="row">
       <div class="col-md-12 col-sm-12">
@@ -416,7 +390,7 @@ color: ;
 .ta-callout .overlay h3, .ta-callout .overlay p { color: ; }
 </style>
 <!--==================== CALLOUT SECTION ====================-->
-
+<!--
 <section class="ta-callout" style="background-image:url('https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/call.jpg');">
   <div class="overlay" style="background-color:rgba(0,0,0,0.56)">
     <div class="container">
@@ -442,8 +416,9 @@ color: ;
   background: ;
 }
 </style>
+-->
 <!--==================== TESTIMONIALS SECTION ====================-->
-<section class="testimonials-section">
+<!--<section class="testimonials-section">
     <div class="overlay" style="background-color:">
     <div class="container">
       <div class="row">
@@ -633,32 +608,45 @@ color: ;
 border-color: ;
 }
 </style>
+-->
 <!--==================== BLOG SECTION ====================-->
+
 <section id="blog" class="ta-blog-section">
     <div class="overlay" style="background-color:">
     <div class="container">
       <div class="row">
         <div class="col-md-12 wow fadeInDown animated padding-bottom-50 text-center">
           <div class="ta-heading">
-            <h3 class="ta-heading-inner">Latest news</h3>          </div>
-                    <p style="color: ;">laoreet ipsum eu laoreet. ugiignissimat Vivamus dignissim feugiat erat sit amet convallis. </p>
+            <h3 class="ta-heading-inner">Últimos posts do Blog</h3>          </div>
+                    <p style="color: ;">Falamos sobre Empreendedorismo, PHP, WordPress, Tecnologia, Statups, Mercados, Hacks, Produtividade</p>
                   </div>
       </div>
       <div class="clear"></div>
       <div class="row">
-                <div class="col-md-4 wow pulse animated">
-          <div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-dumasbibend-bibend/" title="Maecenas dumasbibend bibend">
-            <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1.jpg 1024w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1-300x234.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1-768x600.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3">8</span> <span>Nov</span> </span> </a>
+				<?php var_dump(get_post_meta($post->ID, 'book_author', true)); ?>
+				<?php $q = new WP_Query(['order' => 'DESC', 'posts_per_page'=> 3 ]);?>
+						 <?php if ($q->have_posts()) :?>
+							 <?php while ($q->have_posts()) : $q->the_post();?>
+      <div class="col-md-4 wow pulse animated">
+          <div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="<?php the_permalink(); ?>" title="<?php the_title();?>">
+						<?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
+            <img src="<?php echo $large_image_url[0] ?>" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog3" srcset="<?php echo $large_image_url[0] ?> 1024w, <?php echo $large_image_url[0] ?> 300w, <?php echo $large_image_url[0] ?> 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3">8</span> <span>Nov</span> </span> </a>
             <article class="small">
-              <h2> <a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-dumasbibend-bibend/" title="Maecenas dumasbibend bibend">Maecenas dumasbibend bibend</a> </h2>
+              <h2><a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php the_title();?></a> </h2>
               <div class="ta-blog-category"> <i class="fa fa-folder"></i>&nbsp;
-                                <a href="https://themeansar.com/demo/wp/shopbiz/default/category/uncategorized/" rel="category tag">Uncategorized</a>                                <a href="https://themeansar.com/demo/wp/shopbiz/default/author/pro_shopbiz/"> <i class="fa fa-user"></i>&nbsp;by
+                                <a href="<?php the_title();?>" rel="category tag">Uncategorized</a>                                <a href="https://themeansar.com/demo/wp/shopbiz/default/author/pro_shopbiz/"> <i class="fa fa-user"></i>&nbsp;by
                 Shopbiz                </a> </div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </article>
           </div>
         </div>
-                <div class="col-md-4 wow pulse animated">
+			<?php endwhile; ?>
+<?php else : ?>
+			 <h2 class="center">Not Found</h2>
+			 <p class="center">Sorry, but you are looking for something that isn't here.</p>
+			</div>
+<?php endif; ?>
+          <!--      <div class="col-md-4 wow pulse animated">
           <div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-bibend-bibendumas-2/" title="Maecenas bibend bibendumas">
             <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2.jpg" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog2" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2.jpg 1024w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2-300x234.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2-768x600.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3">8</span> <span>Nov</span> </span> </a>
             <article class="small">
@@ -680,10 +668,9 @@ border-color: ;
                 Shopbiz                </a> </div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </article>
-          </div>
-        </div>
-              </div>
-            <div class="text-center margin-top-50"><a href="#" target='_blank'  class="btn btn-theme">View More</a></div>
+          </div>-->
+
+            <div class="text-center margin-top-50"><a href="http://localhost/index.php/blog" target='_blank'  class="btn btn-theme">Leia Muito Mais</a></div>
       <!-- .container -->
     </div>
   </div>
@@ -699,7 +686,7 @@ border-color: ;
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 text-center">
-          <h4>Love to Hear About our product <span>updates?</span></h4>          <h2>Sign up for Our <span>Newsletter</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
+          <h4>Quer receber atualizações, promoções, videos, conteúdo exclusivo <span>AGORA?</span></h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
           <form class="subscription-form mailchimp form-inline">
 
             <!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
@@ -707,11 +694,11 @@ border-color: ;
             <h6 class="subscription-error"></h6>
 
             <!-- EMAIL INPUT BOX -->
-            <input type="email" name="EMAIL" id="subscriber-email" placeholder="Your Email" class="form-control email int-box">
+            <input type="email" name="EMAIL" id="subscriber-email" placeholder="Seu Email" class="form-control email int-box">
 
             <!-- SUBSCRIBE BUTTON -->
             <button type="submit" id="subscribe-button" class="btn btn-theme">
-            Subscribe            </button>
+            Assinar            </button>
           </form>
           <!-- /END SUBSCRIPTION FORM -->
         </div>

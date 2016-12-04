@@ -15,9 +15,9 @@ $locked = llms_is_page_restricted( $lesson->get( 'id' ), get_current_user_id() )
 //foreach($product->has_free_access_plan() as $plan){
 
 //var_dump($lesson->is_free());
-
+    //se for um curso gratuito, não exibe as lições (so exibe se estiver logado)
     if($lesson->is_free() && get_current_user_id() < 1):
-	return ;
+	    return ;
     else :
 ?>
 <div class="llms-lesson-preview<?php echo $lesson->get_preview_classes(); ?>">
@@ -52,5 +52,3 @@ $locked = llms_is_page_restricted( $lesson->get( 'id' ), get_current_user_id() )
 <?php
     endif;
 ?>
-
-

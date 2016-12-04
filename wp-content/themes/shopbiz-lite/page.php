@@ -23,11 +23,11 @@ get_header(); ?>
 			<?php endwhile; else : endif; ?>
 			<?php } else { ?>
 			<div class="col-md-9">
-			<?php if( have_posts()) :  the_post(); ?>		
+			<?php if( have_posts()) :  the_post(); ?>
 			<?php the_content(); ?>
 				<?php endif; ?>
 				<?php comments_template( '', true ); // show comments ?>
-			<!-- /Blog Area -->			
+			<!-- /Blog Area -->
 			</div>
 			<!--Sidebar Area-->
 			<aside class="col-md-3">
