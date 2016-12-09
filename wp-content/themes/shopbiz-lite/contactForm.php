@@ -1,12 +1,10 @@
   <?php
 
   if( $_SERVER['REQUEST_METHOD'] == 'POST'){
-      var_dump($_POST);
       $nome =  (isset($_POST['nome'])) ? filter_var(trim($_POST["nome"]), FILTER_SANITIZE_STRING) : null;
       $email = filter_var(trim($_POST["email"]), FILTER_VALIDATE_EMAIL);
       $msg = (isset($_POST['msg'])) ? strip_tags(trim($_POST['msg'])) : null;
       $button_book = (isset($_POST['ebook_hidden'])) ? filter_var(trim($_POST['ebook_hidden']), FILTER_SANITIZE_STRING) : null;
-      var_dump($button_book);exit;
       $book_name = substr($button_book, 8);
 
       require_once("utils/PHPMailerAutoload.php");
@@ -36,7 +34,6 @@
         $mail->Body .= " nome {$nome} / email: {$email} Mensagem: ". nl2br($_POST['msg'])."<br />";
         $mail->AltBody = 'Para mensagens somente texto';
         echo ($mail->send()) ? "<script>alert('Mensagme enviada com sucesso')</script>" : "error" ;
-        header("location: http://localhost/index.php/sucesso/");
        }
        elseif ($_POST['email'] && isset($_POST['nome']) && isset($_POST['ebook_hidden'])) {
          # code...
@@ -62,10 +59,30 @@
          $mail2->FromName = 'Timo Cabral';
          $mail2->From = 'timocabralcarvalho@gmail.com';
 
-         $mail2->Body .= " Pedido de Ebook: #{Docker/Wordpress} <br />";
+         $mail2->Body .= " Pedido de Ebook: #{{$book_name}} <br />";
          $mail2->Body .= " email: {$email} <br />";
          $mail2->Body .= " nome: {$nome} <br />";
          $mail2->AddAddress("timocabralcarvalho@gmail.com", 'Timo Cabral');
          return ($mail2->send()) ? "error" : "ok";
+      }
+      elseif(isset($_POST['email'])){
+        # code...
+        $mail2 = new PHPMailer();
+
+        $mail2->IsSMTP();
+        $mail2->SMTPAuth = true;
+        $mail2->SMTPDebug = 3;
+        $mail2->Host = 'smtp.gmail.com';
+        $mail2->Password = 'a12op34unh';
+        $mail2->Username = 'timocabralcarvalho@gmail.com';
+        $mail2->SMTPSecure = "ssl";
+        $mail2->Port = 465;
+        $mail2->FromName = 'Timo Cabral';
+        $mail2->From = 'timocabralcarvalho@gmail.com';
+
+        $mail2->Body .= " ASSINANTE NEWSLLETER <br />";
+        $mail2->Body .= " email: {$email} <br />";
+        $mail2->AddAddress("timocabralcarvalho@gmail.com", 'Timo Cabral');
+        return ($mail2->send()) ? "error" : "ok";
       }
   }

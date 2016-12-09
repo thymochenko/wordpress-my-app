@@ -2,9 +2,8 @@
      Page Breadcrumb
 ============================== -->
 
-  <?php get_header();
+<?php get_header();
 get_template_part('index','banner'); ?>
-
 <div class="clearfix"></div>
 <div class="modal fade bs-example-modal-lg" id="mymodal"
  tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -143,9 +142,6 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
 
     });
 
-    $('#sucess').hide();
-    $('#error').hide();
-    $('#preload').hide();
 
     $.validator.addMethod("simpleCaptcha", function(value, element) {
       if(value == 13){

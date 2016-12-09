@@ -291,96 +291,35 @@ Skip to content</a>
           <!-- Product -->
 
 
-
+					<?php $q = new WP_Query(['post_type' => 'book']);?>
+							 <?php if ($q->have_posts()) :?>
+								 <?php while ($q->have_posts()) : $q->the_post();?>
 					 <div class="item">
 					 	<div class="ta-product">
-							<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business/" >
-								<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business/" class="woocommerce-LoopProduct-link">
-
-	<span class="onsale">Sale!</span>
-<img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-300x300.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="product1" title="product1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-300x300.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-150x150.jpg 150w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-180x180.jpg 180w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1.jpg 350w" sizes="(max-width: 300px) 100vw, 300px" />
-								<h3>business</h3>
+							<a href="<?php the_permalink(); ?>" >
+								<a href="<?php the_permalink(); ?>" class="woocommerce-LoopProduct-link">
+	<span class="onsale">Baixar!</span>
+	<?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
+<img src="<?php echo $large_image_url[0] ?>" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="product1" title="product1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-300x300.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-150x150.jpg 150w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1-180x180.jpg 180w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product1-1.jpg 350w" sizes="(max-width: 300px) 100vw, 300px" />
+								<h3><?php the_title(); ?></h3>
 								<span class="prices">
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.00</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>2.00</span></ins></span>
+	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol"></span></span></del> <ins><span class="woocommerce-Price-amount _amount"><span class="woocommerce-Price-currencySymbol"></span>Gratuito</span></ins></span>
 </span>
 							</a>
 							<div class="clearfix"></div>
-							</a><a rel="nofollow" href="/demo/wp/shopbiz/default/?add-to-cart=99" data-quantity="1" data-product_id="99" data-product_sku="" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>						</div>
+						</a><a rel="nofollow" href="<?php the_permalink() ?>" data-quantity="1" data-product_id="99" data-product_sku="" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Baixar Agora</a>						</div>
 					</div>
+				<?php endwhile; ?>
+	<?php else : ?>
+				 <h2 class="center">Not Found</h2>
+				 <p class="center">Sorry, but you are looking for something that isn't here.</p>
+				</div>
+	<?php endif; ?>
             <!-- /Product -->
 
 
 
-					 <div class="item">
-					 	<div class="ta-product">
-							<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-2/" >
-								<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-2/" class="woocommerce-LoopProduct-link">
-							    <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-300x300.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="product2" title="product2" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-300x300.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-150x150.jpg 150w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-180x180.jpg 180w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1.jpg 350w" sizes="(max-width: 300px) 100vw, 300px" />
-								<h3>business book</h3>
-								<span class="prices">
-
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>9.00</span></span>
-</span>
-							</a>
-							<div class="clearfix"></div>
-							</a><a rel="nofollow" href="/demo/wp/shopbiz/default/?add-to-cart=96" data-quantity="1" data-product_id="96" data-product_sku="" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>						</div>
-					</div>
-            <!-- /Product -->
-
-
-
-					 <div class="item">
-					 	<div class="ta-product">
-							<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-guide/" >
-								<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-guide/" class="woocommerce-LoopProduct-link">
-							    <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product3.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="product3" title="product3" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product3.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product3-150x150.jpg 150w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product3-180x180.jpg 180w" sizes="(max-width: 300px) 100vw, 300px" />
-								<h3>business Guide</h3>
-								<span class="prices">
-
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.00</span></span>
-</span>
-							</a>
-							<div class="clearfix"></div>
-							</a><a rel="nofollow" href="/demo/wp/shopbiz/default/?add-to-cart=93" data-quantity="1" data-product_id="93" data-product_sku="" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>						</div>
-					</div>
-            <!-- /Product -->
-
-
-
-					 <div class="item">
-					 	<div class="ta-product">
-							<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-one/" >
-								<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-one/" class="woocommerce-LoopProduct-link">
-							    <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-300x300.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="product2" title="product2" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-300x300.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-150x150.jpg 150w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1-180x180.jpg 180w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/product2-1.jpg 350w" sizes="(max-width: 300px) 100vw, 300px" />
-								<h3>business one</h3>
-								<span class="prices">
-
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>9.00</span></span>
-</span>
-							</a>
-							<div class="clearfix"></div>
-							</a><a rel="nofollow" href="/demo/wp/shopbiz/default/?add-to-cart=90" data-quantity="1" data-product_id="90" data-product_sku="" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>						</div>
-					</div>
-            <!-- /Product -->
-
-
-
-					 <div class="item">
-					 	<div class="ta-product">
-							<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-grow/" >
-								<a href="https://themeansar.com/demo/wp/shopbiz/default/product/business-grow/" class="woocommerce-LoopProduct-link">
-							    <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/BOOK4-300x300.jpg" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="book4" title="book4" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/BOOK4-300x300.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/BOOK4-150x150.jpg 150w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/BOOK4-180x180.jpg 180w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/BOOK4.jpg 600w" sizes="(max-width: 300px) 100vw, 300px" />
-								<h3>business Grow</h3>
-								<span class="prices">
-
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>9.00</span></span>
-</span>
-							</a>
-							<div class="clearfix"></div>
-							</a><a rel="nofollow" href="/demo/wp/shopbiz/default/?add-to-cart=87" data-quantity="1" data-product_id="87" data-product_sku="" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a>						</div>
-					</div>
-            <!-- /Product -->
+					   <!-- /Product -->
                   </div>
       </div>
     </div>
@@ -610,6 +549,7 @@ border-color: ;
 </style>
 -->
 <!--==================== BLOG SECTION ====================-->
+<?php $query = new WP_Query( array( 'post_type' => 'book' ) ); ?>
 
 <section id="blog" class="ta-blog-section">
     <div class="overlay" style="background-color:">
@@ -623,7 +563,6 @@ border-color: ;
       </div>
       <div class="clear"></div>
       <div class="row">
-				<?php var_dump(get_post_meta($post->ID, 'book_author', true)); ?>
 				<?php $q = new WP_Query(['order' => 'DESC', 'posts_per_page'=> 3 ]);?>
 						 <?php if ($q->have_posts()) :?>
 							 <?php while ($q->have_posts()) : $q->the_post();?>
@@ -686,18 +625,18 @@ border-color: ;
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3 text-center">
-          <h4>Quer receber atualizações, promoções, videos, conteúdo exclusivo <span>AGORA?</span></h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
-          <form class="subscription-form mailchimp form-inline">
+          <h4>Você Quer receber atualizações, promoções, videos, conteúdo exclusivo gratuito?</h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
+          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST">
 
             <!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
             <h6 class="subscription-success"></h6>
             <h6 class="subscription-error"></h6>
 
             <!-- EMAIL INPUT BOX -->
-            <input type="email" name="EMAIL" id="subscriber-email" placeholder="Seu Email" class="form-control email int-box">
+            <input type="email" name="email" id="subscriber-email_" placeholder="Seu Email" class="form-control email int-box_">
 
             <!-- SUBSCRIBE BUTTON -->
-            <button type="submit" id="subscribe-button" class="btn btn-theme">
+            <button type="submit" id="subscribe-button_" class="btn btn-theme">
             Assinar            </button>
           </form>
           <!-- /END SUBSCRIPTION FORM -->
@@ -706,6 +645,12 @@ border-color: ;
     </div>
   </div>
 </section>
+
+<!-- mensagens form -->
+<div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
+<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
+<div id="preload"><img src="http://localhost/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
+<!-- end message form -->
 <!--==================== ta-FOOTER AREA ====================-->
 <footer>
   <!--Start ta-footer-widget-area-->
@@ -1101,5 +1046,59 @@ var wc_cart_fragments_params = {"ajax_url":"\/demo\/wp\/shopbiz\/default\/wp-adm
 </script>
 <script type='text/javascript' src='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/js/frontend/cart-fragments.min.js?ver=2.6.8'></script>
 <script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-includes/js/wp-embed.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+<script>
+
+  $(function() {
+
+				   $('#sucess').hide();
+				   $('#error').hide();
+				   $('#preload').hide();
+
+           $('#newslleter').validate({
+                  rules: {
+                      email: {
+                          required: true,
+                          email: true
+                      }
+                  },
+                  messages: {
+                      email: {
+                          required: "Coloque o seu melhor email"
+                      }
+                  },
+                  submitHandler: function(form) {
+                      $(form).ajaxSubmit({
+                          type:"POST",
+                          data: $(form).serialize(),
+                          url:"http://localhost/",
+                          beforeSend: function (){
+
+                            $("#preload").fadeIn();
+                          },
+                          success: function() {
+
+                                //  $('#contact').fadeTo( "slow", 0.15, function() {
+                                  $(this).find(':input').attr('disabled', 'disabled');
+                                  $('#sucess').fadeIn();
+                                  $('#preload').hide();
+                              //});
+                          },
+                          error: function() {
+                              //$('#contact').fadeTo( "slow", 0.15, function() {
+                                  $('#error').fadeIn();
+                              //});
+                          }
+                      });
+                  }
+              });
+
+  });
+
+</script>
 </body>
 </html>
