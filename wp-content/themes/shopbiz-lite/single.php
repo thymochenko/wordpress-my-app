@@ -139,7 +139,6 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
         $("#mymodal").modal('show');
 
 
-
     });
 
 
@@ -183,7 +182,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
           submitHandler: function(form) {
               $(form).ajaxSubmit({
                   type:"POST",
-                  url:"http://localhost/wp-content/themes/shopbiz-lite/contactForm.php",
+                  url:"http://localhost/",
                   data: $(form).serialize(),
                   beforeSend: function (){
                     data['button'] = $("#modal-download-start").val();

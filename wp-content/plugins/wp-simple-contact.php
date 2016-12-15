@@ -11,38 +11,30 @@ Author: Timo Cabral
 Version: 1.0
 Author URI: http://timocabral.com/
 */
-if($_POST['email']){
-include 'news.core.php';
+
+require_once 'news.core.php';
 require_once("utils/PHPMailerAutoload.php");
-/*
-$news = new Newslleter();
-$news->name = "Timo Cabral";
-$news->email = "timocabral@gmail.com";
-$news->ip = "192.168.1.5";
-$news->status = Newslleter::STATUS['active'];
-$news->date_created = current_time( 'mysql' );
-$news->date_updated = current_time( 'mysql' );
-*/
-$news = new Newslleter();
+
+if(isset($_POST['method']) == 'newslleter'){
+  $news = new Newslleter();
 //$news->name = $_POST['nome'];
-$news->email = $_POST['email'];
+  $news->email = $_POST['email'];
 //$news->email = 'henkosato5@gmail.com';
-//$news->ip = $_SERVER['SERVER_ADDR'];
-//$news->status = Newslleter::STATUS['active'];
-//$news->date_created = '10/10/1986 9:9:33';
-//$news->date_updated = '10/10/1986 9:9:33';
+  $news->ip = $_SERVER['SERVER_ADDR'];
+  $news->status = Newslleter::STATUS['active'];
+  $news->date_created = current_time( 'mysql' );
+  $news->date_updated = current_time( 'mysql' );
 //$news->ebook_hidden = "kkkk";
 
-$dataProvider = new NewslleterDataProvider($news);
-$dataProvider->setReturnType('array');
+  $dataProvider = new NewslleterDataProvider($news);
+  $dataProvider->setReturnType('array');
+  $dao = new DaoNewslleter($wpdb);
+  $dao->setDataProvider($dataProvider);
+  $dao->setTable('newslleter_contact');
+  $dao->store();
 
-$dao = new DaoNewslleter($wpdb);
-$dao->setDataProvider($dataProvider);
-$dao->setTable('newslleter_contac');
-$dao->store();
-
-$mail = new MailSender($dataProvider);
-$mail->send(function() use ($mail){
+  $mail = new MailSender($dataProvider);
+  $mail->send(function() use ($mail){
   $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
   $mailWrapper->IsSMTP();
   $mailWrapper->SMTPAuth = true;
@@ -53,20 +45,123 @@ $mail->send(function() use ($mail){
   $mailWrapper->SMTPSecure = "ssl";
   $mailWrapper->Port = 465;
   $mailWrapper->FromName = 'Timo Cabral';
-  $mailWrapper->From = $email;
+  $mailWrapper->From = 'timocabralcarvalho@gmail.com';
 
   $mailWrapper->Body .= " ASSINANTE NEWSLLETER <br />";
   $mailWrapper->Body .= " email: {$mail->getData()['email']} <br />";
   $mailWrapper->AddAddress("timocabralcarvalho@gmail.com", "Timo Cabral");
   //var_dump($mail->getData()['name']);
-  return ($mailWrapper->send()) ? "error" : "ok";
+  $mailWrapper->send();
+  });
+}elseif(isset($_POST['method']) == 'ebook'){
+    //domain object
+    $news = new Newslleter();
+    $news->email = $_POST['email'];
+    $news->ip = $_SERVER['SERVER_ADDR'];
+    $news->status = Newslleter::STATUS['active'];
+    $news->date_created = current_time( 'mysql' );
+    $news->date_updated = current_time( 'mysql' );
+    $news->ebookHidden = $_POST['ebook_hidden'];
+    //data provider
+    $dataProvider = new NewslleterDataProvider($news);
+    $dataProvider->setReturnType('array');
+    //DAO
+    $dao = new DaoNewslleter($wpdb);
+    $dao->setDataProvider($dataProvider);
+    $dao->setTable('newslleter_contact');
+    $dao->store();
+
+    $mail = new MailSender($dataProvider);
+    $mail->send(function() use ($mail){
+    $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
+    $mailWrapper->IsSMTP();
+    $mailWrapper->SMTPAuth = true;
+    $mailWrapper->SMTPDebug = 0;
+    $mailWrapper->Host = 'smtp.gmail.com';
+    $mailWrapper->Password = 'a12op34unh';
+    $mailWrapper->Username = 'timocabralcarvalho@gmail.com';
+    $mailWrapper->SMTPSecure = "ssl";
+    $mailWrapper->Port = 465;
+    $mailWrapper->FromName = 'Timo Cabral';
+    $mailWrapper->From = $email;
+    //formatando mensagem
+    $mailWrapper->Body .= " ASSINANTE NEWSLLETER <br />";
+    $mailWrapper->Body .= " email: {$mail->getData()['email']} <br />";
+    $mailWrapper->AddAddress("timocabralcarvalho@gmail.com", "Timo Cabral");
+    //var_dump($mail->getData()['name']);
+    $mailWrapper->send();
+    //mandando o ebook
+    //var_dump($mail->getData());exit;
+    $whapper2 = $mail->phpMailerWrapper(new PHPMailer());
+    $whapper2->IsSMTP();
+    $whapper2->SMTPAuth = true;
+    $whapper2->SMTPDebug = 0;
+    $whapper2->Host = 'smtp.gmail.com';
+    $whapper2->Password = 'a12op34unh';
+    $whapper2->Username = 'timocabralcarvalho@gmail.com';
+    $whapper2->SMTPSecure = "ssl";
+    $whapper2->Port = 465;
+    $whapper2->IsHTML(true);
+    $whapper2->CharSet  = 'utf-8';
+    $whapper2->FromName = 'Timo Cabral';
+    $whapper2->From = "timocabralcarvalho@gmail.com";
+    $whapper2->AddAddress($mail->getData()['email'], 'Timo Cabral');
+    $whapper2->send();
+
+    $whapper2->Body .= " Ola  {$mail->getData()['name']}! Segue o Ebook Solicitado :  <br />";
+    $whapper2->Body .= " Atenciosamente: Timo Cabral do timocabral.com :) <br />";
+    $whapper2->addStringAttachment(file_get_contents(
+      $url="http://localhost/wp-content/uploads/{$mail->getData()['button_book']}"),
+       "{$mail->getData()['book_name']}"
+    );
+
+    $whapper2->send();
+
+    });
+}elseif(isset($_POST['method']) == 'contact'){
+  $news = new Newslleter();
+  $news->email = $_POST['email'];
+  $news->name = $_POST['name'];
+  $news->ip = $_SERVER['SERVER_ADDR'];
+  $news->status = Newslleter::STATUS['active'];
+  $news->date_created = current_time( 'mysql' );
+  $news->date_updated = current_time( 'mysql' );
+  $news->msg =  $_POST['msg'];
+  //data provider
+  $dataProvider = new NewslleterDataProvider($news);
+  $dataProvider->setReturnType('array');
+  //DAO
+  $dao = new DaoNewslleter($wpdb);
+  $dao->setDataProvider($dataProvider);
+  $dao->setTable('newslleter_contact');
+  $dao->store();
+
+  $mail = new MailSender($dataProvider);
+  $mail->send(function() use ($mail){
+    $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
+    $mailWrapper->IsSMTP();
+    $mailWrapper->SMTPAuth = true;
+    $mailWrapper->SMTPDebug = 0;
+    $mailWrapper->Host = 'smtp.gmail.com';
+    $mailWrapper->Password = 'a12op34unh';
+    $mailWrapper->Username = 'timocabralcarvalho@gmail.com';
+    $mailWrapper->SMTPSecure = "ssl";
+    $mailWrapper->Port = 465;
+    $mailWrapper->FromName = 'Timo Cabral';
+    $mailWrapper->From = "timocabralcarvalho@gmail.com";
+    //formatando mensagem
+    $mailWrapper->Body = " nome {$mail->getData()['name']} / email: {$mail->getData()['email']}
+     Mensagem: ". nl2br($mail->getData()['msg'])."<br />";
+    $mailWrapper->AddAddress("timocabralcarvalho@gmail.com", "Timo Cabral");
+    //var_dump($mail->getData()['name']);
+    $mailWrapper->send();
+    return ;
   });
 }
 
 add_action('admin_menu', 'my_plugin_menu');
 
     /**
-    *registra configurações básicas do menu do plugin e conteudo inicial.
     *add_menu_page doc : https://developer.wordpress.org/reference/functions/add_menu_page/
     *
     */

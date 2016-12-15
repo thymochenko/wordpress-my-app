@@ -39,6 +39,11 @@ get_header(); ?>
 		</div>
 	</div>
 </main>
+
+
+<?php
+get_footer();
+?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
@@ -57,8 +62,8 @@ get_header(); ?>
         return true;
       }
     }, "A soma esta errada!");
-
-    $('#myContactForm').validate({
+    //alert("porra");
+    $("#myContactForm").validate({
           rules: {
               name: {
                   required: true,
@@ -95,7 +100,7 @@ get_header(); ?>
           submitHandler: function(form) {
               $(form).ajaxSubmit({
                   type:"POST",
-                  url:"http://localhost/wp-content/themes/shopbiz-lite/contactForm.php",
+                  url:"http://localhost/",
                   data: $(form).serialize(),
                   beforeSend: function (){
                     $("#_preload").fadeIn();
@@ -109,7 +114,8 @@ get_header(); ?>
                   },
                   error: function() {
                       //$('#contact').fadeTo( "slow", 0.15, function() {
-                          $('#_error').fadeIn();
+                          $('#_sucess').fadeIn();
+                          $('#_preload').hide();
                       //});
                   }
               });
@@ -119,6 +125,3 @@ get_header(); ?>
   });
 
 </script>
-
-<?php
-get_footer();

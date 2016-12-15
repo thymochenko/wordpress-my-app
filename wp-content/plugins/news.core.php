@@ -41,8 +41,8 @@ class DaoNewslleter {
     $this->table = $this->wpdb->prefix .  $table;
   }
 
-  public function store(){
-    $this->wpdb->insert($this->table, $this->nlDataProvider->getData());
+  public function store() : bool {
+    return ($this->wpdb->insert($this->table, $this->nlDataProvider->getData())) ? true : false;
   }
 
   public function update(){
@@ -118,6 +118,7 @@ class Newslleter {
 
   public function set_ebookHidden($ebookHidden){
     $this->data['button_book'] = (isset($ebookHidden)) ? filter_var(trim($ebookHidden), FILTER_SANITIZE_STRING) : null;
+    $this->data['book_name'] = substr($this->data['button_book'], 8);
   }
 
   public function get_ebookHidden() : string {
@@ -125,7 +126,7 @@ class Newslleter {
   }
 
   public function set_bookName($bookName){
-    $this->data['book_name'] = substr($this->data['button_book'], 8);
+    $this->data['book_name'] = $bookName;
   }
 
   public function get_bookName() : string {

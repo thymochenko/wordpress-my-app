@@ -1,7 +1,7 @@
 <?php
 /**
  * The Template for displaying all single courses.
- *
+ * mostra a listagem de cursos.
  * @author 		codeBOX
  * @package 	LifterLMS/Templates
  * @since       1.0.0

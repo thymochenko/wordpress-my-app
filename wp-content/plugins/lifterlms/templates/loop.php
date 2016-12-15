@@ -1,5 +1,6 @@
+
 <?php
-/**
+/**LOOP principal do Lifter (onde exibe as páginas) que tem um loop
  * Generic loop template
  *
  * utilized by both courses and memberships

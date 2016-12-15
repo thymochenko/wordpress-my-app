@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
@@ -86,8 +87,8 @@ Skip to content</a>
       <div class="row">
         <div class="col-md-6 col-xs-12 col-sm-6">
           <ul class="info-left">
-                        <li><a><i class="fa fa-clock-o "></i>Horário comercial:9 as 17:30 pm</a></li>
-            <li><a href="mailto:timocabralcarvalho@gmail.com" title="Mande-me um email"><i class="fa fa-envelope"></i>timocabralcarvalho@gmail.com</a></li>
+                        <li><a><i class="fa "></i>Horário comercial:9 as 17:30 pm</a></li>
+            <li><a href="mailto:timocabralcarvalho@gmail.com" title="Mande-me um email"><i class="fa"></i>timocabralcarvalho@gmail.com</a></li>
           </ul>
         </div>
         <div class="col-md-6 col-xs-12 col-sm-6">
@@ -103,7 +104,12 @@ Skip to content</a>
       <div class="container">
         <!-- Start Navbar Header -->
         <div class="navbar-header">
-          <a href="https://themeansar.com/demo/wp/shopbiz/default/" class="custom-logo-link" rel="home" itemprop="url"><img width="150" height="35" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/cropped-shopbiz-logo.png" class="custom-logo" alt="cropped-shopbiz-logo.png" itemprop="logo" /></a>          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wp"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a href="https://themeansar.com/demo/wp/shopbiz/default/"
+					class="custom-logo-link"
+					 rel="home" itemprop="url">
+					 <img width="150" height="35"
+					 src="http://localhost/wp-content/themes/shopbiz-lite/images/cropped-shopbiz-logo.png" class="custom-logo" alt="cropped-shopbiz-logo.png" itemprop="logo" /></a>          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wp"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+						  <span class="icon-bar"></span> </button>
         </div>
         <!-- /End Navbar Header -->
 
@@ -134,7 +140,7 @@ Skip to content</a>
 	<li id="menu-item-180" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-180"><a title="My Account" href="https://themeansar.com/demo/wp/shopbiz/default/my-account/">My Account</a></li>
 </ul>
 </li>-->
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/contato/">Consultoria</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/consultoria/">Consultoria</a></li>
 <li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/course/">Cursos</a></li>
 <li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/contato/">Contato</a></li>
 </ul>        </div>
@@ -148,7 +154,15 @@ Skip to content</a>
   <div id="ta-slider" class="owl-carousel">
         <div class="item active">
       <figure>
-        <img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1.jpg" class="img-responsive wp-post-image" alt="slider1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1.jpg 1600w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-300x113.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-768x288.jpg 768w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-1024x384.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />      </figure>
+				<img src="http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg"
+				 class="img-responsive wp-post-image" alt="slider1"
+				  srcset="http://localhost/wp-content/themes/shopbiz-lite/images/startup2.jpg 1600w,
+					 http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg 300w,
+					  http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg 768w,
+						 http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg
+						 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
+			</figure>
+        <!--<img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1.jpg" class="img-responsive wp-post-image" alt="slider1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1.jpg 1600w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-300x113.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-768x288.jpg 768w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-1024x384.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />      </figure>-->
       <div class="ta-slider-inner" style="background:rgba(0,0,0,0.4)">
         <div class="container inner-table">
           <div class="inner-table-cell">
@@ -158,8 +172,10 @@ Skip to content</a>
               <div class="description">
                 <p>Ensinando, Desenvolvendo e Inovando pensando em você</p>
               </div>
-                            <a class="btn btn-tislider" href="#" > Saiba mais </a>
-                            <a class="btn btn-tislider-two" href="#" > veja nossos cursos! </a>
+                            <a class="btn btn-tislider"
+														 href="http://localhost/index.php/sobre-mim/" > Saiba mais </a>
+                            <a class="btn btn-tislider-two"
+														 href="http://localhost/index.php/course/" > veja nossos cursos! </a>
                           </div>
           </div>
         </div>
@@ -232,7 +248,7 @@ Skip to content</a>
        <div class="ta-service">
 
 
-                <img class="img-responsive" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sservice1.jpg" />
+                <img class="img-responsive" src="http://localhost/wp-content/uploads/2016/12/wp-api.jpg" />
                 <div class="ta-service-inner">
 				<h3 class="widgettitle">Consultoria</h3>                    <p>Consultoria em projetos WordPress/PHP/Woocommerce</p>
                                 <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/consultoria/" target="_self">Saiba Mais</a>
@@ -247,7 +263,7 @@ Skip to content</a>
        <div class="ta-service">
 
 
-                <img class="img-responsive" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sservice2.jpg" />
+                <img class="img-responsive" src="http://localhost/wp-content/uploads/2016/12/aws-docker.png" />
                 <div class="ta-service-inner">
 				<h3 class="widgettitle">Cursos</h3>                    <p>Criamos cursos estratégicos e inovadores para você</p>
                                 <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/course/" target="_self">Saiba Mais</a>
@@ -262,7 +278,7 @@ Skip to content</a>
        <div class="ta-service">
 
 
-                <img class="img-responsive" src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sservice3.jpg" />
+                <img class="img-responsive" src="http://localhost/wp-content/uploads/2016/12/web.png" />
                 <div class="ta-service-inner">
 				<h3 class="widgettitle">Eventos</h3>                    <p>Nossos eventos semestrais podem estar ai na sua cidade</p>
                                 <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/eventos" target="_self">Saiba Mais</a>
@@ -626,8 +642,8 @@ border-color: ;
       <div class="row">
         <div class="col-md-6 col-md-offset-3 text-center">
           <h4>Você Quer receber atualizações, promoções, videos, conteúdo exclusivo gratuito?</h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
-          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST">
-
+          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST" action="http://localhost">
+						<input type="hidden" name="method" value="newslleter">
             <!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
             <h6 class="subscription-success"></h6>
             <h6 class="subscription-error"></h6>
@@ -639,6 +655,12 @@ border-color: ;
             <button type="submit" id="subscribe-button_" class="btn btn-theme">
             Assinar            </button>
           </form>
+					<!-- mensagens form -->
+					<div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
+					<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
+					<div id="preload"><img src="http://localhost/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
+					<!-- end message form -->
+
           <!-- /END SUBSCRIPTION FORM -->
         </div>
       </div>
@@ -646,111 +668,76 @@ border-color: ;
   </div>
 </section>
 
-<!-- mensagens form -->
-<div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
-<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
-<div id="preload"><img src="http://localhost/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
-<!-- end message form -->
 <!--==================== ta-FOOTER AREA ====================-->
 <footer>
   <!--Start ta-footer-widget-area-->
     <div class="ta-footer-widget-area">
     <div class="container">
       <div class="row">
-        <div id="shopbiz_contact_callout-3" class="col-md-3 col-sm-6 rotateInDownLeft animated ta-widget shopbiz_contact_widget">															<h6>Address</h6>
+        <div id="shopbiz_contact_callout-3" class="col-md-3 col-sm-6 rotateInDownLeft animated ta-widget shopbiz_contact_widget">															<h6>Endereço</h6>
 									 									<ul class="ta-widget-address">
 									<li>
 									<span class="icon-addr">
-																		<i class="fa fa fa-map-marker"></i>
+																		<i class="fa fa "></i>
 																		</span>
-									<strong>Addresss:</strong>
-																		1240 Park Avenue NYC, USA 256323																		</li>
+									<strong>Endereço:</strong>
+																		Rua padre Moises Santos 2541 Teresina, Piaui, São João																		</li>
 									<li>
 									<span class="icon-addr">
-																		<i class="fa fa fa-envelope"></i>
+																		<i class="fa fa "></i>
 																		</span>
 									<strong>Email:</strong>
-																		info@themeansar.com									</li>
+																		timocabralcarvalho@gmail.com									</li>
 
 									<li>
 									<span class="icon-addr">
-																		<i class="fa fa fa-phone"></i>
+																		<i class="fa fa "></i>
 																		</span>
-									<strong>Phone:</strong>
-																		+ (007) 548 58 5400									</li>
+									<strong>Telefone:</strong>
+																		+ 55(86) 99475618									</li>
 
-									<li>
-									<span class="icon-addr">
-																		<i class="fa fa fa-globe"></i>
-																		</span>
-									<strong>Website:</strong>
-																		www.themeansar.com									</li>
 								</ul>
 	</div><div id="opning_close_hours_widget-2" class="col-md-3 col-sm-6 rotateInDownLeft animated ta-widget opning_hours_widget">
-								<h6  class="footer-widget-title" ><span></span>Business Hours</h6>				<ul class="ta-opening-hours">
-					<li><b><i class="fa fa-clock-o"></i> Monday :</b>
-						<span class="pull-right">
-														09:00 AM to 07:00 PM													</span></li>
-
-						<li><b><i class="fa fa-clock-o"></i> Tuesday :</b>
-							<span class="pull-right">
-																09:00 AM to 07:00 PM							</span>
-						</li>
-
-						<li><b><i class="fa fa-clock-o"></i> Wednesday :</b>
-								<span class="pull-right">
-																		09:00 AM to 07:00 PM																	</span>
-						</li>
-								<li><b><i class="fa fa-clock-o"></i> Thursday :</b>
-									<span class="pull-right">
-																				09:00 AM to 07:00 PM																			</span></li>
-									<li><b><i class="fa fa-clock-o"></i> Friday :</b>
-										<span class="pull-right">
-																				09:00 AM to 07:00 PM																			</span></li>
-									<li><b><i class="fa fa-clock-o"></i> Saturday :</b>
-										<span class="pull-right">
-																						closed to closed																					</span></li>
-										<li><b><i class="fa fa-clock-o"></i> Sunday :</b>
-											<span class="pull-right">
-																								closed to closed																							</span></li>
+								<h6  class="footer-widget-title" ><span></span>Últimos Cursos</h6>				<ul class="ta-opening-hours">
+					<li><a href="index.php/course/infraestrutura-web-com-wordpress-usando-docker-e-amazon-web-service/">AWS e WordPress</a></li>
+					<li><a href="index.php/course/aprenda-programar-com-php/">Aprenda a programar com PHP</a></li>
+					<li><a href="index.php/course/desenvolvimento-de-thema-para-wordpress/">Criação de temas para WordPress</li>
+					<li><a href="index.php/course/curso-de-wordpress-definitivo/">WordPress Definitivo</li>
+					<li><a href="index.php/course/rest-api-com-wordpress/">Rest API com WordPress</li>
+					<li><a href="index.php/course/introducao-ao-desenvolvimento-web/">Introdução ao Desenvolvimento Web</a></li>
 										</ul>
-								</div><div id="footer_recent_blog-3" class="col-md-3 col-sm-6 rotateInDownLeft animated ta-widget widget_footer_recent_blog"><h6>Latest News</h6>
-
+								</div>
+								<div id="footer_recent_blog-3" class="col-md-3 col-sm-6 rotateInDownLeft
+								 animated ta-widget widget_footer_recent_blog"><h6>Últimos notícias</h6>
+								 <?php $q = new WP_Query(['order' => 'DESC', 'posts_per_page'=> 3 ]);?>
+											<?php if ($q->have_posts()) :?>
+												<?php while ($q->have_posts()) : $q->the_post();?>
 					<div class="media ta-blog-post">
-                        						                        <div class="ta-post-area">
-                            <a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-dumasbibend-bibend/" title="Maecenas dumasbibend bibend">
-                            	<img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1.jpg" class="img-responsive wp-post-image" alt="blog1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1.jpg 1024w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1-300x234.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog1-768x600.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" />                            </a>
+                      <div class="ta-post-area">
+                            <a href="<?php the_permalink(); ?>"
+														 title="<?php the_title();?>">
+														 <?php $large_image_url_l = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
+														 <?php $large_image_url_m = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );  ?>
+														 <?php $large_image_url_s = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'small' );  ?>
+                            	<img src="<?php echo $large_image_url_l[0] ?>"
+															 class="img-responsive wp-post-image" alt="blog1"
+															 srcset="<?php echo $large_image_url_l[0] ?>
+															 1024w, <?php echo $large_image_url_s[0] ?>
+															 300w, <?php echo $large_image_url_m[0] ?>
+															 768w" sizes="(max-width: 1024px) 100vw, 1024px" />                            </a>
                         </div>
                                                 <div class="media-body">
-                        	<h3><a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-dumasbibend-bibend/">Maecenas dumasbibend bibend</a></h3>
-                                <span>November 8, 2016</span>
+                        	<h3><a href="<?php the_permalink(); ?>">
+														<?php the_title();?></a></h3>
+                                <span><?php echo get_the_date(); ?></span>
                         </div>
                     </div>
-
-
-					<div class="media ta-blog-post">
-                        						                        <div class="ta-post-area">
-                            <a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-bibend-bibendumas-2/" title="Maecenas bibend bibendumas">
-                            	<img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2.jpg" class="img-responsive wp-post-image" alt="blog2" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2.jpg 1024w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2-300x234.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog2-768x600.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" />                            </a>
-                        </div>
-                                                <div class="media-body">
-                        	<h3><a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-bibend-bibendumas-2/">Maecenas bibend bibendumas</a></h3>
-                                <span>November 8, 2016</span>
-                        </div>
-                    </div>
-
-
-					<div class="media ta-blog-post">
-                        						                        <div class="ta-post-area">
-                            <a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-bibend-bibendumas/" title="Maecenas bibend bibendumas">
-                            	<img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog3.jpg" class="img-responsive wp-post-image" alt="blog3" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog3.jpg 1024w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog3-300x234.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/blog3-768x600.jpg 768w" sizes="(max-width: 1024px) 100vw, 1024px" />                            </a>
-                        </div>
-                                                <div class="media-body">
-                        	<h3><a href="https://themeansar.com/demo/wp/shopbiz/default/maecenas-bibend-bibendumas/">Maecenas bibend bibendumas</a></h3>
-                                <span>November 8, 2016</span>
-                        </div>
-                    </div>
-
+									<?php endwhile; ?>
+									<?php else : ?>
+									 <h2 class="center">Not Found</h2>
+									 <p class="center">Sorry, but you are looking for something that isn't here.</p>
+									</div>
+									<?php endif; ?>
 
 
 		</div>      </div>
@@ -763,7 +750,7 @@ border-color: ;
         <div class="col-md-6 col-sm-6 text-center-xs">
 
 
-			<p><i class="fa fa-copyright"></i> Copyright 2016 by <a href="#">shopbiz</a>. All Rights Reserved.</p>
+			<p><i class="fa "></i> Copyright 2016 <a href="#">shopbiz</a>. Todos os direitos reservados</p>
 
         </div>
         <div class="col-md-6 col-sm-6 text-right text-center-xs">
@@ -884,12 +871,12 @@ function homeslider() {
     $("#ta-slider").owlCarousel({
         animateOut: 'slideOutDown',
         animateIn: 'flipInX',
-        navigation: true, // Show next and prev buttons
-        slideSpeed: 200,
+        navigation: false, // Show next and prev buttons
+        slideSpeed: 9000,
         pagination: true,
-        paginationSpeed: 400,
+        paginationSpeed: 4400,
         singleItem: true,
-        autoPlay: true,
+        autoPlay: false,
         transitionStyle: "backSlide",
         navigationText: [
             "<i class='fa fa-angle-left'></i>",

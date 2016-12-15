@@ -1,17 +1,22 @@
-/*
-global $wpdb;
-$table = $wpdb->prefix . 'newslleter_contact';
 
- $wpdb->insert($table,
-  ['name'=>'timo 2',
-  'email'=>'timocabral@gmail.com',
-  'ip'=>'1',
-   'status'=>1,
-   'date_created'=> current_time( 'mysql' ),
-   'date_updated'=> current_time( 'mysql' )
-  ]);
-
-$results = $wpdb->get_results( "SELECT * FROM {$table}" );
-var_dump($results);
-*/
+<table style="width: 100%; font-size: .9em; border-collapse: collapse; margin:0 0 .4em; background-color:#fff;" color="black" border="1">
+<thead>
+<tr>
+<th style="padding: .7em .3em; text-align: center; font-weight: bold; border: 0; ">nome</th>
+<th>email</th>
+<th>data</th>
+<th>tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="">thymochenko</td>
+<td>timocabralcarvalho@gmail.com</td>
+<td>10/10/1986</td>
+<td>newslleter</td>
+</tr>
+</tbody>
+</table>
+</body>
+<?php
 ?>

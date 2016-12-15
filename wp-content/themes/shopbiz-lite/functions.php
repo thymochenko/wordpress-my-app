@@ -21,7 +21,7 @@
 	/* ----------------------------------------------------------------------------------- */
 	/* Customizer */
 	/* ----------------------------------------------------------------------------------- */
-	
+
 	require( $shopbiz_theme_path . '/customize/ta_customize_copyright.php');
 	require( $shopbiz_theme_path . '/customize/ta_customize_theme_style.php');
 	require( $shopbiz_theme_path . '/customize/ta_customize_homepage.php');
@@ -48,7 +48,7 @@ function shopbiz_setup() {
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
-	
+
 	//Custom logo Support
 	add_theme_support( 'custom-logo' );
 
@@ -135,7 +135,7 @@ function shopbiz_widgets_init() {
 		'before_title'  => '<h6>',
 		'after_title'   => '</h6>',
 	) );
-	
+
 	register_sidebar( array(
 		'name' => __('shopbiz service widget','shopbiz'),
 		'id' => 'shopbiz_service_widget',
@@ -143,7 +143,7 @@ function shopbiz_widgets_init() {
 		'before_widget' => '<div id="%1$s" class="col-md-4 service_area widget wow swing  animated %1$s">',
 		'after_widget' => '</div>',
 ));
-	
+
 }
 add_action( 'widgets_init', 'shopbiz_widgets_init' );
 
@@ -180,11 +180,11 @@ function shopbiz_remove_width_attribute( $html ) {
 
 //Read more Button on slider & Post
 function shopbiz_read_more() {
-	
+
 	global $post;
-	
+
 	$readbtnurl = '<a class="btn btn-tislider-two" href="' . get_permalink() . '">'.__( 'Read More' , 'shopbiz' ).'</a>';
-	
+
     return $readbtnurl;
 }
 add_filter( 'the_content_more_link', 'shopbiz_read_more' );
@@ -230,10 +230,10 @@ add_action('init', 'book_init');
 /**
  * Admin messages for your custom post type
  */
-function book_updated_messages( $messages ) {
+/*function book_updated_messages( $messages ) {
 	$messages['book'] = array(
 		'', /* Unused. Messages start at index 1. */
-		sprintf('Book updated. <a href="%s">View book</a>', esc_url(get_permalink($post_ID))),
+	/*	sprintf('Book updated. <a href="%s">View book</a>', esc_url(get_permalink($post_ID))),
 		'Custom field updated.',
 		'Custom field deleted.',
 		'Book updated.',
@@ -246,8 +246,8 @@ function book_updated_messages( $messages ) {
 	);
 	return $messages;
 }
-
-add_filter('post_updated_messages', 'book_updated_messages');
+*/
+#add_filter('post_updated_messages', 'book_updated_messages');
 
 /**
  * Custom taxonomy for books
@@ -264,5 +264,6 @@ function build_taxonomies() {
 		)
 	);
 }
+
 
 add_action('init', 'build_taxonomies', 0);

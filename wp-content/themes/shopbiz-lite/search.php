@@ -7,11 +7,11 @@
 
 get_header(); ?>
 <!--==================== Breadcrumb ====================-->
-<?php $search_image = get_theme_mod('search_image',get_template_directory_uri() . '/images/callout-back.jpg'); 
+<?php $search_image = get_theme_mod('search_image',get_template_directory_uri() . '/images/callout-back.jpg');
 	  $search_overlay = get_theme_mod('shopbiz_overlay_search_color_control','');
 ?>
 <div class="ta-breadcrumb-section" style="background:url(<?php echo esc_url($search_image);?>)" >
-  <div class="overlay"  style="background-color:<?php echo esc_html($search_overlay);?>"> 
+  <div class="overlay"  style="background-color:<?php echo esc_html($search_overlay);?>">
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-sm-6">
@@ -31,11 +31,11 @@ get_header(); ?>
     <div class="row">
       <div class="<?php echo ( !is_active_sidebar( 'sidebar_primary' ) ? '12' :'9' ); ?> col-md-9">
         <div class="row">
-          <?php 
+          <?php
 		global $i;
 		if ( have_posts() ) : ?>
 		<h2><?php printf( __( "Search Results for: %s", 'shopbiz' ), '<span>' . get_search_query() . '</span>' ); ?></h2>
-		<?php while ( have_posts() ) : the_post();  
+		<?php while ( have_posts() ) : the_post();
 		 get_template_part('content','');
 		 endwhile; else : ?>
 		<h2><?php _e( "Not Found", 'shopbiz' ); ?></h2>

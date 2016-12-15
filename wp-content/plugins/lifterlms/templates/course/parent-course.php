@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Back to Course Template

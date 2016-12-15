@@ -20,8 +20,9 @@ get_template_part('index','banner'); ?>
          src="http://localhost/wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg"
           width="500" height="300"/></div>
           <div style="margin-top:-35px;" class="modal-body">
-            <form id="modal-ebook-download" action="http://localhost/wp-content/themes/shopbiz-lite/contactForm.php" name="modal-sqz-pg"  method="post">
+            <form id="modal-ebook-download" action="http://localhost/" name="modal-sqz-pg"  method="post">
               <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
+              <input name="method" type="hidden" id="" value="ebook">
              <input style="margin-left:75px;" type="text" value="NOME" name="nome" size="37"/>
              <input style="margin-left:75px;" type="text" value="EMAIL" name="email" size="37"/>
              <br><input style="margin-left:75px;"  size="41" type="submit"
@@ -233,7 +234,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://localhost/wp-content/themes/shopbiz-lite/contactForm.php",
+                          url:"http://localhost/",
                           beforeSend: function (){
                             //alert($("#modal-download-start").val());
                             $("#preload").fadeIn();
