@@ -15,13 +15,15 @@ Author URI: http://timocabral.com/
 require_once 'news.core.php';
 require_once("utils/PHPMailerAutoload.php");
 
-if(isset($_POST['method']) == 'newslleter'){
+
+GLOBAL $wpdb;
+if($_POST['method'] == 'newslleter'){
   $news = new Newslleter();
 //$news->name = $_POST['nome'];
   $news->email = $_POST['email'];
 //$news->email = 'henkosato5@gmail.com';
   $news->ip = $_SERVER['SERVER_ADDR'];
-  $news->status = Newslleter::STATUS['active'];
+  $news->status = Newslleter::STATUS['active_newslleter'];
   $news->date_created = current_time( 'mysql' );
   $news->date_updated = current_time( 'mysql' );
 //$news->ebook_hidden = "kkkk";
@@ -53,12 +55,13 @@ if(isset($_POST['method']) == 'newslleter'){
   //var_dump($mail->getData()['name']);
   $mailWrapper->send();
   });
-}elseif(isset($_POST['method']) == 'ebook'){
+}elseif($_POST['method'] == 'ebook'){
     //domain object
     $news = new Newslleter();
+    $news->name = $_POST['nome'];
     $news->email = $_POST['email'];
     $news->ip = $_SERVER['SERVER_ADDR'];
-    $news->status = Newslleter::STATUS['active'];
+    $news->status = Newslleter::STATUS['ebook_request'];
     $news->date_created = current_time( 'mysql' );
     $news->date_updated = current_time( 'mysql' );
     $news->ebookHidden = $_POST['ebook_hidden'];
@@ -118,12 +121,12 @@ if(isset($_POST['method']) == 'newslleter'){
     $whapper2->send();
 
     });
-}elseif(isset($_POST['method']) == 'contact'){
+}elseif($_POST['method'] == 'contact'){
   $news = new Newslleter();
   $news->email = $_POST['email'];
   $news->name = $_POST['name'];
   $news->ip = $_SERVER['SERVER_ADDR'];
-  $news->status = Newslleter::STATUS['active'];
+  $news->status = Newslleter::STATUS['msg'];
   $news->date_created = current_time( 'mysql' );
   $news->date_updated = current_time( 'mysql' );
   $news->msg =  $_POST['msg'];

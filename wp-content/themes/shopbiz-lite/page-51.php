@@ -23,15 +23,14 @@ get_header(); ?>
       <?php if ($q->have_posts()) :?>
         <?php while ($q->have_posts()) : $q->the_post();?>
 <div class="col-md-4 wow pulse animated">
-   <div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="<?php the_permalink(); ?>" title="<?php the_title();?>">
-     <?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
-     <img src="<?php echo $large_image_url[0] ?>" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog3" srcset="<?php echo $large_image_url[0] ?> 1024w, <?php echo $large_image_url[0] ?> 300w, <?php echo $large_image_url[0] ?> 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3">8</span> <span>Nov</span> </span> </a>
-     <article class="small">
-       <h2><a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php the_title();?></a> </h2>
-       <div class="ta-blog-category"> <i class="fa fa-folder"></i>&nbsp;
-                         <a href="<?php the_title();?>" rel="category tag">Uncategorized</a>                                <a href="https://themeansar.com/demo/wp/shopbiz/default/author/pro_shopbiz/"> <i class="fa fa-user"></i>&nbsp;by
-         Shopbiz                </a> </div>
-       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  <div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="<?php the_permalink(); ?>" title="<?php the_title();?>">
+   <?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
+    <img src="<?php echo $large_image_url[0] ?>" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog3" srcset="<?php echo $large_image_url[0] ?> 1024w, <?php echo $large_image_url[0] ?> 300w, <?php echo $large_image_url[0] ?> 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3"><?php the_time('d'); ?></span> <span style="font-size:10px"><?php the_time('F'); ?></span> </span> </a>
+    <article class="small">
+      <h2><a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php the_title();?></a> </h2>
+      <div class="ta-blog-category"> <i class="fa fa-folder"></i>&nbsp;
+                        <a href="<?php the_title();?>" rel="category tag"><?php the_category(" ");?></a>                                <a href="<?php the_author_link(); ?>" <i class="fa fa-user"></i>&nbsp;<?php echo get_the_author(); ?>              </a> </div>
+      <p><?php echo wp_trim_words( get_the_content(), 19, '...' ); ?></p>
      </article>
    </div>
  </div>

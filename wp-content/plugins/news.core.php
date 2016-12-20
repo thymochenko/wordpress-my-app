@@ -5,7 +5,6 @@ class NewslleterDataProvider {
   protected $nl,$dataType, $transformedData;
 
   public function __construct(Newslleter $newslleter){
-
       $this->nl = $newslleter;
   }
 
@@ -42,7 +41,47 @@ class DaoNewslleter {
   }
 
   public function store() : bool {
-    return ($this->wpdb->insert($this->table, $this->nlDataProvider->getData())) ? true : false;
+    if(!isset($this->wpdb)){
+      throw new Exception("wpdb is not set", 1);
+    }
+    $data = $this->nlDataProvider->getData();
+
+    if(isset($data["button_book"])){
+
+      $this->wpdb->insert("wp_book", ["title"=>$data['book_name'],
+       "date_created"=> current_time( 'mysql' ), "date_updated"=> current_time( 'mysql' )]);
+
+      $book = $this->wpdb->get_results('SELECT id FROM wp_book ORDER BY id DESC limit 1');
+      $data['book_id'] = $book[0]->id;
+
+      unset($data['book_name']);
+      unset($data['button_book']);
+
+       return ($this->wpdb->insert($this->table, $data)) ? true : false;
+    }
+
+    return ($this->wpdb->insert($this->table, $data)) ? true : false;
+  }
+
+  public function getAll() : array {
+    $result1 = $this->wpdb->get_results(
+    'SELECT * FROM ' . $this->table . ' as n');
+
+    $result2 = $this->wpdb->get_results(
+    'SELECT DISTINCT * FROM ' . $this->table . ' as n
+    INNER JOIN wp_book AS b ON n.book_id = b.id
+
+    ', object);
+    $data = [];
+    $objects = ['news'=>$result1, 'books'=>$result2];
+    for($i =0; $i < count($objects['news']); $i++){
+      if($objects['books'][$i]->title){
+        $objects['news'][] = $objects['books'][$i];
+        unset($objects['books']);
+      }
+    }
+    
+    return $objects;
   }
 
   public function update(){
@@ -58,14 +97,19 @@ class Newslleter {
 
   protected $data;
 
-  const STATUS = ['active'=>1, 'inactive'=>2, 'canceled'=>3];
+  const STATUS = ['active_newslleter'=>1, 'inactive'=>2, 'canceled'=>3,
+   'ebook_request' => 4, 'msg' => 5];
 
   public function __construct(){
 
   }
 
   public function getData(): array {
-    return $this->data;
+    if(isset($this->data)){
+        return $this->data;
+    }else{
+      return [];
+    }
   }
 
   public function __set(string $prop, $value) {

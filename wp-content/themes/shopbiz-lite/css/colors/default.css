@@ -351,3 +351,16 @@ footer .ta-footer-widget-area {
 .woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
 	background: #3f51b5;
 }
+
+.ta-head-detail {
+    background: #303f9f none repeat scroll 0 0;
+    color:#fff;
+}
+
+.ta-head-detail .info-left li a, .ta-head-detail li a i, .ta-head-detail .info-right li a {
+    color: #fff;
+}
+
+.ta-service-inner {
+    background: rgba(0, 0, 0, 0.65) none repeat scroll 0 0;
+}

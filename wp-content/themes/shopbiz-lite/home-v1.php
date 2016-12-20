@@ -35,39 +35,45 @@ img.emoji {
 <!--<link rel='stylesheet' id='contact-form-7-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.5.1' type='text/css' media='all' />
 <link rel='stylesheet' id='woocommerce-layout-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=2.6.8' type='text/css' media='all' />
 <link rel='stylesheet' id='woocommerce-smallscreen-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=2.6.8' type='text/css' media='only screen and (max-width: 768px)' />
-<link rel='stylesheet' #303f9f none repeat scroll 0 0 id='woocommerce-general-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=2.6.8' type='text/css' media='all' />
+<link rel='stylesheet' id='woocommerce-general-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=2.6.8' type='text/css' media='all' />
 -->
 <link rel='stylesheet' id='shopbiz-fonts-css'  href='//fonts.googleapis.com/css?family=Poppins%3A300%2C400%2C500%2C700%7CLato%3A100%2C300%2C400%2C600%2C700%2C900%7Citalic&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
 <link rel='stylesheet' id='Prompt-font-css'  href='https://fonts.googleapis.com/css?family=Prompt&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
 <link rel='stylesheet' id='poppins-font-css'  href='https://fonts.googleapis.com/css?family=Poppins&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='bootstrap-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='style-css'  href='http://localhost/wp-content/themes/shopbiz-lite/style.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='default-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/colors/default.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='smartmenus-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/jquery.smartmenus.bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='carousel-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/owl.carousel.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='owl_transitions-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/owl.transitions.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='font-awesome-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/font-awesome.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='animate-css'  href='http://localhost/wp-content/themes/shopbiz-lite/css/animate.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<script type='text/javascript' src='http://localhost/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
-<script type='text/javascript' src='http://localhost/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/navigation.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.bootstrap.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.sticky.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/owl.carousel.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.magnific-popup.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/bootstrap-progressbar.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/waypoints.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.counterup.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<link rel='stylesheet' id='bootstrap-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/style.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='default-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/colors/default.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='smartmenus-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/jquery.smartmenus.bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='carousel-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/owl.carousel.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='owl_transitions-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/owl.transitions.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/font-awesome.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='animate-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/animate.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='magnific-popup-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/magnific-popup.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='boot-progressbar-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/css/bootstrap-progressbar.min.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/navigation.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.smartmenus.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.smartmenus.bootstrap.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.sticky.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/owl.carousel.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.magnific-popup.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/bootstrap-progressbar.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/waypoints.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.counterup.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <!-- <script type='text/javascript' src='https://www.google.com/recaptcha/api.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.ajaxchimp.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;extension=.js&#038;output=embed&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>-->
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<link rel='https://api.w.org/' href='https://themeansar.com/demo/wp/shopbiz/default/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://themeansar.com/demo/wp/shopbiz/default/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://themeansar.com/demo/wp/shopbiz/default/wp-includes/wlwmanifest.xml" />
 
-<link rel="canonical" href="http://localhost/" />
-<link rel='shortlink' href='http://localhost/' />
-
+<link rel="canonical" href="https://themeansar.com/demo/wp/shopbiz/default/" />
+<link rel='shortlink' href='https://themeansar.com/demo/wp/shopbiz/default/' />
+<link rel="alternate" type="application/json+oembed" href="https://themeansar.com/demo/wp/shopbiz/default/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fthemeansar.com%2Fdemo%2Fwp%2Fshopbiz%2Fdefault%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://themeansar.com/demo/wp/shopbiz/default/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fthemeansar.com%2Fdemo%2Fwp%2Fshopbiz%2Fdefault%2F&#038;format=xml" />
     <style>
         </style>
 </head>
@@ -167,10 +173,10 @@ Skip to content</a>
               <div class="description">
                 <p>Ensinando, Desenvolvendo e Inovando pensando em você</p>
               </div>
-                            <a class="btn btn-tislide"
-														 href="http://localhost/index.php/sobre-mim/" > <span style="color:#303f9f">Saiba mais </span></a>
+                            <a class="btn btn-tislider"
+														 href="http://localhost/index.php/sobre-mim/" > Saiba mais </a>
                             <a class="btn btn-tislider-two"
-														 href="http://localhost/index.php/course/"> veja nossos cursos! </a>
+														 href="http://localhost/index.php/course/" > veja nossos cursos! </a>
                           </div>
           </div>
         </div>
@@ -577,16 +583,17 @@ border-color: ;
 						 <?php if ($q->have_posts()) :?>
 							 <?php while ($q->have_posts()) : $q->the_post();?>
       <div class="col-md-4 wow pulse animated">
-				<div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="<?php the_permalink(); ?>" title="<?php the_title();?>">
-				 <?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
-					<img src="<?php echo $large_image_url[0] ?>" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog3" srcset="<?php echo $large_image_url[0] ?> 1024w, <?php echo $large_image_url[0] ?> 300w, <?php echo $large_image_url[0] ?> 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3"><?php the_time('d'); ?></span> <span style="font-size:10px"><?php the_time('F'); ?></span> </span> </a>
-					<article class="small">
-						<h2><a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php the_title();?></a> </h2>
-						<div class="ta-blog-category"> <i class="fa fa-folder"></i>&nbsp;
-															<a href="<?php the_title();?>" rel="category tag"><?php the_category(" ");?></a>                                <a href="<?php the_author_link(); ?>" <i class="fa fa-user"></i>&nbsp;<?php echo get_the_author(); ?>              </a> </div>
-						<p><?php echo wp_trim_words( get_the_content(), 19, '...' ); ?></p>
-					 </article>
-				 </div>
+          <div class="ta-blog-post-box"> <a class="ta-blog-thumb" href="<?php the_permalink(); ?>" title="<?php the_title();?>">
+						<?php $large_image_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );  ?>
+            <img src="<?php echo $large_image_url[0] ?>" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="blog3" srcset="<?php echo $large_image_url[0] ?> 1024w, <?php echo $large_image_url[0] ?> 300w, <?php echo $large_image_url[0] ?> 768w" sizes="(max-width: 1024px) 100vw, 1024px" />            <span class="ta-blog-date"> <span class="h3">8</span> <span>Nov</span> </span> </a>
+            <article class="small">
+              <h2><a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php the_title();?></a> </h2>
+              <div class="ta-blog-category"> <i class="fa fa-folder"></i>&nbsp;
+                                <a href="<?php the_title();?>" rel="category tag">Uncategorized</a>                                <a href="https://themeansar.com/demo/wp/shopbiz/default/author/pro_shopbiz/"> <i class="fa fa-user"></i>&nbsp;by
+                Shopbiz                </a> </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </article>
+          </div>
         </div>
 			<?php endwhile; ?>
 <?php else : ?>
@@ -671,20 +678,20 @@ border-color: ;
 									 									<ul class="ta-widget-address">
 									<li>
 									<span class="icon-addr">
-																		<i class="fa fa fa-map-marker"></i>
+																		<i class="fa fa "></i>
 																		</span>
 									<strong>Endereço:</strong>
 																		Rua padre Moises Santos 2541 Teresina, Piaui, São João																		</li>
 									<li>
 									<span class="icon-addr">
-																		<i class="fa fa fa-envelope"></i>
+																		<i class="fa fa "></i>
 																		</span>
 									<strong>Email:</strong>
 																		timocabralcarvalho@gmail.com									</li>
 
 									<li>
 									<span class="icon-addr">
-																		<i class="fa fa fa-phone"></i>
+																		<i class="fa fa "></i>
 																		</span>
 									<strong>Telefone:</strong>
 																		+ 55(86) 99475618									</li>
@@ -701,7 +708,7 @@ border-color: ;
 										</ul>
 								</div>
 								<div id="footer_recent_blog-3" class="col-md-3 col-sm-6 rotateInDownLeft
-								 animated ta-widget widget_footer_recent_blog"><h6>Últimas notícias</h6>
+								 animated ta-widget widget_footer_recent_blog"><h6>Últimos notícias</h6>
 								 <?php $q = new WP_Query(['order' => 'DESC', 'posts_per_page'=> 3 ]);?>
 											<?php if ($q->have_posts()) :?>
 												<?php while ($q->have_posts()) : $q->the_post();?>

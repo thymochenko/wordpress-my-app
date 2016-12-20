@@ -405,6 +405,7 @@ input[type="text"].cc_cvv,
 .list-view .site-content .llms-course-list .hentry, .list-view .site-content .llms-membership-list .hentry {
   border-top: 0;
   padding-top: 0;
+  background-color:#ccc;
 }
 
 .llms-content {
@@ -623,7 +624,7 @@ svg .llms-animated-circle {
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 100%;
+  width: 10%;
 }
 
 .llms-loop-item-content {
