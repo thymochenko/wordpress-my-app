@@ -33,16 +33,18 @@
 /** O tipo de collate do banco de dados. Não altere isso se tiver dúvidas. */
 #define('DB_COLLATE', '');
 // ** Heroku Postgres settings - from Heroku Environment ** //
-$db = parse_url($_ENV["DATABASE_URL"]);
+#dbname=dft9i1utfnjen1 host=ec2-54-235-90-107.compute-1.amazonaws.com port=5432 user=gfbgglucozntor password=25adcebd2cfb5445d8c66f7a1d8ded2cc71d098f8cbe89ebdd2106bb73cbda7b sslmode=require"
+
+#$db = parse_url($_ENV["DATABASE_URL"]);
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', trim($db["path"],"/"));
+define('DB_NAME', "dft9i1utfnjen1");
 /** MySQL database username */
-define('DB_USER', $db["user"]);
+define('DB_USER', "gfbgglucozntor");
 /** MySQL database password */
-define('DB_PASSWORD', $db["pass"]);
+define('DB_PASSWORD', "25adcebd2cfb5445d8c66f7a1d8ded2cc71d098f8cbe89ebdd2106bb73cbda7b");
 /** MySQL hostname */
-define('DB_HOST', $db["host"]);
+define('DB_HOST', "ec2-54-235-90-107.compute-1.amazonaws.com");
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
