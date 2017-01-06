@@ -34,15 +34,15 @@
 #define('DB_COLLATE', '');
 // ** Heroku Postgres settings - from Heroku Environment ** //
 #dbname=dft9i1utfnjen1 host=ec2-54-235-90-107.compute-1.amazonaws.com port=5432 user=gfbgglucozntor password=25adcebd2cfb5445d8c66f7a1d8ded2cc71d098f8cbe89ebdd2106bb73cbda7b sslmode=require"
-
+#"dbname=d5qlu91p4agp9e host=ec2-54-235-90-107.compute-1.amazonaws.com port=5432 user=mthyyfemaxidhg password=e0c8ed785d529cf0f6013f37f9fcf349e0d52b6ca2b3c86f54b79196ea86a744
 #$db = parse_url($_ENV["DATABASE_URL"]);
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define('DB_NAME', "dft9i1utfnjen1");
+define('DB_NAME', "d5qlu91p4agp9e");
 /** MySQL database username */
-define('DB_USER', "gfbgglucozntor");
+define('DB_USER', "mthyyfemaxidhg");
 /** MySQL database password */
-define('DB_PASSWORD', "25adcebd2cfb5445d8c66f7a1d8ded2cc71d098f8cbe89ebdd2106bb73cbda7b");
+define('DB_PASSWORD', "e0c8ed785d529cf0f6013f37f9fcf349e0d52b6ca2b3c86f54b79196ea86a744");
 /** MySQL hostname */
 define('DB_HOST', "ec2-54-235-90-107.compute-1.amazonaws.com");
 /** Database Charset to use in creating database tables. */
