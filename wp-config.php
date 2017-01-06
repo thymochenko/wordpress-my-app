@@ -44,7 +44,7 @@ define('DB_USER', "mthyyfemaxidhg");
 /** MySQL database password */
 define('DB_PASSWORD', "e0c8ed785d529cf0f6013f37f9fcf349e0d52b6ca2b3c86f54b79196ea86a744");
 /** MySQL hostname */
-define('DB_HOST', "ec2-54-235-90-107.compute-1.amazonaws.com");
+define('DB_HOST', "ec2-54-235-90-107.compute-1.amazonaws.com:5432");
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
 /** The Database Collate type. Don't change this if in doubt. */
