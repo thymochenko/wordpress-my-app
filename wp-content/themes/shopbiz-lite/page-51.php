@@ -15,7 +15,6 @@
 get_header(); ?>
 <?php get_template_part('index','banner'); ?>
 <main id="content">
-
     <div class="container">
       <div class="row">
         <?php $q = new WP_Query('cat=-3,-8');  ?>
@@ -23,7 +22,6 @@ get_header(); ?>
 			<div class="col-md-12" >
 			<div class="col-md-9">
 			<!-- /Blog Area -->
-      
       <?php if ($q->have_posts()) :?>
         <?php while ($q->have_posts()) : $q->the_post();?>
 <div class="col-md-4 wow pulse animated">

@@ -32,11 +32,6 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<!--<link rel='stylesheet' id='contact-form-7-css'  href='https://themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=4.5.1' type='text/css' media='all' />
-<link rel='stylesheet' id='woocommerce-layout-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce-layout.css?ver=2.6.8' type='text/css' media='all' />
-<link rel='stylesheet' id='woocommerce-smallscreen-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreen.css?ver=2.6.8' type='text/css' media='only screen and (max-width: 768px)' />
-<link rel='stylesheet' #303f9f none repeat scroll 0 0 id='woocommerce-general-css'  href='//themeansar.com/demo/wp/shopbiz/default/wp-content/plugins/woocommerce/assets/css/woocommerce.css?ver=2.6.8' type='text/css' media='all' />
--->
 <link rel='stylesheet' id='shopbiz-fonts-css'  href='//fonts.googleapis.com/css?family=Poppins%3A300%2C400%2C500%2C700%7CLato%3A100%2C300%2C400%2C600%2C700%2C900%7Citalic&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
 <link rel='stylesheet' id='Prompt-font-css'  href='https://fonts.googleapis.com/css?family=Prompt&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
 <link rel='stylesheet' id='poppins-font-css'  href='https://fonts.googleapis.com/css?family=Poppins&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
@@ -53,13 +48,8 @@ img.emoji {
 <script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/navigation.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.bootstrap.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.sticky.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/owl.carousel.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.magnific-popup.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/bootstrap-progressbar.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/waypoints.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://localhost/wp-content/themes/shopbiz-lite/js/jquery.counterup.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <!-- <script type='text/javascript' src='https://www.google.com/recaptcha/api.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.ajaxchimp.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;extension=.js&#038;output=embed&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>-->
@@ -750,15 +740,11 @@ border-color: ;
           <!--<ul class="list-inline">
                       </ul>-->
                     <ul class="ta-social">
-                        <li> <span class="icon-soci"><a href="https://www.facebook.com"  title="Facebook" ><i class="fa fa-facebook"></i></a></span>
-            </li>
-
-                        <li><span class="icon-soci"><a href="https://twitter.com/"  title="Twitter" ><i class="fa fa-twitter"></i></a></span></li>
-
-                        <li><span class="icon-soci"><a href="https://www.linkedin.com/"  title="Linkedin"><i class="fa fa-linkedin"></i></a></span></li>
-
-                        <li><span class="icon-soci"><a href="https://plus.google.com"  ><i class="fa fa-google-plus" title="Google-plus"></i></a></span></li>
-                      </ul>
+											<li><span class="icon-soci"><a href="https://www.facebook.com/Timo-Cabral-1510126822338424/" target='_blank' ><i class="fa fa-facebook"></i></a></span></li>
+										 <li><span class="icon-soci"><a href="https://twitter.com/timocabral" target='_blank' ><i class="fa fa-twitter"></i></a></span></li>
+										 <li><span class="icon-soci"><a href="https://www.linkedin.com/in/timo-cabral-62b1b1136?" target='_blank' ><i class="fa fa-linkedin"></i></a></span></li>
+										 <li><span class="icon-soci"><a href="#" target='_blank' ><i class="fa fa-google-plus"></i></a></span></li>
+									 </ul>
                   </div>
       </div>
     </div>

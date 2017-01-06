@@ -8,34 +8,7 @@
 <?php get_header();
 get_template_part('index','banner'); ?>
 <div class="clearfix"></div>
-<div class="modal fade bs-example-modal-lg" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
- <div class="modal-dialog" role="document">
-   <div class="modal-content">
-     <div class="modal-header">
-       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">&times;</span></button>
-         <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
-       </div><div class="modal-body">
-         <img style="margin-left:25px;"
-         src="http://localhost/wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg"
-          width="500" height="300"/></div>
-          <div style="margin-top:-35px;" class="modal-body">
-            <form id="modal-ebook-download" action="http://localhost/" name="modal-sqz-pg"  method="post">
-              <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
-              <input name="method" type="hidden" id="" value="ebook">
-             <input style="margin-left:75px;" type="text" value="NOME" name="nome" size="37"/>
-             <input style="margin-left:75px;" type="text" value="EMAIL" name="email" size="37"/>
-             <br><input style="margin-left:75px;"  size="41" type="submit"
-             name="lead-ebook-docker" class="btn btn-default"
-             value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL"></form>
-             <br><div id="sucess" class="alert alert-success">
-               <strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
-               <div id="error" class="alert alert-warning">
-                 <strong>Error!</strong> Erro ao solicitar Ebook</div>
-                 <div id="preload">
-                   <img src="http://localhost/wp-content/themes/latinabigass/img/load.gif"
-                    width="100" height="100" />
-</div></div></div></div></div><!-- closeModalBanner -->
+
 <!-- =========================
      Page Content Section
 ============================== -->
@@ -119,6 +92,34 @@ get_template_part('index','banner'); ?>
     </div>
     <!--/ Row end -->
   </div>
+  <!-- Modal -->
+  <div class="modal fade bs-example-modal-lg" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span></button>
+           <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
+         </div><div style="margin-left:140px;" class="modal-body">
+<?php the_post_thumbnail('', $defalt_arg); ?><br>
+           </div>
+            <div style="margin-top:-35px;" class="modal-body">
+              <form id="modal-ebook-download" action="http://localhost/" name="modal-sqz-pg"  method="post">
+                <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
+                <input name="method" type="hidden" id="" value="ebook">
+               <input style="margin-left:75px;" type="text" value="NOME" name="nome" size="37"/>
+               <input style="margin-left:75px;" type="text" value="EMAIL" name="email" size="37"/>
+               <br><input style="margin-left:75px;"  size="41" type="submit"
+               name="lead-ebook-docker" class="btn btn-default"
+               value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL"></form>
+               <br><div id="sucess" class="alert alert-success">
+                 <strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
+                 <div id="error" class="alert alert-warning">
+                   <strong>Error!</strong> Erro ao solicitar Ebook</div>
+                   <div id="preload">
+                     <img src="http://localhost/wp-content/themes/latinabigass/img/load.gif"
+                      width="100" height="100" />
+  </div></div></div></div></div><!-- closeModalBanner -->
 </main>
 <style>
 #mymodal{
