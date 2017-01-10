@@ -631,7 +631,7 @@ border-color: ;
       <div class="row">
         <div class="col-md-6 col-md-offset-3 text-center">
           <h4>Você Quer receber atualizações, promoções, videos, conteúdo exclusivo gratuito?</h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
-          <form id="_newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST" action="http://fast-eyrie-67178.herokuapp.com/">
+          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST" action="http://fast-eyrie-67178.herokuapp.com/">
 						<input type="hidden" name="method" value="newslleter">
             <!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
             <h6 class="subscription-success"></h6>

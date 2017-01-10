@@ -24,9 +24,41 @@ class NewslleterDataProvider {
   }
 }
 
+final class Connection {
+
+  protected static $conn;
+
+  const DATABASE_CONF = [
+    "dbname"=>"wordpress",
+    "host"=>"localhost",
+    "username"=>"postgres",
+    "password"=> "silvia25"
+  ];
+
+  final public function __construct(){}
+
+  public static function getConnection(){
+    if(isset(self::$conn)){
+      return self::$conn;
+    }
+    else{
+      self::open();
+    }
+  }
+
+  public static function open(){
+    self::$conn = new PDO("pgsql:dbname=" .  self::DATABASE_CONF["dbname"] .
+     " host=" . self::DATABASE_CONF["host"], self::DATABASE_CONF["username"],
+     self::DATABASE_CONF["password"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING] );
+     self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+     return self::$conn;
+  }
+}
+
+
 class DaoNewslleter {
 
-  protected $wpdb, $nlDataProvider;
+  protected $wpdb, $nlDataProvider, $conn;
 
   public function __construct($wpdb){
       if($wpdb instanceOf wpdb || $wpdb instanceOf wpdb2){
@@ -46,11 +78,12 @@ class DaoNewslleter {
     if(!isset($this->wpdb)){
       throw new Exception("wpdb is not set", 1);
     }
-    $data = $this->nlDataProvider->getData();
 
+    $data = $this->nlDataProvider->getData();
+    //@Book persist
     if(isset($data["button_book"])){
 
-      $this->wpdb->insert("wp_book", ["title"=>$data['book_name'],
+      $bool = $this->wpdb->insert("wp_book", ["title"=>$data['book_name'],
        "date_created"=> current_time( 'mysql' ), "date_updated"=> current_time( 'mysql' )]);
 
       $book = $this->wpdb->get_results('SELECT id FROM wp_book ORDER BY id DESC limit 1');
@@ -61,8 +94,33 @@ class DaoNewslleter {
 
        return ($this->wpdb->insert($this->table, $data)) ? true : false;
     }
+    //@newslleter persist
+    try {
+      $sth = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
+        (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+          VALUES (
+            :name,
+            :email,:ip,:msg,
+            :book_id, :status,
+            :datecreated,:dateupdated)
+         ");
 
-    return ($this->wpdb->insert($this->table, $data)) ? true : false;
+      $sth->bindValue(':name', "newslleter:index", PDO::PARAM_STR);
+      $sth->bindValue(':email', $data["email"], PDO::PARAM_STR);
+      $sth->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
+      $sth->bindValue(':msg', "newslleter:index", PDO::PARAM_STR);
+      $sth->bindValue(':book_id', 0, PDO::PARAM_INT);
+      $sth->bindValue(':status',Newslleter::STATUS['active_newslleter'] , PDO::PARAM_INT);
+      $sth->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+      $sth->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+      if($sth->execute()){
+        return true;
+      }
+
+  } catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+}
+    //return ($this->wpdb->insert($this->table, $data)) ? true : false;
   }
 
   public function getAll(){

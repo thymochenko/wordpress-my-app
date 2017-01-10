@@ -34,7 +34,7 @@ if($_POST['method'] == 'newslleter'){
   $dao->setDataProvider($dataProvider);
   $dao->setTable('newslleter_contact');
   $dao->store();
-
+  exit;
   $mail = new MailSender($dataProvider);
   $mail->send(function() use ($mail){
   $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
