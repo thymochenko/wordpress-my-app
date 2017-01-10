@@ -200,7 +200,7 @@ class Newslleter {
     $this->data['name'] = (isset($name)) ? filter_var(trim($name), FILTER_SANITIZE_STRING) : null;
   }
 
-  public function get_name() : string {
+  public function get_name() {
     return $this->data['name'];
   }
 
