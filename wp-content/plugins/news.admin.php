@@ -87,12 +87,12 @@ $dao->setTable('newslleter_contact');
 </tr>
 </thead>
 <tbody>
-  <?php  $d = $dao->getAll()['news']; sort($d, SORT_NUMERIC);
-   foreach($d as $newslleter): ?>
+  <?php  if(isset($dao->getAll()['news'])){ $d = $dao->getAll()['news']; @sort($d, SORT_NUMERIC); } ;
+   foreach($d as $newslleter):?>
 <tr>
     <td style=""><?php  echo $newslleter->name ?></td>
     <td><?php  echo $newslleter->email ?></td>
-    <td><?php  echo $newslleter->date_created ?></td>
+    <td><?php  if(isset($newslleter->date_created)):?><?php  echo $newslleter->date_created ?><?php endif; ?></td>
     <td> <?php  if ($newslleter->status == Newslleter::STATUS['active_newslleter']):?> Newslleter Ativo <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::STATUS['inactive']):?> Inativo <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::STATUS['canceled']):?> cancelado <?php endif; ?>

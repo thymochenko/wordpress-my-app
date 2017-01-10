@@ -8,7 +8,7 @@ class NewslleterDataProvider {
       $this->nl = $newslleter;
   }
 
-  public function setReturnType(string $type){
+  public function setReturnType($type){
     if($type == 'array'){
       $this->dataType = 'array';
       if($this->nl->getData()){
@@ -70,7 +70,7 @@ class DaoNewslleter {
     $this->nlDataProvider = $nlDataProvider;
   }
 
-  public function setTable(string $table){
+  public function setTable($table){
     $this->table = $this->wpdb->prefix .  $table;
   }
 
@@ -116,6 +116,9 @@ class DaoNewslleter {
       if($sth->execute()){
         return true;
       }
+      else{
+	return false;
+      }
 
   } catch (PDOException $e) {
     echo 'Connection failed: ' . $e->getMessage();
@@ -127,18 +130,20 @@ class DaoNewslleter {
     $result1 = $this->wpdb->get_results(
     'SELECT * FROM ' . $this->table . ' as n');
 
-    $result2 = $this->wpdb->get_results(
+    @$result2 = $this->wpdb->get_results(
     'SELECT DISTINCT * FROM ' . $this->table . ' as n
     INNER JOIN wp_book AS b ON n.book_id = b.id
 
     ', object);
     $data = [];
-    $objects = ['news'=>$result1, 'books'=>$result2];
-    for($i =0; $i < count($objects['news']); $i++){
-      if($objects['books'][$i]->title){
-        $objects['news'][] = $objects['books'][$i];
-        unset($objects['books']);
-      }
+    if(isset($result1)){
+        $objects = ['news'=>$result1, 'books'=>@$result2];
+        for($i =0; $i < count($objects['news']); $i++){
+          if(isset($objects['books'][$i]->title)){
+            $objects['news'][] = $objects['books'][$i];
+            unset($objects['books']);
+          }
+        }
     }
 
     return $objects;
@@ -172,7 +177,7 @@ class Newslleter {
     }
   }
 
-  public function __set(string $prop, $value) {
+  public function __set($prop, $value) {
       if (method_exists($this, 'set_' . $prop)) {
           call_user_func(array(
               $this,
@@ -196,7 +201,7 @@ class Newslleter {
        }
    }
 
-  public function set_name(string $name){
+  public function set_name($name){
     $this->data['name'] = (isset($name)) ? filter_var(trim($name), FILTER_SANITIZE_STRING) : null;
   }
 
@@ -204,19 +209,19 @@ class Newslleter {
     return $this->data['name'];
   }
 
-  public function set_email(string $email){
+  public function set_email($email){
       $this->data['email'] = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
   }
 
-  public function get_email(): string {
+  public function get_email(){
     return $this->data['email'];
   }
 
-  public function set_msg(string $msg){
+  public function set_msg($msg){
     $this->data['msg'] = (isset($msg)) ? strip_tags(trim($msg)) : null;
   }
 
-  public function get_msg() : string {
+  public function get_msg(){
     return $this->data['msg'];
   }
 
@@ -248,7 +253,7 @@ class MailSender {
       $this->data = $dataProvider->getData();
     }
 
-    public function phpMailerWrapper(PHPMailer $mailer) : PHPMailer {
+    public function phpMailerWrapper(PHPMailer $mailer){
         $this->phpMailer = $mailer;
         return $this->phpMailer;
     }

@@ -10,7 +10,7 @@ add_filter ( 'pre_option_siteurl', 'test_localhosts' );
 function test_localhosts( ) {
   /* DB URL is set with SetEnv in Apache https://github.com/mhoofman/wordpress-heroku#linux-or-manual-apache-config */
 
-  if (preg_match('/localhost/',$_ENV['DATABASE_URL'])) {
+  if (preg_match('/localhost/',@$_ENV['DATABASE_URL'])) {
     preg_match('/(.*)\/wp-.*\/(\w*\.php)+$/', $_SERVER['REQUEST_URI'], $path);
     return ("http://" . $_SERVER['HTTP_HOST'] . $path[1]);
   }
