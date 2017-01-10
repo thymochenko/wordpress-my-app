@@ -8,7 +8,7 @@ require '../PHPMailerAutoload.php';
 
 $CFG['smtp_debug'] = 2; //0 == off, 1 for client output, 2 for client and server
 $CFG['smtp_debugoutput'] = 'html';
-$CFG['smtp_server'] = 'localhost';
+$CFG['smtp_server'] = 'http://http://fast-eyrie-67178.herokuapp.com/';
 $CFG['smtp_port'] = '25';
 $CFG['smtp_authenticate'] = false;
 $CFG['smtp_username'] = 'name@example.com';

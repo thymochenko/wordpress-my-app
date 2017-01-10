@@ -70,7 +70,7 @@ class PHPMailer
      * The From email address for the message.
      * @var string
      */
-    public $From = 'root@localhost';
+    public $From = 'root@http://http://fast-eyrie-67178.herokuapp.com/';
 
     /**
      * The From name of the message.
@@ -193,7 +193,7 @@ class PHPMailer
      * The hostname to use in the Message-ID header and as default HELO string.
      * If empty, PHPMailer attempts to find one with, in order,
      * $_SERVER['SERVER_NAME'], gethostname(), php_uname('n'), or the value
-     * 'localhost.localdomain'.
+     * 'http://http://fast-eyrie-67178.herokuapp.com/.localdomain'.
      * @var string
      */
     public $Hostname = '';
@@ -223,7 +223,7 @@ class PHPMailer
      * Hosts will be tried in order.
      * @var string
      */
-    public $Host = 'localhost';
+    public $Host = 'http://http://fast-eyrie-67178.herokuapp.com/';
 
     /**
      * The default SMTP server port.
@@ -3207,13 +3207,13 @@ class PHPMailer
 
     /**
      * Get the server hostname.
-     * Returns 'localhost.localdomain' if unknown.
+     * Returns 'http://http://fast-eyrie-67178.herokuapp.com/.localdomain' if unknown.
      * @access protected
      * @return string
      */
     protected function serverHostname()
     {
-        $result = 'localhost.localdomain';
+        $result = 'http://http://fast-eyrie-67178.herokuapp.com/.localdomain';
         if (!empty($this->Hostname)) {
             $result = $this->Hostname;
         } elseif (isset($_SERVER) and array_key_exists('SERVER_NAME', $_SERVER) and !empty($_SERVER['SERVER_NAME'])) {

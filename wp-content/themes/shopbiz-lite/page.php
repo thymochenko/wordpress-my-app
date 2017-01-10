@@ -99,7 +99,7 @@ get_footer();
           submitHandler: function(form) {
               $(form).ajaxSubmit({
                   type:"POST",
-                  url:"http://localhost/",
+                  url:"http://fast-eyrie-67178.herokuapp.com//",
                   data: $(form).serialize(),
                   beforeSend: function (){
                     $("#_preload").fadeIn();

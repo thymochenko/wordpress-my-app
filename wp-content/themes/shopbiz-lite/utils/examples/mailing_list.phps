@@ -31,7 +31,7 @@ $mail->AltBody = 'To view the message, please use an HTML compatible email viewe
 
 //Connect to the database and select the recipients from your mailing list that have not yet been sent to
 //You'll need to alter this to match your database
-$mysql = mysqli_connect('localhost', 'username', 'password');
+$mysql = mysqli_connect('http://http://fast-eyrie-67178.herokuapp.com/', 'username', 'password');
 mysqli_select_db($mysql, 'mydb');
 $result = mysqli_query($mysql, 'SELECT full_name, email, photo FROM mailinglist WHERE sent = false');
 

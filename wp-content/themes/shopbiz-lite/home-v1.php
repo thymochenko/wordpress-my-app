@@ -93,8 +93,8 @@ Skip to content</a>
           </ul>
         </div>
         <div class="col-md-6 col-xs-12 col-sm-6">
-          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="http://localhost/index.php/my-courses/">Meus Cursos</a></li>
-<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="http://localhost/index.php/purchase/?plan=203">Minha Conta</a></li>
+          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="http://fast-eyrie-67178.herokuapp.com//index.php/my-courses/">Meus Cursos</a></li>
+<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="http://fast-eyrie-67178.herokuapp.com//index.php/purchase/?plan=203">Minha Conta</a></li>
 </ul>        </div>
       </div>
     </div>
@@ -109,16 +109,16 @@ Skip to content</a>
 					class="custom-logo-link"
 					 rel="home" itemprop="url">
 					 <img width="150" height="35"
-					 src="http://localhost/wp-content/themes/shopbiz-lite/images/cropped-shopbiz-logo.png" class="custom-logo" alt="cropped-shopbiz-logo.png" itemprop="logo" /></a>          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wp"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					 src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/cropped-shopbiz-logo.png" class="custom-logo" alt="cropped-shopbiz-logo.png" itemprop="logo" /></a>          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wp"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 						  <span class="icon-bar"></span> </button>
         </div>
         <!-- /End Navbar Header -->
 
         <!-- Navigation -->
         <div class="collapse navbar-collapse" id="navbar-wp">
-          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="http://localhost/">Home</a></li>
-<li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="http://localhost/index.php/sobre-mim/">Sobre mim</a></li>
-<li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="http://localhost/index.php/blog/">Blog</a></li>
+          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="http://fast-eyrie-67178.herokuapp.com//">Home</a></li>
+<li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="http://fast-eyrie-67178.herokuapp.com//index.php/sobre-mim/">Sobre mim</a></li>
+<li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="http://fast-eyrie-67178.herokuapp.com//index.php/blog/">Blog</a></li>
 <!--<li id="menu-item-216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-216 dropdown"><a title="Portfolio" href="#">Portfolio <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-215" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-215"><a title="Portfolio Two Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-two-column/">Portfolio Two Column</a></li>
@@ -126,7 +126,7 @@ Skip to content</a>
 	<li id="menu-item-213" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-213"><a title="Portfolio Four Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-four-column/">Portfolio Four Column</a></li>
 </ul>
 </li>-->
-<li id="menu-item-108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-108"><a title="Pricing" href="http://localhost/index.php/materiais/">Materiais Gratuitos</a></li>
+<li id="menu-item-108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-108"><a title="Pricing" href="http://fast-eyrie-67178.herokuapp.com//index.php/materiais/">Materiais Gratuitos</a></li>
 <!-- <li id="menu-item-183" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-183 dropdown"><a title="Blog">Blog <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-186"><a title="Blog Full width" href="https://themeansar.com/demo/wp/shopbiz/default/blog-full-width/">Blog Full width</a></li>
@@ -141,9 +141,9 @@ Skip to content</a>
 	<li id="menu-item-180" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-180"><a title="My Account" href="https://themeansar.com/demo/wp/shopbiz/default/my-account/">My Account</a></li>
 </ul>
 </li>-->
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/consultoria/">Consultoria</a></li>
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/course/">Cursos</a></li>
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://localhost/index.php/contato/">Contato</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://fast-eyrie-67178.herokuapp.com//index.php/consultoria/">Consultoria</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://fast-eyrie-67178.herokuapp.com//index.php/course/">Cursos</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://fast-eyrie-67178.herokuapp.com//index.php/contato/">Contato</a></li>
 </ul>        </div>
         <!-- /Navigation -->
       </div>
@@ -155,12 +155,12 @@ Skip to content</a>
   <div id="ta-slider" class="owl-carousel">
         <div class="item active">
       <figure>
-				<img src="http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg"
+				<img src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/startup1.jpg"
 				 class="img-responsive wp-post-image" alt="slider1"
-				  srcset="http://localhost/wp-content/themes/shopbiz-lite/images/startup2.jpg 1600w,
-					 http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg 300w,
-					  http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg 768w,
-						 http://localhost/wp-content/themes/shopbiz-lite/images/startup1.jpg
+				  srcset="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/startup2.jpg 1600w,
+					 http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/startup1.jpg 300w,
+					  http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/startup1.jpg 768w,
+						 http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/startup1.jpg
 						 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />
 			</figure>
         <!--<img src="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1.jpg" class="img-responsive wp-post-image" alt="slider1" srcset="https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1.jpg 1600w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-300x113.jpg 300w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-768x288.jpg 768w, https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/slider1-1-1024x384.jpg 1024w" sizes="(max-width: 1600px) 100vw, 1600px" />      </figure>-->
@@ -174,9 +174,9 @@ Skip to content</a>
                 <p>Ensinando, Desenvolvendo e Inovando pensando em você</p>
               </div>
                             <a class="btn btn-tislider"
-														 href="http://localhost/index.php/sobre-mim/" > Saiba mais </a>
+														 href="http://fast-eyrie-67178.herokuapp.com//index.php/sobre-mim/" > Saiba mais </a>
                             <a class="btn btn-tislider-two"
-														 href="http://localhost/index.php/course/" > veja nossos cursos! </a>
+														 href="http://fast-eyrie-67178.herokuapp.com//index.php/course/" > veja nossos cursos! </a>
                           </div>
           </div>
         </div>
@@ -248,10 +248,10 @@ Skip to content</a>
        <div class="ta-service">
 
 
-                <img class="img-responsive" src="http://localhost/wp-content/uploads/2016/12/wp-api.jpg" />
+                <img class="img-responsive" src="http://fast-eyrie-67178.herokuapp.com//wp-content/uploads/2016/12/wp-api.jpg" />
                 <div class="ta-service-inner">
 				<h3 class="widgettitle">Cursos de Desenvolvimento</h3>                    <p>Curso Desenvolvendo com a nova REST API do WordPress </p>
-                                <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/course/rest-api-com-wordpress/" target="_self">Saiba Mais</a>
+                                <a class="btn btn-theme margin-bottom-20"  href="http://fast-eyrie-67178.herokuapp.com//index.php/course/rest-api-com-wordpress/" target="_self">Saiba Mais</a>
 
 
             </div>
@@ -263,10 +263,10 @@ Skip to content</a>
        <div class="ta-service">
 
 
-                <img class="img-responsive" src="http://localhost/wp-content/uploads/2016/12/aws-docker.png" />
+                <img class="img-responsive" src="http://fast-eyrie-67178.herokuapp.com//wp-content/uploads/2016/12/aws-docker.png" />
                 <div class="ta-service-inner">
 				<h3 class="widgettitle">Cursos de UI e UX</h3>                    <p>Curso Desenvolvimento de Temas Responsivos para WordPress</p>
-                                <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/course/desenvolvimento-de-thema-para-wordpress/" target="_self">Saiba Mais</a>
+                                <a class="btn btn-theme margin-bottom-20"  href="http://fast-eyrie-67178.herokuapp.com//index.php/course/desenvolvimento-de-thema-para-wordpress/" target="_self">Saiba Mais</a>
 
 
             </div>
@@ -278,10 +278,10 @@ Skip to content</a>
        <div class="ta-service">
 
 
-                <img class="img-responsive" src="http://localhost/wp-content/uploads/2016/12/web.png" />
+                <img class="img-responsive" src="http://fast-eyrie-67178.herokuapp.com//wp-content/uploads/2016/12/web.png" />
                 <div class="ta-service-inner">
 				<h3 class="widgettitle">Cursos sobre Fundamentos </h3>                    <p>Curso Introdução ao desenvolvimento Web</p>
-                                <a class="btn btn-theme margin-bottom-20"  href="http://localhost/index.php/course/introducao-ao-desenvolvimento-web/" target="_self">Saiba Mais</a>
+                                <a class="btn btn-theme margin-bottom-20"  href="http://fast-eyrie-67178.herokuapp.com//index.php/course/introducao-ao-desenvolvimento-web/" target="_self">Saiba Mais</a>
 
 
             </div>
@@ -625,7 +625,7 @@ border-color: ;
             </article>
           </div>-->
 
-            <div class="text-center margin-top-50"><a href="http://localhost/index.php/blog" target='_blank'  class="btn btn-theme">Leia Muito Mais</a></div>
+            <div class="text-center margin-top-50"><a href="http://fast-eyrie-67178.herokuapp.com//index.php/blog" target='_blank'  class="btn btn-theme">Leia Muito Mais</a></div>
       <!-- .container -->
     </div>
   </div>
@@ -642,7 +642,7 @@ border-color: ;
       <div class="row">
         <div class="col-md-6 col-md-offset-3 text-center">
           <h4>Você Quer receber atualizações, promoções, videos, conteúdo exclusivo gratuito?</h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
-          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST" action="http://localhost">
+          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST" action="http://fast-eyrie-67178.herokuapp.com/">
 						<input type="hidden" name="method" value="newslleter">
             <!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
             <h6 class="subscription-success"></h6>
@@ -658,7 +658,7 @@ border-color: ;
 					<!-- mensagens form -->
 					<div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
 					<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
-					<div id="preload"><img src="http://localhost/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
+					<div id="preload"><img src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
 					<!-- end message form -->
 
           <!-- /END SUBSCRIPTION FORM -->
@@ -1062,7 +1062,7 @@ var wc_cart_fragments_params = {"ajax_url":"\/demo\/wp\/shopbiz\/default\/wp-adm
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://localhost/",
+                          url:"http://fast-eyrie-67178.herokuapp.com//",
                           beforeSend: function (){
 
                             $("#preload").fadeIn();
