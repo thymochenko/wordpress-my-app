@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+//declare(strict_types=1);
 class NewslleterDataProvider {
 
   protected $nl,$dataType, $transformedData;
@@ -28,8 +28,10 @@ class DaoNewslleter {
 
   protected $wpdb, $nlDataProvider;
 
-  public function __construct(wpdb $wpdb){
-      $this->wpdb = $wpdb;
+  public function __construct($wpdb){
+      if($wpdb instanceOf wpdb || $wpdb instanceOf wpdb2){
+        $this->wpdb = $wpdb;
+    }
   }
 
   public function setDataProvider(NewslleterDataProvider $nlDataProvider){
@@ -40,7 +42,7 @@ class DaoNewslleter {
     $this->table = $this->wpdb->prefix .  $table;
   }
 
-  public function store() : bool {
+  public function store(){
     if(!isset($this->wpdb)){
       throw new Exception("wpdb is not set", 1);
     }
@@ -63,7 +65,7 @@ class DaoNewslleter {
     return ($this->wpdb->insert($this->table, $data)) ? true : false;
   }
 
-  public function getAll() : array {
+  public function getAll(){
     $result1 = $this->wpdb->get_results(
     'SELECT * FROM ' . $this->table . ' as n');
 
@@ -80,7 +82,7 @@ class DaoNewslleter {
         unset($objects['books']);
       }
     }
-    
+
     return $objects;
   }
 
@@ -104,7 +106,7 @@ class Newslleter {
 
   }
 
-  public function getData(): array {
+  public function getData(){
     if(isset($this->data)){
         return $this->data;
     }else{
@@ -165,7 +167,7 @@ class Newslleter {
     $this->data['book_name'] = substr($this->data['button_book'], 8);
   }
 
-  public function get_ebookHidden() : string {
+  public function get_ebookHidden() {
     return $this->data['button_book'];
   }
 
@@ -173,7 +175,7 @@ class Newslleter {
     $this->data['book_name'] = $bookName;
   }
 
-  public function get_bookName() : string {
+  public function get_bookName(){
     return $this->data['book_name'];
   }
 
@@ -201,7 +203,7 @@ class MailSender {
       $closure();
     }
 
-    public function getData(): array {
+    public function getData(){
       return $this->data;
     }
 }
