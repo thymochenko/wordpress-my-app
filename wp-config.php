@@ -53,12 +53,16 @@ define('AUTH_SALT',             getenv('AUTH_SALT'));
 define('SECURE_AUTH_SALT',      getenv('SECURE_AUTH_SALT'));
 define('LOGGED_IN_SALT',        getenv('LOGGED_IN_SALT'));
 define('NONCE_SALT',            getenv('NONCE_SALT'));
-define('AWS_ACCESS_KEY_ID',     "AKIAJHBUZA5XFTYQRVEA");
-define('AWS_SECRET_ACCESS_KEY', "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");
-
+//user aws timocabralcarvalho group bucketgroup 
+define('AWS_ACCESS_KEY_ID',     "AKIAIWEZHRHPABIH2DPA");
+define('AWS_SECRET_ACCESS_KEY', "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");
+// https://677914266604.signin.aws.amazon.com/console 
+//arn:aws:iam::677914266604:user/timocabral 
 /**#@-*/
 
 /**
+ * AKIAJKAMMM4T4B4MZ6DQ
+qLl7I95wmpwDsP8Rq+wfd/3Vldw0gPDebbeNg56T Hide 
  * WordPress Database Table prefix.
  *
  * You can have multiple installations in one database if you give each a unique
@@ -74,7 +78,7 @@ $table_prefix  = 'wp_';
  * in their development environments.
  */
 define('WP_DEBUG', false);
-
+define('FS_METHOD','direct');
 /* That's all, stop editing! Happy blogging. */
 
 /** Absolute path to the WordPress directory. */

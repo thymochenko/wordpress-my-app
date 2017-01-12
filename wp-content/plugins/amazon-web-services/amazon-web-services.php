@@ -64,7 +64,7 @@ function amazon_web_services_activation() {
 		include dirname( __FILE__ ) . '/view/activation-error.php';
 		die();
 	}
-
+	var_dump($error_msg);
 	// Migrate keys over from old Amazon S3 and CloudFront plugin settings
 	if ( ! ( $as3cf = get_option( 'tantan_wordpress_s3' ) ) ) {
 		return;
