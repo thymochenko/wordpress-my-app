@@ -97,7 +97,7 @@ $dao->setTable('newslleter_contact');
     <td> <?php  if ($newslleter->status == Newslleter::STATUS['active_newslleter']):?> Newslleter Ativo <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::STATUS['inactive']):?> Inativo <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::STATUS['canceled']):?> cancelado <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::STATUS['ebook_request']):?> Ebook : <?php echo $newslleter->title ?> <?php endif; ?>
+      <?php  if ($newslleter->status == Newslleter::STATUS['ebook_request']):?> Ebook  <?php echo @$newslleter->title ?> <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::STATUS['msg']):?> Mensagem <?php endif; ?>
     </td>
 </tr>

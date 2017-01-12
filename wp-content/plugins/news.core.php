@@ -175,6 +175,7 @@ class DaoNewslleter {
     INNER JOIN wp_book AS b ON n.book_id = b.id
 
     ', object);
+
     $data = [];
     if(isset($result1)){
         $objects = ['news'=>$result1, 'books'=>@$result2];
