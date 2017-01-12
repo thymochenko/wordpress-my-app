@@ -105,7 +105,7 @@ get_template_part('index','banner'); ?>
 <br>
            </div>
             <div style="margin-top:-35px;" class="modal-body">
-                <form id="_modal-ebook-download" action="http://localhost" name="modal-sqz-pg"  method="post">
+                <form id="modal-ebook-download" action="http://fast-eyrie-67178.herokuapp.com/" name="modal-sqz-pg"  method="post">
 <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
                 <input name="method" type="hidden" id="" value="ebook">
                <input style="margin-left:75px;" type="text" value="SEU NOME" name="nome" size="37"/>
@@ -118,7 +118,7 @@ get_template_part('index','banner'); ?>
                  <div id="error" class="alert alert-warning">
                    <strong>Error!</strong> Erro ao solicitar Ebook</div>
                    <div id="preload">
-                     <img src="http://localhost/wp-content/themes/latinabigass/img/load.gif"
+                     <img src="http://fast-eyrie-67178.herokuapp.com/wp-content/themes/latinabigass/img/load.gif"
                       width="100" height="100" />
   </div></div></div></div></div><!-- closeModalBanner -->
 </main>
@@ -191,7 +191,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
           submitHandler: function(form) {
               $(form).ajaxSubmit({
                   type:"POST",
-                  url:"http://localhost/wp-content/themes/shopbiz-lite/contactForm.php",
+                  url:"http://fast-eyrie-67178.herokuapp.com/wp-content/themes/shopbiz-lite/contactForm.php",
                   data: $(form).serialize(),
                   beforeSend: function (){
                     data['button'] = $("#modal-download-start").val();
@@ -237,7 +237,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://localhost/",
+                          url:"http://fast-eyrie-67178.herokuapp.com/",
                           beforeSend: function (){
                             //alert($("#modal-download-start").val());
                             $("#preload").fadeIn();

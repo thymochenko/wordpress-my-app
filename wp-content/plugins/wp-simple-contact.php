@@ -113,10 +113,10 @@ if(@$_POST['method'] == 'newslleter'){
 
     $whapper2->Body .= " Ola  {$mail->getData()['name']}! Segue o Ebook Solicitado :  <br />";
     $whapper2->Body .= " Atenciosamente: Timo Cabral do timocabral.com :) <br />";
-    $whapper2->addStringAttachment(file_get_contents(
-      $url="http://localhost/wp-content/uploads/{$mail->getData()['button_book']}"),
-       "{$mail->getData()['book_name']}"
-    );
+    //$whapper2->addStringAttachment(file_get_contents(
+    //  $url="http://localhost/wp-content/uploads/{$mail->getData()['button_book']}"),
+    //   "{$mail->getData()['book_name']}"
+    //);
 
     $whapper2->send();
 

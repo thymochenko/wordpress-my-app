@@ -27,7 +27,14 @@ class NewslleterDataProvider {
 final class Connection {
 
   protected static $conn;
-
+  /*
+  const DATABASE_CONF = [
+    "dbname"=>"d3e7040odgf0s7",
+    "host"=>"ec2-204-236-218-242.compute-1.amazonaws.com",
+    "username"=>"rjikommzhlyatb",
+    "password"=> "7c3ae88652c3ea9b27612a5009163c2c1b86fab876efd9231bfa84f958955cb4"
+  ];
+  */
   const DATABASE_CONF = [
     "dbname"=>"wordpress",
     "host"=>"localhost",
@@ -43,6 +50,12 @@ final class Connection {
     }
     else{
       self::open();
+    }
+  }
+
+  public static function close(){
+    if(isset(self::$conn)){
+      self::$conn = null;
     }
   }
 
@@ -82,19 +95,6 @@ class DaoNewslleter {
     $data = $this->nlDataProvider->getData();
     //@Book persist
     if(isset($data["button_book"])){
-      /*
-       "date_created"=> current_time( 'mysql' ), "date_updated"=> current_time( 'mysql' )]);
-       $bool = $this->wpdb->insert("wp_book", ["title"=>$data['book_name'],
-
-      $book = $this->wpdb->get_results('SELECT id FROM wp_book ORDER BY id DESC limit 1');
-      $data['book_id'] = $book[0]->id;
-
-      unset($data['book_name']);
-      unset($data['button_book']);
-
-       return ($this->wpdb->insert($this->table, $data)) ? true : false;
-       */
-       //@newslleter persist
        try {
          $sth = Connection::open()->prepare(
             "INSERT INTO wp_book (title,datecreated,dateupdated)
@@ -107,12 +107,14 @@ class DaoNewslleter {
          $sth->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
 
          $sth->execute();
-         $sth2 = Connection::open()->prepare("SELECT id FROM wp_book ORDER BY id DESC limit 1");
+
+         $sth2 = Connection::get()->prepare("SELECT id FROM wp_book ORDER BY id DESC limit 1");
          $sth2->execute();
 
          $result = $sth2->fetch(PDO::FETCH_OBJ);
+         //Connection::close();
 
-         $sth3 = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
+         $sth3 = Connection::get()->prepare("INSERT INTO wp_newslleter_contact
            (name,email,ip, msg, book_id, status,datecreated, dateupdated)
              VALUES (
                :name,
@@ -129,10 +131,8 @@ class DaoNewslleter {
          $sth3->bindValue(':status',Newslleter::STATUS['ebook_request'] , PDO::PARAM_INT);
          $sth3->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
          $sth3->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
-         var_dump($data);
-         var_dump($result->id);
-         var_dump($sth->execute());exit;
-         return ($sth->execute()) ? true : false;
+
+         return ($sth3->execute()) ? true : false;
 
          } catch (PDOException $e) {
            echo 'Connection failed: ' . $e->getMessage();
