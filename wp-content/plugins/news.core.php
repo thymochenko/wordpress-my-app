@@ -94,6 +94,9 @@ class DaoNewslleter {
 
     $data = $this->nlDataProvider->getData();
     //@Book persist
+    $dateTime = new DateTime();
+    $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+    
     if(isset($data["button_book"])){
        try {
          $sth = Connection::open()->prepare(
@@ -103,8 +106,8 @@ class DaoNewslleter {
             ");
 
          $sth->bindValue(':title', $data['book_name'] . ":". $data['button_book'] , PDO::PARAM_STR);
-         $sth->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
-         $sth->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+         $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+         $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
          $sth->execute();
 
@@ -129,8 +132,8 @@ class DaoNewslleter {
          $sth3->bindValue(':msg', "newslleter:ebook", PDO::PARAM_STR);
          $sth3->bindValue(':book_id', $result->id, PDO::PARAM_INT);
          $sth3->bindValue(':status',Newslleter::STATUS['ebook_request'] , PDO::PARAM_INT);
-         $sth3->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
-         $sth3->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+         $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+         $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
          return ($sth3->execute()) ? true : false;
 
@@ -155,8 +158,9 @@ class DaoNewslleter {
       $sth->bindValue(':msg', "newslleter:index", PDO::PARAM_STR);
       $sth->bindValue(':book_id', 0, PDO::PARAM_INT);
       $sth->bindValue(':status',Newslleter::STATUS['active_newslleter'] , PDO::PARAM_INT);
-      $sth->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
-      $sth->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+
+      $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+      $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
       return ($sth->execute()) ? true : false;
 
