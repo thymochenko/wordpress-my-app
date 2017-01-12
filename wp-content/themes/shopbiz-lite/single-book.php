@@ -99,7 +99,7 @@ get_template_part('index','banner'); ?>
        <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true">&times;</span></button>
-           <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
+           <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO : </h4>
          </div><div style="margin-left:140px;" class="modal-body">
 
 <br>
@@ -112,7 +112,7 @@ get_template_part('index','banner'); ?>
                <input style="margin-left:75px;" type="text" value="SEU EMAIL" name="email" size="37"/>
                <br><input style="margin-left:75px;"  size="41" type="submit"
                name="lead-ebook-docker" class="btn btn-default"
-               value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL"></form>
+               value="CLIQUE PARA BAIXAR O SEU EBOOK E APRENDER MAIS"></form>
                <br><div id="sucess" class="alert alert-success">
                  <strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
                  <div id="error" class="alert alert-warning">
@@ -144,6 +144,12 @@ get_template_part('index','banner'); ?>
     $('#preload').hide();
 
 $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
+    var linkebook = $("#modal-download-start").val();
+    var _array = linkebook.split(":");
+    var nomebook = _array[0];
+    var link =  _array[1] +  ":" + _array[2];
+
+    $("#myModalLabel").html("BAIXAR EBOOK : " + nomebook);
 
     $("#modal-download-start").click(function(){
         $("#mymodal").modal('show');
@@ -245,7 +251,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                           success: function() {
                                 //  $('#contact').fadeTo( "slow", 0.15, function() {
                                   $(this).find(':input').attr('disabled', 'disabled');
-                                  $('#sucess').html('<a href="https://drive.google.com/file/d/0ByRILKhxz02OREZjM2xQZnQ1YXc/view?usp=sharing">Clique aqui para baixar</a>')
+                                  $('#sucess').html('<a  target="_blank" href="' + link +'">Clique aqui para baixar</a>');
                                   $('#sucess').fadeIn();
                                   $('#preload').hide();
                               //});
