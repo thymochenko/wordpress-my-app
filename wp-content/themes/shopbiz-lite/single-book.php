@@ -24,8 +24,8 @@ get_template_part('index','banner'); ?>
 		      while(have_posts()) { the_post(); ?>
           <div class="col-md-12">
             <div class="ta-blog-post-box"> <a href="#" class="ta-blog-thumb">
-			        <?php if(has_post_thumbnail()): ?>
-			         <?php $defalt_arg =array('class' => "img-responsive"); ?>
+			         <?php $defalt_arg = array('class' => "img-responsive"); ?>
+               <?php if(has_post_thumbnail()): ?>
 			         <?php the_post_thumbnail('', $defalt_arg); ?>
                 <span class="ta-blog-date"> <span class="h3"><?php echo esc_attr(get_the_date('j')); ?></span>
                   <span><?php echo esc_attr(get_the_date('M')); ?></span>
@@ -101,14 +101,15 @@ get_template_part('index','banner'); ?>
            <span aria-hidden="true">&times;</span></button>
            <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
          </div><div style="margin-left:140px;" class="modal-body">
-<?php the_post_thumbnail('', $defalt_arg); ?><br>
+
+<br>
            </div>
             <div style="margin-top:-35px;" class="modal-body">
-              <form id="modal-ebook-download" action="http://fast-eyrie-67178.herokuapp.com//" name="modal-sqz-pg"  method="post">
-                <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
+                <form id="_modal-ebook-download" action="http://localhost" name="modal-sqz-pg"  method="post">
+<input name="ebook_hidden" type="hidden" id="hidden_book" value="">
                 <input name="method" type="hidden" id="" value="ebook">
-               <input style="margin-left:75px;" type="text" value="NOME" name="nome" size="37"/>
-               <input style="margin-left:75px;" type="text" value="EMAIL" name="email" size="37"/>
+               <input style="margin-left:75px;" type="text" value="SEU NOME" name="nome" size="37"/>
+               <input style="margin-left:75px;" type="text" value="SEU EMAIL" name="email" size="37"/>
                <br><input style="margin-left:75px;"  size="41" type="submit"
                name="lead-ebook-docker" class="btn btn-default"
                value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL"></form>
@@ -117,7 +118,7 @@ get_template_part('index','banner'); ?>
                  <div id="error" class="alert alert-warning">
                    <strong>Error!</strong> Erro ao solicitar Ebook</div>
                    <div id="preload">
-                     <img src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/latinabigass/img/load.gif"
+                     <img src="http://localhost/wp-content/themes/latinabigass/img/load.gif"
                       width="100" height="100" />
   </div></div></div></div></div><!-- closeModalBanner -->
 </main>
@@ -130,10 +131,10 @@ get_template_part('index','banner'); ?>
 <!-- theme -->
 <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">-->
 <!-- scrips -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 <script>
 
   $(function() {
@@ -143,6 +144,7 @@ get_template_part('index','banner'); ?>
     $('#preload').hide();
 
 $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
+
     $("#modal-download-start").click(function(){
         $("#mymodal").modal('show');
 
@@ -189,7 +191,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
           submitHandler: function(form) {
               $(form).ajaxSubmit({
                   type:"POST",
-                  url:"http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/contactForm.php",
+                  url:"http://localhost/wp-content/themes/shopbiz-lite/contactForm.php",
                   data: $(form).serialize(),
                   beforeSend: function (){
                     data['button'] = $("#modal-download-start").val();
@@ -235,7 +237,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://fast-eyrie-67178.herokuapp.com//",
+                          url:"http://localhost/",
                           beforeSend: function (){
                             //alert($("#modal-download-start").val());
                             $("#preload").fadeIn();
@@ -243,6 +245,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                           success: function() {
                                 //  $('#contact').fadeTo( "slow", 0.15, function() {
                                   $(this).find(':input').attr('disabled', 'disabled');
+                                  $('#sucess').html('<a href="https://drive.google.com/file/d/0ByRILKhxz02OREZjM2xQZnQ1YXc/view?usp=sharing">Clique aqui para baixar</a>')
                                   $('#sucess').fadeIn();
                                   $('#preload').hide();
                               //});

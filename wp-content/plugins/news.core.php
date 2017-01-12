@@ -37,7 +37,7 @@ final class Connection {
 
   final public function __construct(){}
 
-  public static function getConnection(){
+  public static function get(){
     if(isset(self::$conn)){
       return self::$conn;
     }
@@ -82,9 +82,9 @@ class DaoNewslleter {
     $data = $this->nlDataProvider->getData();
     //@Book persist
     if(isset($data["button_book"])){
-
-      $bool = $this->wpdb->insert("wp_book", ["title"=>$data['book_name'],
+      /*
        "date_created"=> current_time( 'mysql' ), "date_updated"=> current_time( 'mysql' )]);
+       $bool = $this->wpdb->insert("wp_book", ["title"=>$data['book_name'],
 
       $book = $this->wpdb->get_results('SELECT id FROM wp_book ORDER BY id DESC limit 1');
       $data['book_id'] = $book[0]->id;
@@ -93,6 +93,50 @@ class DaoNewslleter {
       unset($data['button_book']);
 
        return ($this->wpdb->insert($this->table, $data)) ? true : false;
+       */
+       //@newslleter persist
+       try {
+         $sth = Connection::open()->prepare(
+            "INSERT INTO wp_book (title,datecreated,dateupdated)
+             VALUES (
+               :title, :datecreated,:dateupdated)
+            ");
+
+         $sth->bindValue(':title', $data['book_name'] . ":". $data['button_book'] , PDO::PARAM_STR);
+         $sth->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+         $sth->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+
+         $sth->execute();
+         $sth2 = Connection::open()->prepare("SELECT id FROM wp_book ORDER BY id DESC limit 1");
+         $sth2->execute();
+
+         $result = $sth2->fetch(PDO::FETCH_OBJ);
+
+         $sth3 = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
+           (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+             VALUES (
+               :name,
+               :email,:ip,:msg,
+               :book_id, :status,
+               :datecreated,:dateupdated)
+            ");
+
+         $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
+         $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
+         $sth3->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
+         $sth3->bindValue(':msg', "newslleter:ebook", PDO::PARAM_STR);
+         $sth3->bindValue(':book_id', $result->id, PDO::PARAM_INT);
+         $sth3->bindValue(':status',Newslleter::STATUS['ebook_request'] , PDO::PARAM_INT);
+         $sth3->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+         $sth3->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
+         var_dump($data);
+         var_dump($result->id);
+         var_dump($sth->execute());exit;
+         return ($sth->execute()) ? true : false;
+
+         } catch (PDOException $e) {
+           echo 'Connection failed: ' . $e->getMessage();
+         }
     }
     //@newslleter persist
     try {
@@ -113,16 +157,12 @@ class DaoNewslleter {
       $sth->bindValue(':status',Newslleter::STATUS['active_newslleter'] , PDO::PARAM_INT);
       $sth->bindValue(':datecreated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
       $sth->bindValue(':dateupdated', date("Y-m-d H:i:s") , PDO::PARAM_STR);
-      if($sth->execute()){
-        return true;
-      }
-      else{
-	return false;
-      }
 
-  } catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
-}
+      return ($sth->execute()) ? true : false;
+
+      } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+      }
     //return ($this->wpdb->insert($this->table, $data)) ? true : false;
   }
 
@@ -227,7 +267,9 @@ class Newslleter {
 
   public function set_ebookHidden($ebookHidden){
     $this->data['button_book'] = (isset($ebookHidden)) ? filter_var(trim($ebookHidden), FILTER_SANITIZE_STRING) : null;
-    $this->data['book_name'] = substr($this->data['button_book'], 8);
+    $booksMeta = explode(":", substr($this->data['button_book'], 0));
+    $this->data["book_name"] = $booksMeta[0];
+    $this->data['button_book'] = $booksMeta[1] . $booksMeta[2];
   }
 
   public function get_ebookHidden() {

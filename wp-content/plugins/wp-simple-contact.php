@@ -62,8 +62,8 @@ if(@$_POST['method'] == 'newslleter'){
     $news->email = $_POST['email'];
     $news->ip = $_SERVER['SERVER_ADDR'];
     $news->status = Newslleter::STATUS['ebook_request'];
-    $news->date_created = current_time( 'mysql' );
-    $news->date_updated = current_time( 'mysql' );
+    $news->date_created =  date("Y-m-d H:i:s");
+    $news->date_updated =  date("Y-m-d H:i:s");
     $news->ebookHidden = $_POST['ebook_hidden'];
     //data provider
     $dataProvider = new NewslleterDataProvider($news);
