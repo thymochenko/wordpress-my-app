@@ -88,7 +88,7 @@ $dao->setTable('newslleter_contact');
 </thead>
 <tbody>
   <?php
-   if(isset($dao->getAll())){ $d = $dao->getAll(); @sort($d['news'], SORT_NUMERIC); }
+   if($dao->getAll()){ $d = $dao->getAll(); @sort($d['news'], SORT_NUMERIC); }
    foreach($d['news'] as $newslleter):?>
 <tr>
     <td style=""><?php  echo $newslleter->name ?></td>
