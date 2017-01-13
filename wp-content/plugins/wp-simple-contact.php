@@ -23,7 +23,7 @@ if(@$_POST['method'] == 'newslleter'){
   $news->email = $_POST['email'];
 //$news->email = 'henkosato5@gmail.com';
   $news->ip = $_SERVER['SERVER_ADDR'];
-  $news->status = Newslleter::STATUS['active_newslleter'];
+  $news->status = Newslleter::active_newslleter;
   $news->date_created = current_time( 'mysql' );
   $news->date_updated = current_time( 'mysql' );
 //$news->ebook_hidden = "kkkk";
@@ -62,7 +62,7 @@ if(@$_POST['method'] == 'newslleter'){
     $news->name = $_POST['nome'];
     $news->email = $_POST['email'];
     $news->ip = $_SERVER['SERVER_ADDR'];
-    $news->status = Newslleter::STATUS['ebook_request'];
+    $news->status = Newslleter::ebook_request;
     $news->date_created =  date("Y-m-d H:i:s");
     $news->date_updated =  date("Y-m-d H:i:s");
     $news->ebookHidden = $_POST['ebook_hidden'];
@@ -129,7 +129,7 @@ if(@$_POST['method'] == 'newslleter'){
   $news->email = $_POST['email'];
   $news->name = $_POST['name'];
   $news->ip = $_SERVER['SERVER_ADDR'];
-  $news->status = Newslleter::STATUS['msg'];
+  $news->status = Newslleter::msg;
   $news->date_created = current_time( 'mysql' );
   $news->date_updated = current_time( 'mysql' );
   $news->msg =  $_POST['msg'];
