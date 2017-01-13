@@ -35,7 +35,7 @@ final class Connection {
     "password"=> "7c3ae88652c3ea9b27612a5009163c2c1b86fab876efd9231bfa84f958955cb4"
   ];
   */
-  public static DATABASE_CONF = array(
+  static $DATABASE_CONF = array(
     "dbname"=>"wordpress",
     "host"=>"localhost",
     "username"=>"postgres",
@@ -60,9 +60,9 @@ final class Connection {
   }
 
   public static function open(){
-    self::$conn = new PDO("pgsql:dbname=" .  self::DATABASE_CONF["dbname"] .
-     " host=" . self::DATABASE_CONF["host"], self::DATABASE_CONF["username"],
-     self::DATABASE_CONF["password"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING] );
+    self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF["dbname"] .
+     " host=" . self::DATABASE_CONF["host"], self::$DATABASE_CONF["username"],
+     self::$DATABASE_CONF["password"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING] );
      self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
      return self::$conn;
   }
