@@ -883,7 +883,7 @@ homeslider();
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://localhost",
+                          url:"/",
                           beforeSend: function (){
 
                             $("#preload").fadeIn();
