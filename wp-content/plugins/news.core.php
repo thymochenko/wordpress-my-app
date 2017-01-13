@@ -143,6 +143,9 @@ class DaoNewslleter {
     }
     //@newslleter persist
     try {
+    
+      var_dump($data);
+
       $sth = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
         (name,email,ip, msg, book_id, status,datecreated, dateupdated)
           VALUES (
@@ -161,6 +164,10 @@ class DaoNewslleter {
 
       $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
       $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+
+      var_dump($sth);
+
+      var_dump($sth->execute());exit;
 
       return ($sth->execute()) ? true : false;
 
