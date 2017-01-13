@@ -297,7 +297,7 @@ Skip to content</a>
           <!-- Product -->
 
 
-					<?php $q = new WP_Query(['post_type' => 'book']);?>
+					<?php $q = new WP_Query(array('post_type' => 'book'));?>
 							 <?php if ($q->have_posts()) :?>
 								 <?php while ($q->have_posts()) : $q->the_post();?>
 					 <div class="item">
@@ -569,7 +569,7 @@ border-color: ;
       </div>
       <div class="clear"></div>
       <div class="row">
-				<?php $q = new WP_Query(['order' => 'DESC', 'posts_per_page'=> 3 ]);?>
+				<?php $q = new WP_Query(array('order' => 'DESC', 'posts_per_page'=> 3 ));?>
 						 <?php if ($q->have_posts()) :?>
 							 <?php while ($q->have_posts()) : $q->the_post();?>
       <div class="col-md-4 wow pulse animated">
@@ -698,7 +698,7 @@ border-color: ;
 								</div>
 								<div id="footer_recent_blog-3" class="col-md-3 col-sm-6 rotateInDownLeft
 								 animated ta-widget widget_footer_recent_blog"><h6>Últimas notícias</h6>
-								 <?php $q = new WP_Query(['order' => 'DESC', 'posts_per_page'=> 3 ]);?>
+								 <?php $q = new WP_Query(array('order' => 'DESC', 'posts_per_page'=> 3 ));?>
 											<?php if ($q->have_posts()) :?>
 												<?php while ($q->have_posts()) : $q->the_post();?>
 					<div class="media ta-blog-post">
