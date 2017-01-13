@@ -182,7 +182,7 @@ class DaoNewslleter {
 
     $data = array();
     if(isset($result1)){
-        $objects = ['news'=>$result1, 'books'=>@$result2];
+        $objects = array('news'=>$result1, 'books'=>@$result2);
         for($i =0; $i < count($objects['news']); $i++){
           if(isset($objects['books'][$i]->title)){
             $objects['news'][] = $objects['books'][$i];
