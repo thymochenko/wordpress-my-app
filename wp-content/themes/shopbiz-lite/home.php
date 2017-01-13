@@ -883,7 +883,7 @@ homeslider();
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"/",
+                          url:"http://ec2-54-245-152-242.us-west-2.compute.amazonaws.com",
                           beforeSend: function (){
 
                             $("#preload").fadeIn();
