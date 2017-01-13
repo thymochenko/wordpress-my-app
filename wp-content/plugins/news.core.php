@@ -62,7 +62,7 @@ final class Connection {
   public static function open(){
     self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF["dbname"] .
      " host=" . self::$DATABASE_CONF["host"], self::$DATABASE_CONF["username"],
-     self::$DATABASE_CONF["password"], [PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING] );
+     self::$DATABASE_CONF["password"], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING) );
      self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
      return self::$conn;
   }
