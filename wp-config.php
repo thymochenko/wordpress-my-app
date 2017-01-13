@@ -28,7 +28,7 @@ define('DB_USER', "postgres");
 define('DB_PASSWORD', "silvia25");
 
 /** MySQL hostname */
-define('DB_HOST', "localhost");
+define('DB_HOST', "wordpress.ec2-54-245-152-242.us-west-2.compute.amazonaws.com");
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
