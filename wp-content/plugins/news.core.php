@@ -35,12 +35,12 @@ final class Connection {
     "password"=> "7c3ae88652c3ea9b27612a5009163c2c1b86fab876efd9231bfa84f958955cb4"
   ];
   */
-  const DATABASE_CONF = [
+  public static DATABASE_CONF = array(
     "dbname"=>"wordpress",
     "host"=>"localhost",
     "username"=>"postgres",
     "password"=> "silvia25"
-  ];
+  );
 
   final public function __construct(){}
 
@@ -180,7 +180,7 @@ class DaoNewslleter {
 
     ', object);
 
-    $data = [];
+    $data = array();
     if(isset($result1)){
         $objects = ['news'=>$result1, 'books'=>@$result2];
         for($i =0; $i < count($objects['news']); $i++){
@@ -207,8 +207,11 @@ class Newslleter {
 
   protected $data;
 
-  const STATUS = ['active_newslleter'=>1, 'inactive'=>2, 'canceled'=>3,
-   'ebook_request' => 4, 'msg' => 5];
+  const active_newslleter = 1; 
+  const inactive = 2;
+  const canceled = 3;
+  const ebook_request = 4;
+  const msg = 5;
 
   public function __construct(){
 
@@ -218,7 +221,7 @@ class Newslleter {
     if(isset($this->data)){
         return $this->data;
     }else{
-      return [];
+      return array();
     }
   }
 
@@ -290,7 +293,7 @@ class Newslleter {
   }
 
 }
-
+/*
 class MailSender {
 
     protected $data;
@@ -319,3 +322,4 @@ class MailSender {
 }
 //$sender = new MailSender($news);
 //$sender->
+**/

@@ -34,7 +34,7 @@ if(@$_POST['method'] == 'newslleter'){
   $dao->setDataProvider($dataProvider);
   $dao->setTable('newslleter_contact');
   $dao->store();
-
+ /*
   $mail = new MailSender($dataProvider);
   $mail->send(function() use ($mail){
   $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
@@ -55,6 +55,7 @@ if(@$_POST['method'] == 'newslleter'){
   //var_dump($mail->getData()['name']);
   $mailWrapper->send();
   });
+*/
 }elseif(@$_POST['method'] == 'ebook'){
     //domain object
     $news = new Newslleter();
@@ -73,7 +74,8 @@ if(@$_POST['method'] == 'newslleter'){
     $dao->setDataProvider($dataProvider);
     $dao->setTable('newslleter_contact');
     $dao->store();
-
+/*
+ 
     $mail = new MailSender($dataProvider);
     $mail->send(function() use ($mail){
     $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
@@ -121,6 +123,7 @@ if(@$_POST['method'] == 'newslleter'){
     $whapper2->send();
 
     });
+*/
 }elseif(@$_POST['method'] == 'contact'){
   $news = new Newslleter();
   $news->email = $_POST['email'];
@@ -138,7 +141,8 @@ if(@$_POST['method'] == 'newslleter'){
   $dao->setDataProvider($dataProvider);
   $dao->setTable('newslleter_contact');
   $dao->store();
-
+/*
+ 
   $mail = new MailSender($dataProvider);
   $mail->send(function() use ($mail){
     $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
@@ -160,6 +164,7 @@ if(@$_POST['method'] == 'newslleter'){
     $mailWrapper->send();
     return ;
   });
+*/
 }
 
 add_action('admin_menu', 'my_plugin_menu');

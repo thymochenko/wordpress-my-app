@@ -88,17 +88,17 @@ $dao->setTable('newslleter_contact');
 </thead>
 <tbody>
   <?php
-   if(isset($dao->getAll()['news'])){ $d = $dao->getAll()['news']; @sort($d, SORT_NUMERIC); }
+   if(isset($dao->getAll())){ $d = $dao->getAll(); ['news']; @sort($d, SORT_NUMERIC); }
    foreach($d as $newslleter):?>
 <tr>
     <td style=""><?php  echo $newslleter->name ?></td>
     <td><?php  echo $newslleter->email ?></td>
     <td><?php  if(isset($newslleter->datecreated)):?><?php  echo $newslleter->datecreated ?><?php endif; ?></td>
-    <td> <?php  if ($newslleter->status == Newslleter::STATUS['active_newslleter']):?> Newslleter Ativo <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::STATUS['inactive']):?> Inativo <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::STATUS['canceled']):?> cancelado <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::STATUS['ebook_request']):?> Ebook  <?php echo @$newslleter->title ?> <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::STATUS['msg']):?> Mensagem <?php endif; ?>
+    <td> <?php  if ($newslleter->status == Newslleter::active_newslleter):?> Newslleter Ativo <?php endif; ?>
+      <?php  if ($newslleter->status == Newslleter::inactive):?> Inativo <?php endif; ?>
+      <?php  if ($newslleter->status == Newslleter::canceled):?> cancelado <?php endif; ?>
+      <?php  if ($newslleter->status == Newslleter::ebook_request):?> Ebook  <?php echo @$newslleter->title ?> <?php endif; ?>
+      <?php  if ($newslleter->status == Newslleter::msg):?> Mensagem <?php endif; ?>
     </td>
 </tr>
 <?php endforeach; ?>
