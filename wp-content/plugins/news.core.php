@@ -42,6 +42,13 @@ final class Connection {
     "password"=> "silvia25"
   );
 
+  static $DATABASE_CONF_REMOTE = = array(
+    "dbname"=>"wordpress",
+    "host"=>"wordpress.ec2-54-245-152-242.us-west-2.compute.amazonaws.com",
+    "username"=>"postgres",
+    "password"=> "silvia25"
+  );
+
   final public function __construct(){}
 
   public static function get(){
@@ -60,12 +67,20 @@ final class Connection {
   }
 
   public static function open(){
-    self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF["dbname"] .
-     " host=" . self::$DATABASE_CONF["host"], self::$DATABASE_CONF["username"],
-     self::$DATABASE_CONF["password"], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING) );
-     self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-     return self::$conn;
-  }
+    if($_SERVER['HTTP_HOST'] == 'localhost'){
+        self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF["dbname"] .
+        " host=" . self::$DATABASE_CONF["host"], self::$DATABASE_CONF["username"],
+        self::$DATABASE_CONF["password"], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING) );
+        self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return self::$conn;
+    }
+    else{
+        self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF_REMOTE["dbname"] .
+        " host=" . self::$DATABASE_CONF_REMOTE["host"], self::$DATABASE_CONF_REMOTE["username"],
+        self::$DATABASE_CONF_REMOTE["password"], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING) );
+        self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return self::$conn;
+    }
 }
 
 
