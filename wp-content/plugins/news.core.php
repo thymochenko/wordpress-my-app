@@ -42,9 +42,9 @@ final class Connection {
     "password"=> "silvia25"
   );
 
-  static $DATABASE_CONF_REMOTE = = array(
+  static $DATABASE_CONF_REMOTE = array(
     "dbname"=>"wordpress",
-    "host"=>"wordpress.ec2-54-245-152-242.us-west-2.compute.amazonaws.com",
+    "host"=>"wordpress.clo6jnwupfzu.us-west-2.rds.amazonaws.com",
     "username"=>"postgres",
     "password"=> "silvia25"
   );

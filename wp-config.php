@@ -31,7 +31,7 @@ define('DB_PASSWORD', "silvia25");
 if($_SERVER['HTTP_HOST'] == 'localhost'){
 	define('DB_HOST', "localhost");
 } else{
-	define('DB_HOST', "wordpress.ec2-54-245-152-242.us-west-2.compute.amazonaws.com");
+	define('DB_HOST', "wordpress.clo6jnwupfzu.us-west-2.rds.amazonaws.com");
 }
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8');
