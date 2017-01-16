@@ -4,9 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="https://themeansar.com/demo/wp/shopbiz/default/xmlrpc.php">
-<title>Shopbiz WordPress Theme &#8211; Just another WordPress site</title>
+<title>Timo Cabral - Cursos de Desenvolvimento e criação de sites  </title>
 <meta name='robots' content='noindex,follow' />
 <link rel='dns-prefetch' href='//www.google.com' />
 <link rel='dns-prefetch' href='//maps.googleapis.com' />
