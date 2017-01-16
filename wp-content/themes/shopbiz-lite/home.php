@@ -106,7 +106,7 @@ Skip to content</a>
 
         <!-- Navigation -->
         <div class="collapse navbar-collapse" id="navbar-wp">
-          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="http://localhost">Home</a></li>
+          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="<?php echo get_site_url(); ?>">Home</a></li>
 <li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="<?php echo get_site_url(); ?>/index.php/sobre-mim/">Sobre mim</a></li>
 <li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="<?php echo get_site_url(); ?>/index.php/blog/">Blog</a></li>
 <!--<li id="menu-item-216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-216 dropdown"><a title="Portfolio" href="#">Portfolio <span class="caret"></span></a>

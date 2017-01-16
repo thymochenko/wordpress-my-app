@@ -63,8 +63,7 @@ img.emoji {
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;extension=.js&#038;output=embed&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>-->
 <script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 
-<link rel="canonical" href="http://fast-eyrie-67178.herokuapp.com//" />
-<link rel='shortlink' href='http://fast-eyrie-67178.herokuapp.com//' />
+<link rel="canonical" href="<?php echo get_site_url(); ?>" />
 
     <style>
         </style>
@@ -82,7 +81,7 @@ img.emoji {
 <body class="home page page-id-4 page-template page-template-templates page-template-template-frontpage page-template-templatestemplate-frontpage-php wp-custom-logo wide <?php body_class(); ?>" >
 <div class="wrapper">
 <a style="display:none;" class="skip-link screen-reader-text" href="#content">
-Skip to content</a>
+</a>
 <header>
   <!--==================== TOP BAR ====================-->
   <div class="ta-head-detail hidden-xs hidden-sm">
@@ -107,7 +106,7 @@ Skip to content</a>
       <div class="container">
         <!-- Start Navbar Header -->
         <div class="navbar-header">
-          <a href="https://themeansar.com/demo/wp/shopbiz/default/"
+          <a href="<?php echo get_site_url(); ?>"
 					class="custom-logo-link"
 					 rel="home" itemprop="url">
 					 <img width="150" height="35"
