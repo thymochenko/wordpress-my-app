@@ -3,7 +3,7 @@
  * Get an OAuth2 token from Google.
  * * Install this script on your server so that it's accessible
  * as [https/http]://<yourdomain>/<folder>/get_oauth_token.php
- * e.g.: http://fast-eyrie-67178.herokuapp.com//phpmail/get_oauth_token.php
+ * e.g.: <?php echo get_site_url(); ?>/phpmail/get_oauth_token.php
  * * Ensure dependencies are installed with 'composer install'
  * * Set up an app in your Google developer console
  * * Set the script address as the app's redirect URL
@@ -26,7 +26,7 @@ session_start();
 
 //If this automatic URL doesn't work, set it yourself manually
 $redirectUri = isset($_SERVER['HTTPS']) ? 'https://' : 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-//$redirectUri = 'http://fast-eyrie-67178.herokuapp.com//phpmailer/get_oauth_token.php';
+//$redirectUri = '<?php echo get_site_url(); ?>/phpmailer/get_oauth_token.php';
 
 //These details obtained are by setting up app in Google developer console.
 $clientId = 'RANDOMCHARS-----duv1n2.apps.googleusercontent.com';

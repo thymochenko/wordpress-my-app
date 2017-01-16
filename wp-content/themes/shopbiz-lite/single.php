@@ -15,10 +15,10 @@ get_template_part('index','banner'); ?>
          <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
        </div><div class="modal-body">
          <img style="margin-left:25px;"
-         src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg"
+         src="<?php echo get_site_url(); ?>/wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg"
           width="500" height="300"/></div>
           <div style="margin-top:-35px;" class="modal-body">
-            <form id="modal-ebook-download_" action="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/contactForm.php" name="_modal-sqz-pg"  method="post">
+            <form id="modal-ebook-download_" action="<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/contactForm.php" name="_modal-sqz-pg"  method="post">
               <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
              <input style="margin-left:75px;" type="text" value="NOME" name="nome" size="37"/>
              <input style="margin-left:75px;" type="text" value="EMAIL" name="email" size="37"/>
@@ -30,7 +30,7 @@ get_template_part('index','banner'); ?>
                <div id="error" class="alert alert-warning">
                  <strong>Error!</strong> Erro ao solicitar Ebook</div>
                  <div id="preload">
-                   <img src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/latinabigass/img/load.gif"
+                   <img src="<?php echo get_site_url(); ?>/wp-content/themes/latinabigass/img/load.gif"
                     width="100" height="100" />
 </div></div></div></div></div><!-- closeModalBanner -->
 <!-- =========================
@@ -228,7 +228,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/contactForm.php",
+                          url:"<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/contactForm.php",
                           beforeSend: function (){
                             $("#preload").fadeIn();
                           },

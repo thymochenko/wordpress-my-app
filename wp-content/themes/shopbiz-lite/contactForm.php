@@ -40,7 +40,7 @@
          $mail->Body .= " Ola  {$nome}! Segue o Ebook Solicitado :  <br />";
          $mail->Body .= " Atenciosamente: Timo Cabral do timocabral.com:) <br />";
          $mail->addStringAttachment(file_get_contents(
-           $url="http://fast-eyrie-67178.herokuapp.com//wp-content/uploads/{$button_book}"),
+           $url="<?php echo get_site_url(); ?>/wp-content/uploads/{$button_book}"),
             "{$book_name}"
          );
 

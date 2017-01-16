@@ -43,25 +43,25 @@ img.emoji {
 <link rel='stylesheet' id='shopbiz-fonts-css'  href='//fonts.googleapis.com/css?family=Poppins%3A300%2C400%2C500%2C700%7CLato%3A100%2C300%2C400%2C600%2C700%2C900%7Citalic&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
 <link rel='stylesheet' id='Prompt-font-css'  href='https://fonts.googleapis.com/css?family=Prompt&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
 <link rel='stylesheet' id='poppins-font-css'  href='https://fonts.googleapis.com/css?family=Poppins&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='bootstrap-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='style-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/style.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='default-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/colors/default.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='smartmenus-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/jquery.smartmenus.bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='carousel-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/owl.carousel.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='owl_transitions-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/owl.transitions.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='font-awesome-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/font-awesome.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<link rel='stylesheet' id='animate-css'  href='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/css/animate.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/js/navigation.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/js/bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/js/jquery.smartmenus.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/js/jquery.smartmenus.bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/js/owl.carousel.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<link rel='stylesheet' id='bootstrap-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='style-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/style.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='default-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/colors/default.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='smartmenus-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/jquery.smartmenus.bootstrap.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='carousel-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/owl.carousel.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='owl_transitions-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/owl.transitions.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='font-awesome-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/font-awesome.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<link rel='stylesheet' id='animate-css'  href='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/css/animate.css?ver=ae88dc27e8ac3a64975f48bb2766b4ec' type='text/css' media='all' />
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-includes/js/jquery/jquery.js?ver=1.12.4'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.4.1'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/navigation.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/jquery.smartmenus.bootstrap.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/owl.carousel.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <!-- <script type='text/javascript' src='https://www.google.com/recaptcha/api.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.ajaxchimp.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;extension=.js&#038;output=embed&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>-->
-<script type='text/javascript' src='http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 
 <link rel="canonical" href="http://fast-eyrie-67178.herokuapp.com//" />
 <link rel='shortlink' href='http://fast-eyrie-67178.herokuapp.com//' />
@@ -95,8 +95,8 @@ Skip to content</a>
           </ul>
         </div>
         <div class="col-md-6 col-xs-12 col-sm-6">
-          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="http://fast-eyrie-67178.herokuapp.com//index.php/my-courses/">Meus Cursos</a></li>
-<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="http://fast-eyrie-67178.herokuapp.com//index.php/purchase/?plan=203">Minha Conta</a></li>
+          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="<?php echo get_site_url(); ?>/index.php/my-courses/">Meus Cursos</a></li>
+<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="<?php echo get_site_url(); ?>/index.php/purchase/?plan=203">Minha Conta</a></li>
 </ul>        </div>
       </div>
     </div>
@@ -111,7 +111,7 @@ Skip to content</a>
 					class="custom-logo-link"
 					 rel="home" itemprop="url">
 					 <img width="150" height="35"
-					 src="http://fast-eyrie-67178.herokuapp.com//wp-content/themes/shopbiz-lite/images/cropped-shopbiz-logo.png" class="custom-logo" alt="cropped-shopbiz-logo.png" itemprop="logo" /></a>          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wp"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					 src="<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/images/cropped-shopbiz-logo.png" class="custom-logo" alt="cropped-shopbiz-logo.png" itemprop="logo" /></a>          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-wp"> <span class="sr-only">Toggle Navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 						  <span class="icon-bar"></span> </button>
         </div>
         <!-- /End Navbar Header -->
@@ -119,8 +119,8 @@ Skip to content</a>
         <!-- Navigation -->
         <div class="collapse navbar-collapse" id="navbar-wp">
           <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="http://fast-eyrie-67178.herokuapp.com//">Home</a></li>
-<li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="http://fast-eyrie-67178.herokuapp.com//index.php/sobre-mim/">Sobre mim</a></li>
-<li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="http://fast-eyrie-67178.herokuapp.com//index.php/blog/">Blog</a></li>
+<li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="<?php echo get_site_url(); ?>/index.php/sobre-mim/">Sobre mim</a></li>
+<li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="<?php echo get_site_url(); ?>/index.php/blog/">Blog</a></li>
 <!--<li id="menu-item-216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-216 dropdown"><a title="Portfolio" href="#">Portfolio <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-215" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-215"><a title="Portfolio Two Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-two-column/">Portfolio Two Column</a></li>
@@ -128,7 +128,7 @@ Skip to content</a>
 	<li id="menu-item-213" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-213"><a title="Portfolio Four Column" href="https://themeansar.com/demo/wp/shopbiz/default/portfolio-four-column/">Portfolio Four Column</a></li>
 </ul>
 </li>-->
-<li id="menu-item-108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-108"><a title="Pricing" href="http://fast-eyrie-67178.herokuapp.com//index.php/materiais/">Materiais Gratuitos</a></li>
+<li id="menu-item-108" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-108"><a title="Pricing" href="<?php echo get_site_url(); ?>/index.php/materiais/">Materiais Gratuitos</a></li>
 <!-- <li id="menu-item-183" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-183 dropdown"><a title="Blog">Blog <span class="caret"></span></a>
 <ul role="menu" class=" dropdown-menu">
 	<li id="menu-item-186" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-186"><a title="Blog Full width" href="https://themeansar.com/demo/wp/shopbiz/default/blog-full-width/">Blog Full width</a></li>
@@ -143,9 +143,9 @@ Skip to content</a>
 	<li id="menu-item-180" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-180"><a title="My Account" href="https://themeansar.com/demo/wp/shopbiz/default/my-account/">My Account</a></li>
 </ul>
 </li>-->
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://fast-eyrie-67178.herokuapp.com//index.php/consultoria/">Consultoria</a></li>
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://fast-eyrie-67178.herokuapp.com//index.php/course/">Cursos</a></li>
-<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="http://fast-eyrie-67178.herokuapp.com//index.php/contato/">Contato</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="<?php echo get_site_url(); ?>/index.php/consultoria/">Consultoria</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="<?php echo get_site_url(); ?>/index.php/course/">Cursos</a></li>
+<li id="menu-item-130" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-130"><a title="Contact" href="<?php echo get_site_url(); ?>/index.php/contato/">Contato</a></li>
 </ul>        </div>
         <!-- /Navigation -->
       </div>
