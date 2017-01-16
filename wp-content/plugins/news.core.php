@@ -81,8 +81,8 @@ final class Connection {
         self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return self::$conn;
     }
+  }
 }
-
 
 class DaoNewslleter {
 
