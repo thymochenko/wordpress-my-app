@@ -88,9 +88,10 @@ img.emoji {
 				while(have_posts()): the_post(); ?>
 					<meta property="og:url"           content="<?php echo get_permalink(); ?>" />
 					<meta property="og:type"          content="website" />
+					<meta property="fb:app_id" content="1799355743614933">
 					<meta property="og:title"         content="<?php the_title(); ?>" />
-					<meta property="og:description"   content="<?php  the_title();//$content = get_the_content(); echo mb_strimwidth($content, 0, 1, '...'); ?>"/>
-					<meta property="og:image"         content=" <?php the_post_thumbnail('large'); ?>" />
+					<meta property="og:description"   content="<?php $content = get_the_content(); echo mb_strimwidth($content, 0, 100, '...'); ?>"/>
+					<meta property="og:image"         content=" <?php $img = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );echo $img[0]; ?>" />
 					<! -- end-->
 			  <?php endwhile; ?>
 		  <?php endif; ?>
