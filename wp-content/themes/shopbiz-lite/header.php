@@ -12,7 +12,7 @@
 <!-- <link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Feed" href="https://themeansar.com/demo/wp/shopbiz/default/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Comments Feed" href="https://themeansar.com/demo/wp/shopbiz/default/comments/feed/" />-->
 
-		<style type="text/css">
+<style type="text/css">
 img.wp-smiley,
 img.emoji {
 	display: inline !important;
@@ -75,6 +75,25 @@ img.emoji {
 				  ga('send', 'pageview');
 
 				</script>
+				<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8&appId=1799355743614933";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+				<! -- share facebook -->
+				<?php if(have_posts()):
+				while(have_posts()): the_post(); ?>
+					<meta property="og:url"           content="<?php echo get_permalink(); ?>" />
+					<meta property="og:type"          content="website" />
+					<meta property="og:title"         content="<?php the_title(); ?>" />
+					<meta property="og:description"   content="<?php  the_title();//$content = get_the_content(); echo mb_strimwidth($content, 0, 1, '...'); ?>"/>
+					<meta property="og:image"         content=" <?php the_post_thumbnail('large'); ?>" />
+					<! -- end-->
+			  <?php endwhile; ?>
+		  <?php endif; ?>
 </head>
 <body class="home page page-id-4 page-template page-template-templates page-template-template-frontpage page-template-templatestemplate-frontpage-php wp-custom-logo wide <?php body_class(); ?>" >
 <div class="wrapper">

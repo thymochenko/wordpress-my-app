@@ -33,6 +33,11 @@ get_template_part('index','banner'); ?>
 			        <?php endif; ?></a>
               <article class="small">
                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                <!-- facebook  -->
+	               <div class="fb-share-button"
+		               data-href="<?php echo get_permalink(); ?>"
+		                 data-layout="button_count">
+	                  </div>
                 <div class="ta-blog-category">
                   <i class="fa fa-folder"></i>&nbsp;
                   <?php $cat_list = get_the_category_list();
