@@ -34,7 +34,7 @@ get_template_part('index','banner'); ?>
               <article class="small">
                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
                 <!-- facebook  -->
-	               <div  class="fb-share-button"
+	               <div class="fb-share-button"
 		               data-href="<?php echo get_permalink(); ?>"
 		                 data-layout="button_count">
 	                  </div>

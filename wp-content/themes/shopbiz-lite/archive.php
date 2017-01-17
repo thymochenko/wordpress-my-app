@@ -15,7 +15,7 @@ get_header(); ?>
         <div class="col-md-12">
           <div class="ta-breadcrumb-title">
             <h1>
-				<?php 
+				<?php
 				if ( is_category() ) : ?>
 				<h1><?php echo single_cat_title("", false); ?></h1>
 				<?php elseif ( is_tag() ) : ?>
@@ -30,7 +30,7 @@ get_header(); ?>
 				<?php  _e( "Yearly Archives:", 'shopbiz' );  echo esc_attr((get_the_date( 'Y' ))); ?>
 				<?php else : ?>
 				<?php _e( "Blog Archives", 'shopbiz' ); ?>
-				<?php endif; ?>	
+				<?php endif; ?>
 				<?php if(get_post_meta( get_the_ID(), 'post_description', true ) != '' ) { ?>
 				<p><?php echo get_post_meta( get_the_ID(), 'post_description', true ) ; ?></p>
 				<?php } ?>
@@ -46,10 +46,10 @@ get_header(); ?>
   <div class="container">
     <div class="row">
       <div class="<?php echo ( !is_active_sidebar( 'sidebar_primary' ) ? '12' :'9' ); ?> col-md-9">
-			<?php 
+			<?php
 			if( have_posts() ) :
 			while( have_posts() ): the_post();
-			get_template_part('content',''); 
+			get_template_part('content','');
 			endwhile; endif;
 			get_template_part('content','');
 			?>

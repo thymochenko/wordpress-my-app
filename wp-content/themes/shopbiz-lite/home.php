@@ -22,6 +22,7 @@ ga('create', 'UA-89947056-1', 'auto');
 ga('send', 'pageview');
 
 </script>
+<?php include 'facebook-share.php'; ?>
 		<style type="text/css">
 img.wp-smiley,
 img.emoji {
