@@ -1,38 +1,9 @@
 <!-- =========================
      Page Breadcrumb
 ============================== -->
-
 <?php get_header();
 get_template_part('index','banner'); ?>
 <div class="clearfix"></div>
-<div class="modal fade bs-example-modal-lg" id="mymodal"
- tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
- <div class="modal-dialog" role="document">
-   <div class="modal-content">
-     <div class="modal-header">
-       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-         <span aria-hidden="true">&times;</span></button>
-         <h4 class="modal-title" id="myModalLabel">EBOOK GRATUITO</h4>
-       </div><div class="modal-body">
-         <img style="margin-left:25px;"
-         src="<?php echo get_site_url(); ?>/wp-content/themes/omega/images/DOCKER-EBOOK-LOGO.jpg"
-          width="500" height="300"/></div>
-          <div style="margin-top:-35px;" class="modal-body">
-            <form id="modal-ebook-download_" action="<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/contactForm.php" name="_modal-sqz-pg"  method="post">
-              <input name="ebook_hidden" type="hidden" id="hidden_book" value="">
-             <input style="margin-left:75px;" type="text" value="NOME" name="nome" size="37"/>
-             <input style="margin-left:75px;" type="text" value="EMAIL" name="email" size="37"/>
-             <br><input style="margin-left:75px;"  size="41" type="submit"
-             name="lead-ebook-docker" class="btn btn-default"
-             value="RECEBER EBOOK DOCKER E WORDPRESS NO EMAIL"></form>
-             <br><div id="sucess" class="alert alert-success">
-               <strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
-               <div id="error" class="alert alert-warning">
-                 <strong>Error!</strong> Erro ao solicitar Ebook</div>
-                 <div id="preload">
-                   <img src="<?php echo get_site_url(); ?>/wp-content/themes/latinabigass/img/load.gif"
-                    width="100" height="100" />
-</div></div></div></div></div><!-- closeModalBanner -->
 <!-- =========================
      Page Content Section
 ============================== -->
@@ -58,6 +29,12 @@ get_template_part('index','banner'); ?>
 			        <?php endif; ?></a>
               <article class="small">
                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+                <!-- facebook  -->
+	               <div class="fb-share-button"
+		               data-href="<?php echo get_permalink(); ?>"
+		                 data-layout="button_count">
+	                  </div>
+                    <!-- endfacebook -->
                 <div class="ta-blog-category">
                   <i class="fa fa-folder"></i>&nbsp;
                   <?php $cat_list = get_the_category_list();

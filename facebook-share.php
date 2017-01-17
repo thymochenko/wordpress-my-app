@@ -10,6 +10,7 @@ fjs.parentNode.insertBefore(js, fjs);
 <! -- share facebook -->
 <?php if(is_single() && have_posts()):
 while(have_posts()): the_post(); ?>
+  <link rel="canonical" href="<?php echo get_permalink(); ?>" />
   <meta property="og:url"           content="<?php echo get_permalink(); ?>" />
   <meta property="og:type"          content="website" />
   <meta property="fb:app_id" content="1799355743614933">
@@ -19,6 +20,7 @@ while(have_posts()): the_post(); ?>
   <! -- end-->
  <?php endwhile; ?>
 <?php elseif(is_home()): ?>
+    <link rel="canonical" href="<?php echo get_site_url(); ?>" />
   <meta property="og:url"           content="<?php echo get_site_url(); ?>" />
   <meta property="og:type"          content="website" />
   <meta property="fb:app_id" content="1799355743614933">

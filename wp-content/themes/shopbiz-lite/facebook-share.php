@@ -1,4 +1,5 @@
 <div id="fb-root"></div>
+
 <script>(function(d, s, id) {
 var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) return;
@@ -7,9 +8,10 @@ js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.8&appId=1799355
 fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <! -- share facebook -->
-<?php if(is_single() && have_posts()):
+<?php if(is_single()):
 while(have_posts()): the_post(); ?>
-  <meta property="og:url"           content="<?php echo get_site_url(); ?>" />
+  <link rel="canonical" href="<?php echo get_permalink(); ?>" />
+  <meta property="og:url"           content="<?php echo get_site_url(); ?>2" />
   <meta property="og:type"          content="website" />
   <meta property="fb:app_id" content="1799355743614933">
   <meta property="og:title"         content="<?php the_title(); ?>" />
@@ -18,7 +20,8 @@ while(have_posts()): the_post(); ?>
   <! -- end-->
  <?php endwhile; ?>
 <?php elseif(is_home()): ?>
-  <meta property="og:url"           content="<?php echo get_site_url(); ?>" />
+  <link rel="canonical" href="<?php echo get_site_url(); ?>" />
+  <meta property="og:url"           content="<?php echo get_site_url(); ?>2" />
   <meta property="og:type"          content="website" />
   <meta property="fb:app_id" content="1799355743614933">
   <meta property="og:title"         content="Timo Cabral - Cursos de Desenvolvimento e criação de sites" />
