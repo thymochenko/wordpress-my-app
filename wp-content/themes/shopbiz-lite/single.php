@@ -36,6 +36,7 @@ get_template_part('index','banner'); ?>
 <!-- =========================
      Page Content Section
 ============================== -->
+
  <main id="content">
   <div class="container">
     <div class="row">

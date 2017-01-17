@@ -22,7 +22,7 @@ ga('create', 'UA-89947056-1', 'auto');
 ga('send', 'pageview');
 
 </script>
-<?php include 'facebook-share.php'; ?>
+<?php require_once 'facebook-share.php'; ?>
 		<style type="text/css">
 img.wp-smiley,
 img.emoji {
@@ -60,8 +60,8 @@ img.emoji {
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;extension=.js&#038;output=embed&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>-->
 <script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 
-<link rel="canonical" href="http://localhost/" />
-<link rel='shortlink' href='http://localhost/' />
+<link rel="canonical" href="<?php echo get_site_url(); ?>" />
+<link rel='shortlink' href='<?php echo get_site_url(); ?>' />
 
     <style>
         </style>
@@ -94,7 +94,7 @@ Skip to content</a>
       <div class="container">
         <!-- Start Navbar Header -->
         <div class="navbar-header">
-          <a href="http://localhost"
+          <a href="<?php echo get_site_url(); ?>"
 					class="custom-logo-link"
 					 rel="home" itemprop="url">
 					 <img width="150" height="35"

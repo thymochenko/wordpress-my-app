@@ -38,6 +38,7 @@ get_template_part('index','banner'); ?>
 		               data-href="<?php echo get_permalink(); ?>"
 		                 data-layout="button_count">
 	                  </div>
+                    <!-- endfacebook -->
                 <div class="ta-blog-category">
                   <i class="fa fa-folder"></i>&nbsp;
                   <?php $cat_list = get_the_category_list();

@@ -6,7 +6,7 @@
  */
 
 get_header(); ?>
-  
+
 <!-- Breadcrumb -->
 <div class="ta-breadcrumb-section">
   <div class="overlay">
