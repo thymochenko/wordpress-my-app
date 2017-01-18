@@ -39,7 +39,7 @@ get_template_part('index','banner'); ?>
 
 	                  </div>
 
-                    <!-- endfacebook -->                
+                    <!-- endfacebook -->
 <div class="ta-blog-category">
                   <i class="fa fa-folder"></i>&nbsp;
                   <?php $cat_list = get_the_category_list();
@@ -165,7 +165,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
           submitHandler: function(form) {
               $(form).ajaxSubmit({
                   type:"POST",
-                  url:"http://fast-eyrie-67178.herokuapp.com//",
+                  url:"<?php echo get_site_url() ?>",
                   data: $(form).serialize(),
                   beforeSend: function (){
                     data['button'] = $("#modal-download-start").val();

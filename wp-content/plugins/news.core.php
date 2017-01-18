@@ -109,10 +109,12 @@ class DaoNewslleter {
 
     $data = $this->nlDataProvider->getData();
     //@Book persist
+
     $dateTime = new DateTime();
     $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
-    
+
     if(isset($data["button_book"])){
+
        try {
          $sth = Connection::open()->prepare(
             "INSERT INTO wp_book (title,datecreated,dateupdated)
@@ -157,8 +159,9 @@ class DaoNewslleter {
          }
     }
     //@newslleter persist
-    try {
-      $sth = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
+    if($_POST['newslleter']){
+      try {
+        $sth = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
         (name,email,ip, msg, book_id, status,datecreated, dateupdated)
           VALUES (
             :name,
@@ -167,20 +170,47 @@ class DaoNewslleter {
             :datecreated,:dateupdated)
          ");
 
-      $sth->bindValue(':name', "newslleter:index", PDO::PARAM_STR);
-      $sth->bindValue(':email', $data["email"], PDO::PARAM_STR);
-      $sth->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
-      $sth->bindValue(':msg', "newslleter:index", PDO::PARAM_STR);
-      $sth->bindValue(':book_id', 0, PDO::PARAM_INT);
-      $sth->bindValue(':status',Newslleter::active_newslleter , PDO::PARAM_INT);
+        $sth->bindValue(':name', "newslleter:index", PDO::PARAM_STR);
+        $sth->bindValue(':email', $data["email"], PDO::PARAM_STR);
+        $sth->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
+        $sth->bindValue(':msg', "newslleter:index", PDO::PARAM_STR);
+        $sth->bindValue(':book_id', 0, PDO::PARAM_INT);
+        $sth->bindValue(':status',Newslleter::active_newslleter , PDO::PARAM_INT);
 
-      $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-      $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+        $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+        $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
-      return ($sth->execute()) ? true : false;
+        return ($sth->execute()) ? true : false;
 
-      } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
+        } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+        }
+      }
+
+      if($_POST['method']=='contact'){
+          try {
+
+            $sth4 = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
+              (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+              VALUES (
+                :name,
+                :email,:ip,:msg,
+                :book_id, :status,
+                :datecreated,:dateupdated)
+                ");
+
+                $sth4->bindValue(':name', $data["name"], PDO::PARAM_STR);
+                $sth4->bindValue(':email', $data["email"], PDO::PARAM_STR);
+                $sth4->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
+                $sth4->bindValue(':msg', $data["msg"], PDO::PARAM_STR);
+                $sth4->bindValue(':book_id', 0, PDO::PARAM_INT);
+                $sth4->bindValue(':status',Newslleter::msg , PDO::PARAM_INT);
+                $sth4->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+                $sth4->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+                return ($sth4->execute()) ? true : false;
+         } catch (PDOException $e) {
+           echo 'Connection failed: ' . $e->getMessage();
+         }
       }
     //return ($this->wpdb->insert($this->table, $data)) ? true : false;
   }
@@ -222,7 +252,7 @@ class Newslleter {
 
   protected $data;
 
-  const active_newslleter = 1; 
+  const active_newslleter = 1;
   const inactive = 2;
   const canceled = 3;
   const ebook_request = 4;

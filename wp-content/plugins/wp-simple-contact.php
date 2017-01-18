@@ -75,7 +75,7 @@ if(@$_POST['method'] == 'newslleter'){
     $dao->setTable('newslleter_contact');
     $dao->store();
 /*
- 
+
     $mail = new MailSender($dataProvider);
     $mail->send(function() use ($mail){
     $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
@@ -137,12 +137,13 @@ if(@$_POST['method'] == 'newslleter'){
   $dataProvider = new NewslleterDataProvider($news);
   $dataProvider->setReturnType('array');
   //DAO
+
   $dao = new DaoNewslleter($wpdb);
   $dao->setDataProvider($dataProvider);
   $dao->setTable('newslleter_contact');
   $dao->store();
 /*
- 
+
   $mail = new MailSender($dataProvider);
   $mail->send(function() use ($mail){
     $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
