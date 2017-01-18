@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Timo Cabral - Cursos de Desenvolvimento e criação de sites </title>
-<meta name='robots' content='noindex,follow' />
+<title>Timo Cabral - Cursos de Desenvolvimento e criação de sites</title>
 <link rel='dns-prefetch' href='//www.google.com' />
 <link rel='dns-prefetch' href='//maps.googleapis.com' />
 <link rel='dns-prefetch' href='//fonts.googleapis.com' />
@@ -12,7 +11,7 @@
 <!-- <link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Feed" href="https://themeansar.com/demo/wp/shopbiz/default/feed/" />
 <link rel="alternate" type="application/rss+xml" title="Shopbiz WordPress Theme &raquo; Comments Feed" href="https://themeansar.com/demo/wp/shopbiz/default/comments/feed/" />-->
 
-<style type="text/css">
+		<style type="text/css">
 img.wp-smiley,
 img.emoji {
 	display: inline !important;
@@ -60,6 +59,7 @@ img.emoji {
 <script type='text/javascript' src='https://themeansar.com/demo/wp/shopbiz/default/wp-content/themes/shopbiz/js/jquery.ajaxchimp.min.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false&#038;extension=.js&#038;output=embed&#038;ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>-->
 <script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
+<link rel='shortlink' href="<?php echo get_site_url(); ?>" />
 
     <style>
         </style>
@@ -73,12 +73,12 @@ img.emoji {
 				  ga('send', 'pageview');
 
 				</script>
-				<?php include 'facebook-share.php'; ?>
+				<?php include 'facebook-share.php';?>
 </head>
 <body class="home page page-id-4 page-template page-template-templates page-template-template-frontpage page-template-templatestemplate-frontpage-php wp-custom-logo wide <?php body_class(); ?>" >
 <div class="wrapper">
 <a style="display:none;" class="skip-link screen-reader-text" href="#content">
-</a>
+Skip to content</a>
 <header>
   <!--==================== TOP BAR ====================-->
   <div class="ta-head-detail hidden-xs hidden-sm">

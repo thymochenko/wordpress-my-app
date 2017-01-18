@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Timo Cabral - Cursos de Desenvolvimento e criação de sites  </title>
+<title>Timo Cabral - Cursos de Desenvolvimento e criação de sites </title>
 <meta name='robots' content='noindex,follow' />
 <link rel='dns-prefetch' href='//www.google.com' />
 <link rel='dns-prefetch' href='//maps.googleapis.com' />
@@ -22,7 +22,7 @@ ga('create', 'UA-89947056-1', 'auto');
 ga('send', 'pageview');
 
 </script>
-<?php require_once 'facebook-share.php'; ?>
+<?php include 'facebook-share.php'; ?>
 		<style type="text/css">
 img.wp-smiley,
 img.emoji {
@@ -61,7 +61,7 @@ img.emoji {
 <script type='text/javascript' src='<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/js/custom.js?ver=ae88dc27e8ac3a64975f48bb2766b4ec'></script>
 
 <link rel="canonical" href="<?php echo get_site_url(); ?>" />
-<link rel='shortlink' href='<?php echo get_site_url(); ?>' />
+<link rel='shortlink' href="<?php echo get_site_url(); ?>" />
 
     <style>
         </style>
@@ -105,7 +105,7 @@ Skip to content</a>
 
         <!-- Navigation -->
         <div class="collapse navbar-collapse" id="navbar-wp">
-          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="<?php echo get_site_url(); ?>">Home</a></li>
+          <ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-111" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-4 current_page_item menu-item-111 active"><a title="Home" href="<?php echo get_site_url();?>">Home</a></li>
 <li id="menu-item-110" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-110"><a title="About" href="<?php echo get_site_url(); ?>/index.php/sobre-mim/">Sobre mim</a></li>
 <li id="menu-item-109" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-109"><a title="Services" href="<?php echo get_site_url(); ?>/index.php/blog/">Blog</a></li>
 <!--<li id="menu-item-216" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-216 dropdown"><a title="Portfolio" href="#">Portfolio <span class="caret"></span></a>

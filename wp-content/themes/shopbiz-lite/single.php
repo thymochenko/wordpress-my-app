@@ -1,13 +1,13 @@
 <!-- =========================
      Page Breadcrumb
 ============================== -->
+
 <?php get_header();
 get_template_part('index','banner'); ?>
 <div class="clearfix"></div>
 <!-- =========================
      Page Content Section
 ============================== -->
-
  <main id="content">
   <div class="container">
     <div class="row">
@@ -29,13 +29,18 @@ get_template_part('index','banner'); ?>
 			        <?php endif; ?></a>
               <article class="small">
                 <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                <!-- facebook  -->
+<!-- facebook  -->
+
 	               <div class="fb-share-button"
+
 		               data-href="<?php echo get_permalink(); ?>"
+
 		                 data-layout="button_count">
+
 	                  </div>
-                    <!-- endfacebook -->
-                <div class="ta-blog-category">
+
+                    <!-- endfacebook -->                
+<div class="ta-blog-category">
                   <i class="fa fa-folder"></i>&nbsp;
                   <?php $cat_list = get_the_category_list();
 				          if(!empty($cat_list)) { ?> <?php the_category(', '); ?>

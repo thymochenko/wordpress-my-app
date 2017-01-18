@@ -16,7 +16,7 @@ get_header(); ?>
 <main id="content">
   <div class="container">
     <div class="row">
-      <div class="<?php if( !is_active_sidebar('sidebar-1')) { echo "col-md-12"; } else { echo "col-md-9 col-sm-8"; } ?>">
+      <div class="<?php if( !is_active_sidebar('sidebar-1')) { echo "col-md-12"; } else { echo "col-md-9 col-sm-8"; } ?>"> 
       <?php while(have_posts()){the_post(); get_template_part('content',''); ?>
       <?php } ?>
       <div class="col-md-12 text-center">

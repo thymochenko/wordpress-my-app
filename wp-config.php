@@ -15,7 +15,8 @@
  */
 
 // ** Heroku Postgres settings - from Heroku Environment ** //
-$db = parse_url($_ENV["DATABASE_URL"]);
+define( 'ADMIN_COOKIE_PATH', '/wp-admin' ); //Added by Hide My Wordpress
+$db = parse_url($_ENV["DATABASE_URL"]);
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
