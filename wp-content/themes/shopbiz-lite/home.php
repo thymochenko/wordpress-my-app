@@ -646,7 +646,7 @@ border-color: ;
 																		<i class="fa fa fa-envelope"></i>
 																		</span>
 									<strong>Email:</strong>
-																		timocabralcarvalho@gmail.com									</li>
+																		contato@timocabral.com									</li>
 
 									<li>
 									<span class="icon-addr">
@@ -853,7 +853,7 @@ homeslider();
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"http://ec2-54-245-152-242.us-west-2.compute.amazonaws.com",
+                          url:"<?php echo get_site_url(); ?>",
                           beforeSend: function (){
 
                             $("#preload").fadeIn();
