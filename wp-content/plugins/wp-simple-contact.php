@@ -130,8 +130,8 @@ if(@$_POST['method'] == 'newslleter'){
   $news->name = $_POST['name'];
   $news->ip = $_SERVER['SERVER_ADDR'];
   $news->status = Newslleter::msg;
-  $news->date_created = current_time( 'mysql' );
-  $news->date_updated = current_time( 'mysql' );
+  $news->date_created = date("Y-m-d H:i:s");
+  $news->date_updated = date("Y-m-d H:i:s");
   $news->msg =  $_POST['msg'];
   //data provider
   $dataProvider = new NewslleterDataProvider($news);
@@ -166,6 +166,13 @@ if(@$_POST['method'] == 'newslleter'){
     return ;
   });
 */
+}
+if(isset($_GET['export'])){
+  $news = new Newslleter();
+  $dataProvider = new NewslleterDataProvider($news);
+  $dao = new DaoNewslleter($wpdb);
+  $dao->setTable('newslleter_contact');
+  $dao->exportList();
 }
 
 add_action('admin_menu', 'my_plugin_menu');

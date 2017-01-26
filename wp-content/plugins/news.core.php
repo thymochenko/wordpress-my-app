@@ -75,7 +75,7 @@ final class Connection {
         return self::$conn;
     }
     else{
-        self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF_REMOTE["dbname"] .
+        sdelf::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF_REMOTE["dbname"] .
         " host=" . self::$DATABASE_CONF_REMOTE["host"], self::$DATABASE_CONF_REMOTE["username"],
         self::$DATABASE_CONF_REMOTE["password"], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING) );
         self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -88,7 +88,7 @@ class DaoNewslleter {
 
   protected $wpdb, $nlDataProvider, $conn;
 
-  public function __construct($wpdb){
+  public function __construct($wpdb=null){
       if($wpdb instanceOf wpdb || $wpdb instanceOf wpdb2){
         $this->wpdb = $wpdb;
     }
@@ -158,8 +158,9 @@ class DaoNewslleter {
            echo 'Connection failed: ' . $e->getMessage();
          }
     }
+
     //@newslleter persist
-    if($_POST['newslleter']){
+    if($_POST['method'] == "newslleter"){
       try {
         $sth = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
         (name,email,ip, msg, book_id, status,datecreated, dateupdated)
@@ -213,6 +214,20 @@ class DaoNewslleter {
          }
       }
     //return ($this->wpdb->insert($this->table, $data)) ? true : false;
+  }
+
+  public function exportList(){
+    $sth = Connection::open()->prepare("SELECT DISTINCT name, email FROM wp_newslleter_contact");
+    $sth->execute();
+    while($obj = $sth->fetchObject(__CLASS__)) {
+        $objects[] = $obj;
+    }
+
+    echo "name ; email <br>";
+    foreach ($objects as $k => $news) {
+      echo $news->name . " ; " . $news->email . "<br>";
+    }
+
   }
 
   public function getAll(){

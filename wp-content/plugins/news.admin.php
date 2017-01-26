@@ -77,6 +77,9 @@ $dao->setTable('newslleter_contact');
 }
 }
 </style>
+<div class="menu-admin-wp-news">
+  <h3><a href="?export=true">Export Contacts</a></h3>
+</div>
 <table class="responstable">
 <thead>
 <tr>
