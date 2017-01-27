@@ -1,5 +1,5 @@
 <!-- =========================
-     Page Breadcrumb
+     Page Breadcrumb : posts page
 ============================== -->
 
 <?php get_header();
@@ -8,6 +8,7 @@ get_template_part('index','banner'); ?>
 <!-- =========================
      Page Content Section
 ============================== -->
+
  <main id="content">
   <div class="container">
     <div class="row">
@@ -50,10 +51,44 @@ get_template_part('index','banner'); ?>
                   </a>
                 </div>
                 <?php the_content(); ?>
+                <!-- form call to action -->
+                <section class="ta-subscriber" style="background-image:url('https://themeansar.com/demo/wp/shopbiz/default/wp-content/uploads/2016/11/sub-back.jpg');">
+                  <div class="overlay" style="background-color:">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-6 col-md-offset-1 text-center">
+                          <h4>Você Quer receber atualizações, promoções, videos, conteúdo exclusivo gratuito?</h4>          <h2>Coloque aqui o seu melhor <span>Email</span></h2>          <!-- MAILCHIMP SUBSCRIBE FORM -->
+                          <form id="newslleter" name="newslleter" class="_subscription-form ma_ilchimp f_orm-inline_" method="POST" action="http://localhost">
+                						<input type="hidden" name="method" value="newslleter">
+                            <!-- SUBSCRIPTION SUCCESSFUL OR ERROR MESSAGES -->
+                            <h6 class="subscription-success"></h6>
+                            <h6 class="subscription-error"></h6>
+
+                            <!-- EMAIL INPUT BOX -->
+                            <input type="email" name="email" id="subscriber-email_" placeholder="Seu Email" class="form-control email int-box_">
+
+                            <!-- SUBSCRIBE BUTTON -->
+                            <button type="submit" id="subscribe-button_" class="btn btn-theme">
+                            Assinar            </button>
+                          </form>
+                					<!-- mensagens form -->
+                					<div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
+                					<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
+                					<div id="preload"><img src="<?php echo get_site_url(); ?>/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
+                          <!-- end message form -->
+
+                          <!-- /END SUBSCRIPTION FORM -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <!-- form call to action -->
               </article>
             </div>
           </div>
 		      <?php } ?>
+
           <div class="col-md-12">
             <div class="media ta-info-author-block"> <a href="<?php echo esc_url(get_author_posts_url( get_the_author_meta( 'ID' ) ));?>" class="ta-author-pic"> <?php echo get_avatar( get_the_author_meta( 'ID') , 150); ?> </a>
               <div class="media-body">
@@ -186,6 +221,48 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
               });
           }
       });
+
+      $('#sucess').hide();
+      $('#error').hide();
+      $('#preload').hide();
+
+      $('#newslleter').validate({
+             rules: {
+                 email: {
+                     required: true,
+                     email: true
+                 }
+             },
+             messages: {
+                 email: {
+                     required: "Coloque o seu melhor email"
+                 }
+             },
+             submitHandler: function(form) {
+                 $(form).ajaxSubmit({
+                     type:"POST",
+                     data: $(form).serialize(),
+                     url:"<?php echo get_site_url(); ?>",
+                     beforeSend: function (){
+
+                       $("#preload").fadeIn();
+                     },
+                     success: function() {
+
+                           //  $('#contact').fadeTo( "slow", 0.15, function() {
+                             $(this).find(':input').attr('disabled', 'disabled');
+                             $('#sucess').fadeIn();
+                             $('#preload').hide();
+                         //});
+                     },
+                     error: function() {
+                         //$('#contact').fadeTo( "slow", 0.15, function() {
+                             $('#error').fadeIn();
+                         //});
+                     }
+                 });
+             }
+         });
 
 
 
