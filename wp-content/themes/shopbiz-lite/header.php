@@ -91,8 +91,9 @@ Skip to content</a>
           </ul>
         </div>
         <div class="col-md-6 col-xs-12 col-sm-6">
-          <ul id="menu-top" class="info-right"><li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="<?php echo get_site_url(); ?>/index.php/my-courses/">Meus Cursos</a></li>
-<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="<?php echo get_site_url(); ?>/index.php/purchase/?plan=203">Minha Conta</a></li>
+          <ul id="menu-top" class="info-right">
+						<!--<li id="menu-item-133" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-133"><a title="Cart" href="<?php echo get_site_url(); ?>/index.php/my-courses/">Meus Cursos</a></li>
+<li id="menu-item-131" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-131"><a title="My Account" href="<?php echo get_site_url(); ?>/index.php/purchase/?plan=203">Minha Conta</a></li>-->
 </ul>        </div>
       </div>
     </div>

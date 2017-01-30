@@ -8,7 +8,33 @@ get_template_part('index','banner'); ?>
 <!-- =========================
      Page Content Section
 ============================== -->
-
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="mymodal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span></button>
+         <h4 class="modal-title" id="myModalLabel" style="text-align:center">Cadastre-se agora para receber TODO o nosso conteúdo gratuito</h4>
+       </div><div style="margin-left:140px;" class="modal-body">
+<br>
+         </div>
+          <div style="margin-top:-35px;" class="modal-body">
+              <form id="modal-for-posts" action="<?php echo get_site_url(); ?>" name="modal-sqz-pg"  method="post">
+             <input name="method" type="hidden" id="" value="modal">
+             <input style="margin-left:75px;" type="text" value="SEU NOME" name="nome" size="37"/>
+             <input style="margin-left:75px;" type="text" value="SEU EMAIL" name="email" size="37"/>
+             <br><input style="margin-left:75px;"  size="41" type="submit"
+             name="lead-ebook-docker" class="btn btn-default"
+             value="CLIQUE PARA RECEBER CONTEÚDO VIP"></form>
+             <br><div id="sucess_m" class="alert alert-success">
+               <strong>Ok!</strong> VOCÊ FOI CADASTRADO COM SUCESSO!</div>
+               <div id="error_m" class="alert alert-warning">
+                 <strong>Error!</strong> ERRO AO CADASTRAR</div>
+                 <div id="preload_m">
+                   <img src="<?php echo get_site_url(); ?>/wp-content/themes/latinabigass/img/load.gif"
+                    width="100" height="100" />
+</div></div></div></div></div><!-- closeModalBanner -->
  <main id="content">
   <div class="container">
     <div class="row">
@@ -72,9 +98,9 @@ get_template_part('index','banner'); ?>
                             Assinar            </button>
                           </form>
                 					<!-- mensagens form -->
-                					<div id="sucess" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
-                					<div id="error" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
-                					<div id="preload"><img src="<?php echo get_site_url(); ?>/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
+                          <div id="sucess_n" class="alert alert-success"><strong>Ok!</strong> Verifique o Ebook no seu Email!</div>
+                					<div id="error_n" class="alert alert-warning"><strong>Error!</strong> Erro ao solicitar Ebook</div>
+                					<div id="preload_n"><img src="<?php echo get_site_url(); ?>/wp-content/themes/latinabigass/img/load.gif" width="100" height="100" /></div>
                           <!-- end message form -->
 
                           <!-- /END SUBSCRIPTION FORM -->
@@ -151,13 +177,17 @@ get_template_part('index','banner'); ?>
 <script>
 
   $(function() {
+
 $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
     $("#modal-download-start").click(function(){
         alert($("#modal-download-start").val());
         $("#mymodal").modal('show');
-
-
     });
+
+    setTimeout(function(){
+        $("#mymodal2").modal('show');
+    },25000 );
+
 
 
     $.validator.addMethod("simpleCaptcha", function(value, element) {
@@ -222,9 +252,14 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
           }
       });
 
-      $('#sucess').hide();
-      $('#error').hide();
-      $('#preload').hide();
+
+      $('#sucess_n').hide();
+      $('#error_n').hide();
+      $('#preload_n').hide();
+
+      $('#sucess_m').hide();
+      $('#error_m').hide();
+      $('#preload_m').hide();
 
       $('#newslleter').validate({
              rules: {
@@ -251,8 +286,8 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
 
                            //  $('#contact').fadeTo( "slow", 0.15, function() {
                              $(this).find(':input').attr('disabled', 'disabled');
-                             $('#sucess').fadeIn();
-                             $('#preload').hide();
+                             $('#sucess_n').fadeIn();
+                             $('#preload_n').hide();
                          //});
                      },
                      error: function() {
@@ -266,7 +301,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
 
 
 
-            $('#modal-ebook-download').validate({
+            $('#modal-for-posts').validate({
                   rules: {
                       email: {
                           required: true,
@@ -288,7 +323,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                       $(form).ajaxSubmit({
                           type:"POST",
                           data: $(form).serialize(),
-                          url:"<?php echo get_site_url(); ?>/wp-content/themes/shopbiz-lite/contactForm.php",
+                          url:"<?php echo get_site_url(); ?>",
                           beforeSend: function (){
                             $("#preload").fadeIn();
                           },
@@ -296,8 +331,8 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                                 //  $('#contact').fadeTo( "slow", 0.15, function() {
                                   $(this).find(':input').attr('disabled', 'disabled');
                                   alert(data);
-                                  $('#sucess').fadeIn();
-                                  $('#preload').hide();
+                                  $('#sucess_m').fadeIn();
+                                  $('#preload_m').hide();
                               //});
                           },
                           error: function() {

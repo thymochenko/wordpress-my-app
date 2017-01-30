@@ -6,6 +6,7 @@ GLOBAL $wpdb;
 $dao = new DaoNewslleter($wpdb);
 $dao->setDataProvider($dataProvider);
 $dao->setTable('newslleter_contact');
+$dao->emailsForToday();
 ?>
 <style>
 .responstable {
@@ -96,12 +97,13 @@ $dao->setTable('newslleter_contact');
 <tr>
     <td style=""><?php  echo $newslleter->name ?></td>
     <td><?php  echo $newslleter->email ?></td>
-    <td><?php  if(isset($newslleter->datecreated)):?><?php  echo $newslleter->datecreated ?><?php endif; ?></td>
+    <td><?php  if(isset($newslleter->datecreated)):?><b style="color:red;"><?php  echo $newslleter->datecreated ?></b><?php endif; ?></td>
     <td> <?php  if ($newslleter->status == Newslleter::active_newslleter):?> Newslleter Ativo <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::inactive):?> Inativo <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::canceled):?> cancelado <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::ebook_request):?> Ebook  <?php echo @$newslleter->title ?> <?php endif; ?>
       <?php  if ($newslleter->status == Newslleter::msg):?> Mensagem <?php endif; ?>
+      <?php  if ($newslleter->status == Newslleter::modal):?> Modal <?php endif; ?>
     </td>
 </tr>
 <?php endforeach; ?>

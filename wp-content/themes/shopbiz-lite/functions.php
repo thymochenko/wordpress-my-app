@@ -302,7 +302,7 @@ if ( $query->have_posts() ) :
 	endwhile;
 endif;
 echo '<a href="' . get_the_permalink() . '">';
-echo '<br><br><button type="button" class=" btn-warning">Baixar Agora</button>';
+echo '<br><br><button type="button" class=" btn-warning">BAIXAR Agora</button>';
 echo '</a>';
 // This is where you run the code and display the output
 echo __( '', 'wpb_widget_domain' );

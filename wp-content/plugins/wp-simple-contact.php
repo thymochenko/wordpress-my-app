@@ -166,7 +166,26 @@ if(@$_POST['method'] == 'newslleter'){
     return ;
   });
 */
+}elseif(@$_POST['method'] == 'modal'){
+    //domain object
+    $news = new Newslleter();
+    $news->name = $_POST['nome'];
+    $news->email = $_POST['email'];
+    $news->ip = $_SERVER['SERVER_ADDR'];
+    $news->status = Newslleter::ebook_request;
+    $news->date_created =  date("Y-m-d H:i:s");
+    $news->date_updated =  date("Y-m-d H:i:s");
+    $news->ebookHidden = 'null';
+    //data provider
+    $dataProvider = new NewslleterDataProvider($news);
+    $dataProvider->setReturnType('array');
+    //DAO
+    $dao = new DaoNewslleter($wpdb);
+    $dao->setDataProvider($dataProvider);
+    $dao->setTable('newslleter_contact');
+    $dao->store();
 }
+
 if(isset($_GET['export'])){
   $news = new Newslleter();
   $dataProvider = new NewslleterDataProvider($news);

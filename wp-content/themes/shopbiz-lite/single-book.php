@@ -135,6 +135,11 @@ get_template_part('index','banner'); ?>
 <style>
 #mymodal{
   background-color:rgba(221, 221, 221, 0.9);
+  width: 100%;
+   height: 100%;
+   margin: 0;
+   top: 0;
+   left: 0;
 }
 </style>
 <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->

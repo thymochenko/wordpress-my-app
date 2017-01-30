@@ -113,7 +113,7 @@ class DaoNewslleter {
     $dateTime = new DateTime();
     $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
 
-    if(isset($data["button_book"])){
+    if(isset($data["button_book"]) && $data["button_book"] != ''){
 
        try {
          $sth = Connection::open()->prepare(
@@ -152,6 +152,35 @@ class DaoNewslleter {
          $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
+         return ($sth3->execute()) ? true : false;
+
+         } catch (PDOException $e) {
+           echo 'Connection failed: ' . $e->getMessage();
+         }
+    }
+    //@modal
+
+    if($_POST['method'] == 'modal'){
+
+       try {
+
+         $sth3 = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
+           (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+             VALUES (
+               :name,
+               :email,:ip,:msg,
+               :book_id, :status,
+               :datecreated,:dateupdated)
+            ");
+
+         $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
+         $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
+         $sth3->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
+         $sth3->bindValue(':msg', "newslleter:modal", PDO::PARAM_STR);
+         $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
+         $sth3->bindValue(':status',Newslleter::modal , PDO::PARAM_INT);
+         $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+         $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          return ($sth3->execute()) ? true : false;
 
          } catch (PDOException $e) {
@@ -227,7 +256,14 @@ class DaoNewslleter {
     foreach ($objects as $k => $news) {
       echo $news->name . " ; " . $news->email . "<br>";
     }
+  }
 
+  /*
+  *emails recebidos do dia.
+  */
+  public function emailsForToday(){
+    $date = new DateTime('now');
+    echo $date->format('Y-m-d') . "\n";
   }
 
   public function getAll(){
@@ -272,6 +308,7 @@ class Newslleter {
   const canceled = 3;
   const ebook_request = 4;
   const msg = 5;
+  const modal = 6;
 
   public function __construct(){
 
