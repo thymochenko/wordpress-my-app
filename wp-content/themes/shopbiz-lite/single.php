@@ -186,7 +186,7 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
 
     setTimeout(function(){
         $("#mymodal2").modal('show');
-    },25000 );
+    },1000 );
 
 
 
@@ -330,7 +330,6 @@ $('input[name="ebook_hidden"]:hidden').val($("#modal-download-start").val());
                           success: function() {
                                 //  $('#contact').fadeTo( "slow", 0.15, function() {
                                   $(this).find(':input').attr('disabled', 'disabled');
-                                  alert(data);
                                   $('#sucess_m').fadeIn();
                                   $('#preload_m').hide();
                               //});

@@ -1,12 +1,12 @@
 <?php
 require_once 'news.core.php';
-$dataProvider = new NewslleterDataProvider(new Newslleter());
+$dataProvider = new LeadsDataProvider(new Leads());
 $dataProvider->setReturnType('array');
 GLOBAL $wpdb;
-$dao = new DaoNewslleter($wpdb);
+$dao = new DaoLeads($wpdb);
 $dao->setDataProvider($dataProvider);
-$dao->setTable('newslleter_contact');
-$dao->emailsForToday();
+$dao->setTable('wp_news_leads');
+$collMsgForLast5Days = $dao->emailsForToday();
 ?>
 <style>
 .responstable {
@@ -78,6 +78,11 @@ $dao->emailsForToday();
 }
 }
 </style>
+<div id="last-msg">
+  <h2>Últimas Leads recebidas nos últmos 5 dias :
+     <span style="color:red">[<?php echo count($collMsgForLast5Days);?>]</span></h2>
+  <h3></h3>
+</div>
 <div class="menu-admin-wp-news">
   <h3><a href="?export=true">Export Contacts</a></h3>
 </div>
@@ -92,18 +97,46 @@ $dao->emailsForToday();
 </thead>
 <tbody>
   <?php
-   if($dao->getAll()){ $d = $dao->getAll(); @sort($d['news'], SORT_NUMERIC); }
-   foreach($d['news'] as $newslleter):?>
+   foreach($collMsgForLast5Days as $lead):?>
 <tr>
-    <td style=""><?php  echo $newslleter->name ?></td>
-    <td><?php  echo $newslleter->email ?></td>
-    <td><?php  if(isset($newslleter->datecreated)):?><b style="color:red;"><?php  echo $newslleter->datecreated ?></b><?php endif; ?></td>
-    <td> <?php  if ($newslleter->status == Newslleter::active_newslleter):?> Newslleter Ativo <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::inactive):?> Inativo <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::canceled):?> cancelado <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::ebook_request):?> Ebook  <?php echo @$newslleter->title ?> <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::msg):?> Mensagem <?php endif; ?>
-      <?php  if ($newslleter->status == Newslleter::modal):?> Modal <?php endif; ?>
+    <td style=""><?php  echo $lead->name ?></td>
+    <td><?php  echo $lead->email ?></td>
+    <td><?php  if(isset($lead->datecreated)):?><b style="color:red;"><?php  echo $lead->datecreated ?></b><?php endif; ?></td>
+    <td> <?php  if ($lead->status == Leads::active_newslleter):?> Newslleter Ativo <?php endif; ?>
+      <?php  if ($lead->status == Leads::inactive):?> Inativo <?php endif; ?>
+      <?php  if ($lead->status == Leads::canceled):?> cancelado <?php endif; ?>
+      <?php  if ($lead->status == Leads::ebook_request):?> Ebook  <?php echo @$lead->title ?> <?php endif; ?>
+      <?php  if ($lead->status == Leads::msg):?> Mensagem <?php endif; ?>
+      <?php  if ($lead->status == Leads::modal):?> Modal <?php endif; ?>
+    </td>
+</tr>
+<?php endforeach; ?>
+
+</tbody>
+</table>
+<h1>Todas as leads Cadastradas</h1>
+<table class="responstable">
+<thead>
+<tr>
+<th style="padding: .7em .3em; text-align: center; font-weight: bold; border: 0; ">nome</th>
+<th>email</th>
+<th>data</th>
+<th>tipo</th>
+</tr>
+</thead>
+<tbody>
+  <?php
+   foreach($dao->getAll() as $lead):?>
+<tr>
+    <td style=""><?php  echo $lead->name ?></td>
+    <td><?php  echo $lead->email ?></td>
+    <td><?php  if(isset($lead->datecreated)):?><b style="color:red;"><?php  echo $lead->datecreated ?></b><?php endif; ?></td>
+    <td> <?php  if ($lead->status == Leads::active_newslleter):?> Newslleter Ativo <?php endif; ?>
+      <?php  if ($lead->status == Leads::inactive):?> Inativo <?php endif; ?>
+      <?php  if ($lead->status == Leads::canceled):?> cancelado <?php endif; ?>
+      <?php  if ($lead->status == Leads::ebook_request):?> Ebook  <?php echo @$lead->title ?> <?php endif; ?>
+      <?php  if ($lead->status == Leads::msg):?> Mensagem <?php endif; ?>
+      <?php  if ($lead->status == Leads::modal):?> Modal <?php endif; ?>
     </td>
 </tr>
 <?php endforeach; ?>
@@ -111,5 +144,3 @@ $dao->emailsForToday();
 </tbody>
 </table>
 </body>
-<?php
-?>

@@ -16,131 +16,60 @@ require_once 'news.core.php';
 require_once("utils/PHPMailerAutoload.php");
 
 
-GLOBAL $wpdb;
+//GLOBAL $wpdb;
 if(@$_POST['method'] == 'newslleter'){
-  $news = new Newslleter();
+  $l = new Leads();
 //$news->name = $_POST['nome'];
-  $news->email = $_POST['email'];
-//$news->email = 'henkosato5@gmail.com';
-  $news->ip = $_SERVER['SERVER_ADDR'];
-  $news->status = Newslleter::active_newslleter;
-  $news->date_created = current_time( 'mysql' );
-  $news->date_updated = current_time( 'mysql' );
-//$news->ebook_hidden = "kkkk";
-
-  $dataProvider = new NewslleterDataProvider($news);
+  $l->name = "newslleter:index";
+  $l->email = $_POST['email'];
+  $l->ip = $_SERVER['SERVER_ADDR'];
+  $l->msg = "formulário da página inicial";
+  $l->date_created = date("Y-m-d H:i:s");
+  $l->book_id = 0;
+  $l->status = Leads::active_newslleter;
+  $l->date_updated = date("Y-m-d H:i:s");
+  $l->method = 'newslleter';
+  $dataProvider = new LeadsDataProvider($l);
   $dataProvider->setReturnType('array');
-  $dao = new DaoNewslleter($wpdb);
+  $dao = new DaoLeads();
   $dao->setDataProvider($dataProvider);
-  $dao->setTable('newslleter_contact');
   $dao->store();
- /*
-  $mail = new MailSender($dataProvider);
-  $mail->send(function() use ($mail){
-  $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
-  $mailWrapper->IsSMTP();
-  $mailWrapper->SMTPAuth = true;
-  $mailWrapper->SMTPDebug = 0;
-  $mailWrapper->Host = 'smtp.gmail.com';
-  $mailWrapper->Password = 'a12op34unh';
-  $mailWrapper->Username = 'timocabralcarvalho@gmail.com';
-  $mailWrapper->SMTPSecure = "ssl";
-  $mailWrapper->Port = 465;
-  $mailWrapper->FromName = 'Timo Cabral';
-  $mailWrapper->From = 'timocabralcarvalho@gmail.com';
 
-  $mailWrapper->Body .= " ASSINANTE NEWSLLETER <br />";
-  $mailWrapper->Body .= " email: {$mail->getData()['email']} <br />";
-  $mailWrapper->AddAddress("timocabralcarvalho@gmail.com", "Timo Cabral");
-  //var_dump($mail->getData()['name']);
-  $mailWrapper->send();
-  });
-*/
 }elseif(@$_POST['method'] == 'ebook'){
     //domain object
-    $news = new Newslleter();
-    $news->name = $_POST['nome'];
-    $news->email = $_POST['email'];
-    $news->ip = $_SERVER['SERVER_ADDR'];
-    $news->status = Newslleter::ebook_request;
-    $news->date_created =  date("Y-m-d H:i:s");
-    $news->date_updated =  date("Y-m-d H:i:s");
-    $news->ebookHidden = $_POST['ebook_hidden'];
+    $l = new Leads();
+    $l->name = $_POST['nome'];
+    $l->email = $_POST['email'];
+    $l->msg = "persistindo um livro";
+    $l->ip = $_SERVER['SERVER_ADDR'];
+    $l->status = Leads::ebook_request;
+    $l->method = "ebook";
+    $l->date_created =  date("Y-m-d H:i:s");
+    $l->date_updated =  date("Y-m-d H:i:s");
+    $l->ebookHidden = $_POST['ebook_hidden'];
     //data provider
-    $dataProvider = new NewslleterDataProvider($news);
+    $dataProvider = new LeadsDataProvider($l);
     $dataProvider->setReturnType('array');
-    //DAO
-    $dao = new DaoNewslleter($wpdb);
+    $dao = new DaoLeads();
     $dao->setDataProvider($dataProvider);
-    $dao->setTable('newslleter_contact');
     $dao->store();
-/*
 
-    $mail = new MailSender($dataProvider);
-    $mail->send(function() use ($mail){
-    $mailWrapper = $mail->phpMailerWrapper(new PHPMailer());
-    $mailWrapper->IsSMTP();
-    $mailWrapper->SMTPAuth = true;
-    $mailWrapper->SMTPDebug = 0;
-    $mailWrapper->Host = 'smtp.gmail.com';
-    $mailWrapper->Password = 'a12op34unh';
-    $mailWrapper->Username = 'timocabralcarvalho@gmail.com';
-    $mailWrapper->SMTPSecure = "ssl";
-    $mailWrapper->Port = 465;
-    $mailWrapper->FromName = 'Timo Cabral';
-    $mailWrapper->From = $email;
-    //formatando mensagem
-    $mailWrapper->Body .= " ASSINANTE NEWSLLETER <br />";
-    $mailWrapper->Body .= " email: {$mail->getData()['email']} <br />";
-    $mailWrapper->AddAddress("timocabralcarvalho@gmail.com", "Timo Cabral");
-    //var_dump($mail->getData()['name']);
-    $mailWrapper->send();
-    //mandando o ebook
-    //var_dump($mail->getData());exit;
-    $whapper2 = $mail->phpMailerWrapper(new PHPMailer());
-    $whapper2->IsSMTP();
-    $whapper2->SMTPAuth = true;
-    $whapper2->SMTPDebug = 0;
-    $whapper2->Host = 'smtp.gmail.com';
-    $whapper2->Password = 'a12op34unh';
-    $whapper2->Username = 'timocabralcarvalho@gmail.com';
-    $whapper2->SMTPSecure = "ssl";
-    $whapper2->Port = 465;
-    $whapper2->IsHTML(true);
-    $whapper2->CharSet  = 'utf-8';
-    $whapper2->FromName = 'Timo Cabral';
-    $whapper2->From = "timocabralcarvalho@gmail.com";
-    $whapper2->AddAddress($mail->getData()['email'], 'Timo Cabral');
-    $whapper2->send();
-
-    $whapper2->Body .= " Ola  {$mail->getData()['name']}! Segue o Ebook Solicitado :  <br />";
-    $whapper2->Body .= " Atenciosamente: Timo Cabral do timocabral.com :) <br />";
-    //$whapper2->addStringAttachment(file_get_contents(
-    //  $url="http://localhost/wp-content/uploads/{$mail->getData()['button_book']}"),
-    //   "{$mail->getData()['book_name']}"
-    //);
-
-    $whapper2->send();
-
-    });
-*/
 }elseif(@$_POST['method'] == 'contact'){
-  $news = new Newslleter();
-  $news->email = $_POST['email'];
-  $news->name = $_POST['name'];
-  $news->ip = $_SERVER['SERVER_ADDR'];
-  $news->status = Newslleter::msg;
-  $news->date_created = date("Y-m-d H:i:s");
-  $news->date_updated = date("Y-m-d H:i:s");
-  $news->msg =  $_POST['msg'];
+  $l = new Leads();
+  $l->email = $_POST['email'];
+  $l->name = $_POST['name'];
+  $l->ip = $_SERVER['SERVER_ADDR'];
+  $l->status = Leads::msg;
+  $l->date_created = date("Y-m-d H:i:s");
+  $l->date_updated = date("Y-m-d H:i:s");
+  $l->msg =  $_POST['msg'];
+  $l->method = "contact";
   //data provider
-  $dataProvider = new NewslleterDataProvider($news);
+  $dataProvider = new LeadsDataProvider($l);
   $dataProvider->setReturnType('array');
   //DAO
-
-  $dao = new DaoNewslleter($wpdb);
+  $dao = new DaoLeads();
   $dao->setDataProvider($dataProvider);
-  $dao->setTable('newslleter_contact');
   $dao->store();
 /*
 
@@ -168,29 +97,32 @@ if(@$_POST['method'] == 'newslleter'){
 */
 }elseif(@$_POST['method'] == 'modal'){
     //domain object
-    $news = new Newslleter();
-    $news->name = $_POST['nome'];
-    $news->email = $_POST['email'];
-    $news->ip = $_SERVER['SERVER_ADDR'];
-    $news->status = Newslleter::ebook_request;
-    $news->date_created =  date("Y-m-d H:i:s");
-    $news->date_updated =  date("Y-m-d H:i:s");
-    $news->ebookHidden = 'null';
+    $l = new Leads();
+    $l->name = $_POST['nome'];
+    $l->email = $_POST['email'];
+    $l->ip = $_SERVER['SERVER_ADDR'];
+    $l->status = Leads::modal;
+    $l->date_created =  date("Y-m-d H:i:s");
+    $l->date_updated =  date("Y-m-d H:i:s");
+    $l->ebookHidden = 'null';
+    $l->msg = "cadastrando lead via modal";
+    $l->method = "modal";
     //data provider
-    $dataProvider = new NewslleterDataProvider($news);
+    $dataProvider = new LeadsDataProvider($l);
     $dataProvider->setReturnType('array');
     //DAO
-    $dao = new DaoNewslleter($wpdb);
+    $dao = new DaoLeads();
     $dao->setDataProvider($dataProvider);
-    $dao->setTable('newslleter_contact');
     $dao->store();
+
 }
 
+//lista em formato cvs
 if(isset($_GET['export'])){
-  $news = new Newslleter();
-  $dataProvider = new NewslleterDataProvider($news);
-  $dao = new DaoNewslleter($wpdb);
-  $dao->setTable('newslleter_contact');
+  $l = new Leads();
+  $l = new LeadsDataProvider($l);
+  $dao = new DaoLeads($wpdb);
+  $dao->setTable('wp_news_leads');
   $dao->exportList();
 }
 

@@ -1,11 +1,11 @@
 <?php
 //declare(strict_types=1);
-class NewslleterDataProvider {
+class LeadsDataProvider {
 
   protected $nl,$dataType, $transformedData;
 
-  public function __construct(Newslleter $newslleter){
-      $this->nl = $newslleter;
+  public function __construct(Leads $leads){
+      $this->nl = $leads;
   }
 
   public function setReturnType($type){
@@ -66,8 +66,8 @@ final class Connection {
     }
   }
 
-  public static function open(){
-    if($_SERVER['HTTP_HOST'] == 'localhost'){
+  public static function open($connType=null){
+    if(isset($connType) || isset($_SERVER['HTTP_HOST']) && $_SERVER['HTTP_HOST'] == 'localhost'){
         self::$conn = new PDO("pgsql:dbname=" .  self::$DATABASE_CONF["dbname"] .
         " host=" . self::$DATABASE_CONF["host"], self::$DATABASE_CONF["username"],
         self::$DATABASE_CONF["password"], array(PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING) );
@@ -84,7 +84,7 @@ final class Connection {
   }
 }
 
-class DaoNewslleter {
+class DaoLeads {
 
   protected $wpdb, $nlDataProvider, $conn;
 
@@ -94,7 +94,7 @@ class DaoNewslleter {
     }
   }
 
-  public function setDataProvider(NewslleterDataProvider $nlDataProvider){
+  public function setDataProvider(LeadsDataProvider $nlDataProvider){
     $this->nlDataProvider = $nlDataProvider;
   }
 
@@ -103,20 +103,127 @@ class DaoNewslleter {
   }
 
   public function store(){
-    if(!isset($this->wpdb)){
-      throw new Exception("wpdb is not set", 1);
+    $data = $this->nlDataProvider->getData();
+    if(!isset($data)){
+      throw new Exception("Nenhum dado a ser persistido", 1);
     }
 
-    $data = $this->nlDataProvider->getData();
-    //@Book persist
+    if($this->persistBook($data) ||
+    $this->persistModal($data) ||
+    $this->persistNewslleter($data) ||
+    $this->persistContact($data)){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
 
+  public function persistModal($data){
+    $dateTime = new DateTime();
+    $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+    //@modal
+    if($data['method'] == 'modal'){
+
+       try {
+         $sth3 = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
+           (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+             VALUES (
+               :name,
+               :email,:ip,:msg,
+               :book_id, :status,
+               :datecreated,:dateupdated)
+            ");
+
+         $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
+         $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
+         $sth3->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
+         $sth3->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
+         $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
+         $sth3->bindValue(':status', Leads::modal , PDO::PARAM_INT);
+         $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+         $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+         return ($sth3->execute()) ? true : false;
+
+         } catch (PDOException $e) {
+           echo 'Connection failed: ' . $e->getMessage();
+         }
+    }
+  }
+
+  public function persistNewslleter($data){
+    $dateTime = new DateTime();
+    $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+    //@newslleter persist
+    if($data['method'] == "newslleter"){
+      try {
+        $sth = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
+        (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+          VALUES (
+            :name,
+            :email,:ip,:msg,
+            :book_id, :status,
+            :datecreated,:dateupdated)
+         ");
+
+        $sth->bindValue(':name', $data['name'], PDO::PARAM_STR);
+        $sth->bindValue(':email', $data["email"], PDO::PARAM_STR);
+        $sth->bindValue(':ip', $data['ip'], PDO::PARAM_STR);
+        $sth->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
+        $sth->bindValue(':book_id', $data['book_id'], PDO::PARAM_INT);
+        $sth->bindValue(':status', Leads::active_newslleter , PDO::PARAM_INT);
+        //date
+        $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+        $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+
+        return ($sth->execute()) ? true : false;
+
+        } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+        }
+      }
+  }
+
+  public function persistContact($data){
+    $dateTime = new DateTime();
+    $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+    if($data['method'] == 'contact'){
+        try {
+
+          $sth4 = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
+            (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+            VALUES (
+              :name,
+              :email,:ip,:msg,
+              :book_id, :status,
+              :datecreated,:dateupdated)
+              ");
+
+              $sth4->bindValue(':name', $data["name"], PDO::PARAM_STR);
+              $sth4->bindValue(':email', $data["email"], PDO::PARAM_STR);
+              $sth4->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
+              $sth4->bindValue(':msg', $data["msg"], PDO::PARAM_STR);
+              $sth4->bindValue(':book_id', 0, PDO::PARAM_INT);
+              $sth4->bindValue(':status', Leads::msg , PDO::PARAM_INT);
+              $sth4->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+              $sth4->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+              return ($sth4->execute()) ? true : false;
+       } catch (PDOException $e) {
+         echo 'Connection failed: ' . $e->getMessage();
+       }
+    }
+  }
+
+  public function persistBook(array $data){
+    //@Book persist
     $dateTime = new DateTime();
     $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
 
     if(isset($data["button_book"]) && $data["button_book"] != ''){
 
        try {
-         $sth = Connection::open()->prepare(
+         $sth = Connection::open($localconnection=true)->prepare(
             "INSERT INTO wp_book (title,datecreated,dateupdated)
              VALUES (
                :title, :datecreated,:dateupdated)
@@ -134,7 +241,7 @@ class DaoNewslleter {
          $result = $sth2->fetch(PDO::FETCH_OBJ);
          //Connection::close();
 
-         $sth3 = Connection::get()->prepare("INSERT INTO wp_newslleter_contact
+         $sth3 = Connection::get()->prepare("INSERT INTO wp_news_leads
            (name,email,ip, msg, book_id, status,datecreated, dateupdated)
              VALUES (
                :name,
@@ -148,7 +255,7 @@ class DaoNewslleter {
          $sth3->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
          $sth3->bindValue(':msg', "newslleter:ebook", PDO::PARAM_STR);
          $sth3->bindValue(':book_id', $result->id, PDO::PARAM_INT);
-         $sth3->bindValue(':status',Newslleter::ebook_request , PDO::PARAM_INT);
+         $sth3->bindValue(':status', Leads::ebook_request , PDO::PARAM_INT);
          $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
@@ -158,95 +265,10 @@ class DaoNewslleter {
            echo 'Connection failed: ' . $e->getMessage();
          }
     }
-    //@modal
-
-    if($_POST['method'] == 'modal'){
-
-       try {
-
-         $sth3 = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
-           (name,email,ip, msg, book_id, status,datecreated, dateupdated)
-             VALUES (
-               :name,
-               :email,:ip,:msg,
-               :book_id, :status,
-               :datecreated,:dateupdated)
-            ");
-
-         $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
-         $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
-         $sth3->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
-         $sth3->bindValue(':msg', "newslleter:modal", PDO::PARAM_STR);
-         $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
-         $sth3->bindValue(':status',Newslleter::modal , PDO::PARAM_INT);
-         $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-         $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-         return ($sth3->execute()) ? true : false;
-
-         } catch (PDOException $e) {
-           echo 'Connection failed: ' . $e->getMessage();
-         }
-    }
-
-    //@newslleter persist
-    if($_POST['method'] == "newslleter"){
-      try {
-        $sth = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
-        (name,email,ip, msg, book_id, status,datecreated, dateupdated)
-          VALUES (
-            :name,
-            :email,:ip,:msg,
-            :book_id, :status,
-            :datecreated,:dateupdated)
-         ");
-
-        $sth->bindValue(':name', "newslleter:index", PDO::PARAM_STR);
-        $sth->bindValue(':email', $data["email"], PDO::PARAM_STR);
-        $sth->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
-        $sth->bindValue(':msg', "newslleter:index", PDO::PARAM_STR);
-        $sth->bindValue(':book_id', 0, PDO::PARAM_INT);
-        $sth->bindValue(':status',Newslleter::active_newslleter , PDO::PARAM_INT);
-
-        $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-        $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-
-        return ($sth->execute()) ? true : false;
-
-        } catch (PDOException $e) {
-          echo 'Connection failed: ' . $e->getMessage();
-        }
-      }
-
-      if($_POST['method']=='contact'){
-          try {
-
-            $sth4 = Connection::open()->prepare("INSERT INTO wp_newslleter_contact
-              (name,email,ip, msg, book_id, status,datecreated, dateupdated)
-              VALUES (
-                :name,
-                :email,:ip,:msg,
-                :book_id, :status,
-                :datecreated,:dateupdated)
-                ");
-
-                $sth4->bindValue(':name', $data["name"], PDO::PARAM_STR);
-                $sth4->bindValue(':email', $data["email"], PDO::PARAM_STR);
-                $sth4->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
-                $sth4->bindValue(':msg', $data["msg"], PDO::PARAM_STR);
-                $sth4->bindValue(':book_id', 0, PDO::PARAM_INT);
-                $sth4->bindValue(':status',Newslleter::msg , PDO::PARAM_INT);
-                $sth4->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-                $sth4->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-                return ($sth4->execute()) ? true : false;
-         } catch (PDOException $e) {
-           echo 'Connection failed: ' . $e->getMessage();
-         }
-      }
-    //return ($this->wpdb->insert($this->table, $data)) ? true : false;
   }
 
   public function exportList(){
-    $sth = Connection::open()->prepare("SELECT DISTINCT name, email FROM wp_newslleter_contact");
+    $sth = Connection::open($localconnection=true)->prepare("SELECT DISTINCT name, email FROM wp_news_leads");
     $sth->execute();
     while($obj = $sth->fetchObject(__CLASS__)) {
         $objects[] = $obj;
@@ -258,37 +280,41 @@ class DaoNewslleter {
     }
   }
 
+  public function getAll(){
+    $sth = Connection::open($localconnection=true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC");
+    $sth->execute();
+    while($obj = $sth->fetchObject(__CLASS__)) {
+        $objects[] = $obj;
+    }
+    return $objects;
+  }
+
   /*
   *emails recebidos do dia.
   */
   public function emailsForToday(){
     $date = new DateTime('now');
-    echo $date->format('Y-m-d') . "\n";
-  }
+    $data = $date->format('d/m/Y');
+    preg_match('/^(\d+)\/(\d+)\/(\d+)$/', $data, $matches);
+    list($data, $dia, $mes, $ano) = $matches;
 
-  public function getAll(){
-    $result1 = $this->wpdb->get_results(
-    'SELECT * FROM ' . $this->table . ' as n');
+    //Últimos 5 dias de recebimento
+    $time = mktime(0, 0, 0, $mes, $dia - 5, $ano);
 
-    @$result2 = $this->wpdb->get_results(
-    'SELECT DISTINCT * FROM ' . $this->table . ' as n
-    INNER JOIN wp_book AS b ON n.book_id = b.id
+    // Formatar a data obtida
+    $formatedDate = strftime('%Y-%m-%d', $time); // 10/02/2010
+    //busca todos os registros
+    $sth = Connection::open($localconnection=true)->prepare(
+    "SELECT * FROM wp_news_leads
+     WHERE datecreated::date >= to_date('{$formatedDate}' ,'YYYY-MM-DD') ORDER BY id DESC");
 
-    ', object);
-
-    $data = array();
-    if(isset($result1)){
-        $objects = array('news'=>$result1, 'books'=>@$result2);
-        for($i =0; $i < count($objects['news']); $i++){
-          if(isset($objects['books'][$i]->title)){
-            $objects['news'][] = $objects['books'][$i];
-            unset($objects['books']);
-          }
-        }
+    $sth->execute();
+    while($obj = $sth->fetchObject(__CLASS__)) {
+        $objects[] = $obj;
     }
-
     return $objects;
   }
+
 
   public function update(){
 
@@ -299,9 +325,47 @@ class DaoNewslleter {
   }
 }
 
-class Newslleter {
+abstract class Model {
 
-  protected $data;
+    protected $data;
+
+    public function __construct(){
+    }
+
+    public function getData(){
+      if(isset($this->data)){
+          return $this->data;
+      }else{
+        return array();
+      }
+    }
+
+    public function __set($prop, $value) {
+        if (method_exists($this, 'set_' . $prop)) {
+            call_user_func(array(
+                $this,
+                'set_' . $prop
+                    ), $value);
+        } else {
+            //atribui o valor a propriedade
+            $this->data[$prop] = $value;
+        }
+    }
+
+    public function __get(string $prop) {
+         if (method_exists($this, 'get_' . $prop)) {
+             return call_user_func(array(
+                 $this,
+                 'get_' . $prop
+             ));
+         } else {
+             //atribui o valor a propriedade
+             return $this->data[$prop];
+         }
+     }
+}
+
+class Leads extends Model {
 
   const active_newslleter = 1;
   const inactive = 2;
@@ -309,42 +373,6 @@ class Newslleter {
   const ebook_request = 4;
   const msg = 5;
   const modal = 6;
-
-  public function __construct(){
-
-  }
-
-  public function getData(){
-    if(isset($this->data)){
-        return $this->data;
-    }else{
-      return array();
-    }
-  }
-
-  public function __set($prop, $value) {
-      if (method_exists($this, 'set_' . $prop)) {
-          call_user_func(array(
-              $this,
-              'set_' . $prop
-                  ), $value);
-      } else {
-          //atribui o valor a propriedade
-          $this->data[$prop] = $value;
-      }
-  }
-
-  public function __get(string $prop) {
-       if (method_exists($this, 'get_' . $prop)) {
-           return call_user_func(array(
-               $this,
-               'get_' . $prop
-           ));
-       } else {
-           //atribui o valor a propriedade
-           return $this->data[$prop];
-       }
-   }
 
   public function set_name($name){
     $this->data['name'] = (isset($name)) ? filter_var(trim($name), FILTER_SANITIZE_STRING) : null;
@@ -388,6 +416,21 @@ class Newslleter {
   public function get_bookName(){
     return $this->data['book_name'];
   }
+}
+
+class Message extends Model {
+
+}
+
+class Newslleter extends Model{
+
+}
+
+class Template extends Model {
+
+}
+
+class Logs extends Model {
 
 }
 /*
