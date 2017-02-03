@@ -1,26 +1,37 @@
 <?php
 //declare(strict_types=1);
-class LeadsDataProvider {
+class DataProvider {
+    protected $nl,$dataType, $transformedData;
 
-  protected $nl,$dataType, $transformedData;
-
-  public function __construct(Leads $leads){
-      $this->nl = $leads;
-  }
-
-  public function setReturnType($type){
-    if($type == 'array'){
-      $this->dataType = 'array';
-      if($this->nl->getData()){
-          $this->transformedData = $this->nl->getData();
-      }
-    }else if ($type == 'json'){
-      $this->transformedData = json_decode($this->nl->getData());
+    public function __construct($object, $type = null){
+        $this->nl = $object;
+        if(isset($this->nl)){
+            $this->transformedData = $this->nl->getData();
+        }
     }
-  }
 
-  public function getData(){
-    return $this->transformedData;
+    public function getData(){
+      return $this->transformedData;
+    }
+}
+
+class LeadsDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
+  }
+}
+
+class MessageDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
+  }
+}
+class TemplateDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
   }
 }
 
@@ -83,24 +94,28 @@ final class Connection {
     }
   }
 }
+class Dao {
 
-class DaoLeads {
+    protected $wpdb, $nlDataProvider, $table;
+
+    public function __construct($wpdb=null){
+        if($wpdb instanceOf wpdb || $wpdb instanceOf wpdb2){
+          $this->wpdb = $wpdb;
+      }
+    }
+
+    public function setDataProvider(DataProvider $nlDataProvider){
+      $this->nlDataProvider = $nlDataProvider;
+    }
+
+    public function setTable($table){
+      $this->table = $this->wpdb->prefix .  $table;
+    }
+}
+
+class DaoLeads extends Dao {
 
   protected $wpdb, $nlDataProvider, $conn;
-
-  public function __construct($wpdb=null){
-      if($wpdb instanceOf wpdb || $wpdb instanceOf wpdb2){
-        $this->wpdb = $wpdb;
-    }
-  }
-
-  public function setDataProvider(LeadsDataProvider $nlDataProvider){
-    $this->nlDataProvider = $nlDataProvider;
-  }
-
-  public function setTable($table){
-    $this->table = $this->wpdb->prefix .  $table;
-  }
 
   public function store(){
     $data = $this->nlDataProvider->getData();
@@ -420,6 +435,113 @@ class Leads extends Model {
 
 class Message extends Model {
 
+  const active = 1;
+  const inactive = 0;
+
+  public function set_title($title){
+      $this->data['title'] = (isset($title)) ? strip_tags(trim($title)) : null;
+  }
+
+  public function get_title(){
+      return $this->data['title'];
+  }
+
+  public function set_body($body){
+      $this->data['body'] = (isset($body)) ? strip_tags($body) : null;
+  }
+
+  public function get_body(){
+      return $this->data['body'];
+  }
+}
+
+class DaoMessage extends Dao {
+  public function persist(){
+    try {
+      //recebe os dados de um dataProvider
+      $dateTime = new DateTime();
+      $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+      $data = $this->nlDataProvider->getData();
+      $sth = Connection::open($localconnection=true)->prepare(
+         "INSERT INTO wp_news_messages (title,body,status,datecreated,dateupdated)
+          VALUES (
+            :title, :body, :status, :datecreated,:dateupdated)
+         ");
+
+      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+      $sth->bindValue(':body', $data['body'], PDO::PARAM_STR);
+      $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+      $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+      $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+
+      return ($sth->execute()) ? true : false;
+
+      } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+      }
+  }
+
+
+  public function delete(){
+    try {
+      $data = $this->nlDataProvider->getData();
+      //recebe os dados de um dataProvider
+      if(is_integer($data['id'])){
+
+        $dateTime = new DateTime();
+        $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+        $sth = Connection::open($localconnection=true)->prepare("UPDATE
+           wp_news_messages SET status = :status, dateupdated = :dateupdated WHERE id = :id
+        ");
+
+        $sth->bindValue(':status', $data['status'] , PDO::PARAM_INT);
+        $sth->bindValue(':id', (int) $data['id'] , PDO::PARAM_INT);
+        $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+
+        return ($sth->execute()) ? true : false;
+
+      }
+
+     } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+    }
+  }
+
+
+    public function update(){
+      try {
+        $data = $this->nlDataProvider->getData();
+        //recebe os dados de um dataProvider
+        if(is_integer($data['id'])){
+
+          $dateTime = new DateTime();
+          $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+          $sth = Connection::open($localconnection=true)->prepare(
+            "UPDATE wp_news_messages
+            SET title = :title, body = :body, status = :status, dateupdated = :dateupdated
+            WHERE id = :id
+          ");
+          $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+          $sth->bindValue(':body', $data['body'], PDO::PARAM_STR);
+          $sth->bindValue(':status', $data['status'] , PDO::PARAM_INT);
+          $sth->bindValue(':id', (int) $data['id'] , PDO::PARAM_INT);
+          $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+
+          return ($sth->execute()) ? true : false;
+
+        }
+
+       } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+      }
+    }
+
+  public function findAll(){
+
+  }
 }
 
 class Newslleter extends Model{
@@ -427,7 +549,109 @@ class Newslleter extends Model{
 }
 
 class Template extends Model {
+  const active = 1;
+  const inactive = 0;
 
+  public function set_title($title){
+      $this->data['title'] = (isset($title)) ? strip_tags($title) : null;
+  }
+
+  public function get_title(){
+      return $this->data['title'];
+  }
+
+  public function setMessage(Message $msg){
+    $sth = Connection::open($localconnection=true)->prepare(
+       "SELECT * FROM wp_news_messages WHERE title = :title");
+
+    $sth->bindValue(':title', $msg->title, PDO::PARAM_STR);
+    $sth->execute();
+
+    while($obj = $sth->fetchObject(__CLASS__)) {
+        $objects[] = $obj;
+    }
+    $this->data['message_id'] = $objects[0]->id;
+  }
+
+  public function getMessage(){
+    return $this->data['message_id'];
+  }
+
+  public function set_body_template($body){
+      $this->data['body_template'] = (isset($body)) ? strip_tags($body) : null;
+  }
+
+  public function get_body(){
+      return $this->data['body_template'];
+  }
+}
+
+class DaoTemplate extends Dao {
+  public function persist(){
+    try {
+      $data = $this->nlDataProvider->getData();
+      $sth = Connection::open($localconnection=true)->prepare(
+         "INSERT INTO wp_news_template (title, body_template, message_id, status)
+          VALUES (
+            :title, :body_template, :message_id, :status)
+         ");
+
+      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+      $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
+      $sth->bindValue(':message_id', $data['message_id'], PDO::PARAM_INT);
+      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
+
+      return ($sth->execute()) ? true : false;
+
+      } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+      }
+  }
+
+
+  public function update(){
+    try {
+      $data = $this->nlDataProvider->getData();
+      $sth = Connection::open($localconnection=true)->prepare(
+         "UPDATE wp_news_template SET title = :title, body_template = :body_template,
+          message_id = :message_id, status = :status
+          WHERE id = :id
+        ");
+
+      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+      $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
+      $sth->bindValue(':message_id', (int)$data['message_id'], PDO::PARAM_INT);
+      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
+      $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
+
+      return ($sth->execute()) ? true : false;
+
+      } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+      }
+  }
+
+  public function delete(){
+      try {
+        $data = $this->nlDataProvider->getData();
+        $sth = Connection::open($localconnection=true)->prepare(
+           "UPDATE wp_news_template SET status = :status
+            WHERE id = :id
+          ");
+
+        $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+        $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
+
+        return ($sth->execute()) ? true : false;
+
+        } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+        }
+  }
+
+  public function findAll(){
+
+  }
 }
 
 class Logs extends Model {

@@ -1,7 +1,7 @@
 <?php
 require_once '/var/www/html/wp-content/plugins/news.core.php';
 
-class DaoLeadsTest extends PHPUnit_Framework_TestCase{
+class DaoLeadsTest extends PHPUnit_Framework_TestCase {
 
   public function testPersistNewslleter(){
     $l = new Leads();
