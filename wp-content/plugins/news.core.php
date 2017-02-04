@@ -34,6 +34,11 @@ class TemplateDataProvider extends DataProvider {
     parent::__construct($object);
   }
 }
+class GruposDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
 
 final class Connection {
 
@@ -340,6 +345,19 @@ class DaoLeads extends Dao {
   }
 }
 
+class DaoGrupos extends Dao {
+
+    public function findAll(){
+        $sth = Connection::open($localconnection=true)
+        ->prepare("SELECT * FROM wp_grupos ORDER by id DESC");
+        $sth->execute();
+        while($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+        return $objects;
+    }
+}
+
 abstract class Model {
 
     protected $data;
@@ -544,8 +562,37 @@ class DaoMessage extends Dao {
   }
 }
 
-class Newslleter extends Model{
+class Grupos extends Model {
+    protected $manyToMany = 'grupos_leads(grupo_id, lead_id)';
+    protected $name;
+    protected $datecreated, $dateupdated;
+    protected $tags = 'json';
+    protected $status;
+}
 
+class Newslleter extends Model {
+    protected $many_to_many = 'grupos_news(grupo_id, newslleter_id)';
+    protected $Envio;
+    protected $status;
+    protected $title;
+    /*TEST A-B */
+    protected $Newslleter;
+    protected $datecreated, $dateupdated;
+    protected $porcentagem = "json";
+}
+
+class Envio extends Model {
+        protected $manyToMany = 'evio_periodo(envio_id, periodo_id)';
+        protected $Log = ['one to one'];
+        protected $datecreated, $dateupdated;
+}
+
+class Periodicidade extends Model {
+    protected $dia;
+    protected $status;
+    protected $Template = ['one to one'];
+    protected $Message = ['one to onoe'];
+    protected $Envio = ['one to one'];
 }
 
 class Template extends Model {
