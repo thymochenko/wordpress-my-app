@@ -196,12 +196,41 @@ class DaoLeads extends Dao {
         $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
         $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
-        return ($sth->execute()) ? true : false;
+        $sth->execute();
+        return $this->persitFkLeadsGroup($data, $dateTime);
+        //$objects[0];
+
 
         } catch (PDOException $e) {
           echo 'Connection failed: ' . $e->getMessage();
         }
       }
+  }
+
+  public function persitFkLeadsGroup($data,$dateTime){
+      //seleciona a lead inserida
+      $sth1 = Connection::get($localconnection=true)->prepare(
+      "SELECT email, datecreated, grupos_id, id FROM wp_news_leads
+       WHERE email = :email
+       AND datecreated::date = to_date('{$dateTime->format('Y-m-d')}' ,'YYYY-MM-DD')
+       AND grupos_id = :grupos_id
+       ORDER BY id DESC");
+
+      $sth1->bindValue(':email', $data['email'] , PDO::PARAM_STR);
+      $sth1->bindValue(':grupos_id', $data['status'] , PDO::PARAM_INT);
+      $sth1->execute();
+      //percorre os elementos e armazena
+      while($obj = $sth1->fetchObject(__CLASS__)) {
+          $object[] = $obj;
+      }
+      //insere a id da lead e do grupo na tabela manyToMany
+      $sth2 = Connection::get($localconnection=true)->prepare(
+      "INSERT INTO wp_grupos_leads
+      (grupos_id, leads_id) VALUES (:grupos_id, :leads_id)");
+
+      $sth2->bindValue(':grupos_id', (int)$object[0]->grupos_id , PDO::PARAM_INT);
+      $sth2->bindValue(':leads_id', (int)$object[0]->id , PDO::PARAM_INT);
+      return ($sth2->execute()) ? true : false;
   }
 
   public function persistContact($data){
@@ -228,7 +257,8 @@ class DaoLeads extends Dao {
               $sth4->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
               $sth4->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
               $sth4->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
-              return ($sth4->execute()) ? true : false;
+              $sth4->execute();
+              return $this->persitFkLeadsGroup($data, $dateTime);
        } catch (PDOException $e) {
          echo 'Connection failed: ' . $e->getMessage();
        }
@@ -278,8 +308,9 @@ class DaoLeads extends Dao {
          $sth3->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
          $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+         $sth3->execute();
 
-         return ($sth3->execute()) ? true : false;
+         return $this->persitFkLeadsGroup($data, $dateTime);
 
          } catch (PDOException $e) {
            echo 'Connection failed: ' . $e->getMessage();
@@ -610,15 +641,14 @@ class Newslleter extends Model {
 class Envio extends Model {
         protected $manyToMany = 'evio_periodo(envio_id, periodo_id)';
         protected $Log = ['one to one'];
+        protected $Template = ['one to one'];
+        protected $Message = ['one to onoe'];
         protected $datecreated, $dateupdated;
 }
 
 class Periodicidade extends Model {
-    protected $dia;
+    protected $diaInicial, $diaFinal;
     protected $status;
-    protected $Template = ['one to one'];
-    protected $Message = ['one to onoe'];
-    protected $Envio = ['one to one'];
 }
 
 class Template extends Model {

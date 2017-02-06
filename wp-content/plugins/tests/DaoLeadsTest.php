@@ -75,5 +75,4 @@ class DaoLeadsTest extends PHPUnit_Framework_TestCase {
     $dao->setDataProvider($dataProvider);
     $this->assertTrue($dao->store());
   }
-
 }
