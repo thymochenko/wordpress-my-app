@@ -8,7 +8,7 @@ GLOBAL $wpdb;
 $dao = new DaoLeads($wpdb);
 $dao->setDataProvider($dataProvider);
 $dao->setTable('wp_news_leads');
-$collMsgForLast5Days = $dao->emailsForToday();
+
 ?>
 <html>
 <head>
@@ -44,16 +44,13 @@ $collMsgForLast5Days = $dao->emailsForToday();
               var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
 
                   obj[item.name] = item.value;
-                  $('.selectpicker').append('<option value="' + item.name +
+                  $('.selectpicker').append('<option  selected="selected" value="' + item.name +
                    '">' + item.value +'</option>')
                   .selectpicker('refresh');
 
                   return obj;
               }, {});
 
-              $.each(data, function( index, value ) {
-                  alert( index + ": " + value );
-              });
 
               // alert($("#grupos-action").val("160").attr("selected","selected"));
 
@@ -165,7 +162,8 @@ $collMsgForLast5Days = $dao->emailsForToday();
 </thead>
 <tbody>
   <?php
-   foreach($collMsgForLast5Days as $lead):?>
+   if($dao->emailsForToday()):
+   foreach($dao->emailsForToday() as $lead):?>
 <tr>
     <td style=""><?php  echo $lead->name ?></td>
     <td><?php  echo $lead->email ?></td>
@@ -179,6 +177,7 @@ $collMsgForLast5Days = $dao->emailsForToday();
     </td>
 </tr>
 <?php endforeach; ?>
+<?php endif; ?>
 
 </tbody>
 </table>
@@ -244,16 +243,12 @@ $collMsgForLast5Days = $dao->emailsForToday();
         <h2>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h2>
         <h3>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h3>
         <select class="selectpicker" name="grupos"  multiple>
-            <option value="volvo">submodal</option>
-            <option value="saab">index:news</option>
-            <option value="opel">posts:box</option>
+            <?php foreach($daog->findAll(5) as $gp): ?>
+                <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
+            <?php endforeach; ?>
+
         </select>
 
-        <select class="" id="test" name="grupos"  multiple>
-            <option value="volvo">submodal</option>
-            <option value="saab">index:news</option>
-            <option value="opel">posts:box</option>
-        </select>
     </form>
 </body>
 </html>

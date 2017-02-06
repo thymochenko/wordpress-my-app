@@ -147,13 +147,12 @@ class DaoLeads extends Dao {
 
        try {
          $sth3 = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
-           (name,email,ip, msg, book_id, status,datecreated, dateupdated)
-             VALUES (
-               :name,
-               :email,:ip,:msg,
-               :book_id, :status,
-               :datecreated,:dateupdated)
-            ");
+         (name,email,ip, msg, book_id, status, grupos_id, datecreated, dateupdated)
+           VALUES (
+             :name,
+             :email,:ip,:msg,
+             :book_id, :status, :grupos_id, :datecreated, :dateupdated)
+          ");
 
          $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
          $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
@@ -161,6 +160,7 @@ class DaoLeads extends Dao {
          $sth3->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
          $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
          $sth3->bindValue(':status', Leads::modal , PDO::PARAM_INT);
+         $sth3->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
          $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          return ($sth3->execute()) ? true : false;
@@ -178,12 +178,11 @@ class DaoLeads extends Dao {
     if($data['method'] == "newslleter"){
       try {
         $sth = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
-        (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+        (name,email,ip, msg, book_id, status, grupos_id, datecreated, dateupdated)
           VALUES (
             :name,
             :email,:ip,:msg,
-            :book_id, :status,
-            :datecreated,:dateupdated)
+            :book_id, :status, :grupos_id, :datecreated, :dateupdated)
          ");
 
         $sth->bindValue(':name', $data['name'], PDO::PARAM_STR);
@@ -191,7 +190,8 @@ class DaoLeads extends Dao {
         $sth->bindValue(':ip', $data['ip'], PDO::PARAM_STR);
         $sth->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
         $sth->bindValue(':book_id', $data['book_id'], PDO::PARAM_INT);
-        $sth->bindValue(':status', Leads::active_newslleter , PDO::PARAM_INT);
+        $sth->bindValue(':status', $data['status'] , PDO::PARAM_INT);
+        $sth->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
         //date
         $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
         $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
@@ -212,20 +212,20 @@ class DaoLeads extends Dao {
         try {
 
           $sth4 = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
-            (name,email,ip, msg, book_id, status,datecreated, dateupdated)
+          (name,email,ip, msg, book_id, status, grupos_id, datecreated, dateupdated)
             VALUES (
               :name,
               :email,:ip,:msg,
-              :book_id, :status,
-              :datecreated,:dateupdated)
-              ");
+              :book_id, :status, :grupos_id, :datecreated, :dateupdated)
+           ");
 
               $sth4->bindValue(':name', $data["name"], PDO::PARAM_STR);
               $sth4->bindValue(':email', $data["email"], PDO::PARAM_STR);
               $sth4->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
               $sth4->bindValue(':msg', $data["msg"], PDO::PARAM_STR);
               $sth4->bindValue(':book_id', 0, PDO::PARAM_INT);
-              $sth4->bindValue(':status', Leads::msg , PDO::PARAM_INT);
+              $sth4->bindValue(':status', $data['status'] , PDO::PARAM_INT);
+              $sth4->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
               $sth4->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
               $sth4->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
               return ($sth4->execute()) ? true : false;
@@ -262,20 +262,20 @@ class DaoLeads extends Dao {
          //Connection::close();
 
          $sth3 = Connection::get()->prepare("INSERT INTO wp_news_leads
-           (name,email,ip, msg, book_id, status,datecreated, dateupdated)
-             VALUES (
-               :name,
-               :email,:ip,:msg,
-               :book_id, :status,
-               :datecreated,:dateupdated)
-            ");
+         (name,email,ip, msg, book_id, status, grupos_id, datecreated, dateupdated)
+           VALUES (
+             :name,
+             :email,:ip,:msg,
+             :book_id, :status, :grupos_id, :datecreated, :dateupdated)
+          ");
 
          $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
          $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
          $sth3->bindValue(':ip', "192.168.0.1", PDO::PARAM_STR);
          $sth3->bindValue(':msg', "newslleter:ebook", PDO::PARAM_STR);
          $sth3->bindValue(':book_id', $result->id, PDO::PARAM_INT);
-         $sth3->bindValue(':status', Leads::ebook_request , PDO::PARAM_INT);
+         $sth3->bindValue(':status', $data['status'] , PDO::PARAM_INT);
+         $sth3->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
          $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
          $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
 
@@ -324,6 +324,7 @@ class DaoLeads extends Dao {
     // Formatar a data obtida
     $formatedDate = strftime('%Y-%m-%d', $time); // 10/02/2010
     //busca todos os registros
+    //var_dump($formatedDate);
     $sth = Connection::open($localconnection=true)->prepare(
     "SELECT * FROM wp_news_leads
      WHERE datecreated::date >= to_date('{$formatedDate}' ,'YYYY-MM-DD') ORDER BY id DESC");
@@ -332,7 +333,7 @@ class DaoLeads extends Dao {
     while($obj = $sth->fetchObject(__CLASS__)) {
         $objects[] = $obj;
     }
-    return $objects;
+    return $objects ? $object : false;
   }
 
 
@@ -347,13 +348,22 @@ class DaoLeads extends Dao {
 
 class DaoGrupos extends Dao {
 
-    public function findAll(){
-        $sth = Connection::open($localconnection=true)
-        ->prepare("SELECT * FROM wp_grupos ORDER by id DESC");
+    public function findAll($limit = null){
+        if(isset($limit)){
+            $sth = Connection::open($localconnection=true)
+            ->prepare("SELECT * FROM wp_grupos ORDER by id DESC LIMIT :limit");
+            $sth->bindValue(':limit', $limit, PDO::PARAM_INT);
+        }
+        else{
+            $sth = Connection::open($localconnection=true)
+            ->prepare("SELECT * FROM wp_grupos ORDER by id DESC");
+        }
+
         $sth->execute();
         while($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
         }
+
         return $objects;
     }
 }
@@ -444,6 +454,22 @@ class Leads extends Model {
 
   public function set_bookName($bookName){
     $this->data['book_name'] = $bookName;
+  }
+
+  /*@method set_status int $status
+  *
+  *     a variável status será passada para a chave estrangeira grupos_id
+  *     se a variável status tiver o mesmo valor de uma constante da classe Leads
+  */
+  public function set_status($status){
+
+      if($status == 1 || $status > 3  || $status < 7){
+         $this->data['grupos_id'] = $status;
+         $this->data['status'] = $status;
+      }
+      else{
+          $this->data['status'] = $status;
+      }
   }
 
   public function get_bookName(){

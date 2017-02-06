@@ -14,10 +14,9 @@ class DaoLeadsTest extends PHPUnit_Framework_TestCase {
     $l->date_created = date("Y-m-d H:i:s");
     $l->date_updated = date("Y-m-d H:i:s");
     $l->method = 'newslleter';
-  //$news->ebook_hidden = "kkkk";
 
     $dataProvider = new LeadsDataProvider($l);
-    $dataProvider->setReturnType('array');
+    //$dataProvider->setReturnType('array');
     $dao = new DaoLeads();
     $dao->setDataProvider($dataProvider);
     $this->assertTrue($dao->store());
@@ -37,7 +36,6 @@ class DaoLeadsTest extends PHPUnit_Framework_TestCase {
     $l->ebookHidden = "Docker e WordPress:https://drive.google.com/file/d/0ByRILKhxz02OREZjM2xQZnQ1YXc/view?usp=sharing";
 
     $dataProvider = new LeadsDataProvider($l);
-    $dataProvider->setReturnType('array');
     $dao = new DaoLeads();
     $dao->setDataProvider($dataProvider);
     $this->assertTrue($dao->store());
@@ -55,7 +53,6 @@ class DaoLeadsTest extends PHPUnit_Framework_TestCase {
     $l->method = 'contact';
     //data provider
     $dataProvider = new LeadsDataProvider($l);
-    $dataProvider->setReturnType('array');
 
     $dao = new DaoLeads();
     $dao->setDataProvider($dataProvider);
@@ -74,10 +71,9 @@ class DaoLeadsTest extends PHPUnit_Framework_TestCase {
     $l->method = 'modal';
     //data provider
     $dataProvider = new LeadsDataProvider($l);
-    $dataProvider->setReturnType('array');
-
     $dao = new DaoLeads();
     $dao->setDataProvider($dataProvider);
     $this->assertTrue($dao->store());
   }
+
 }
