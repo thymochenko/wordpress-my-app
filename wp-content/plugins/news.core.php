@@ -364,7 +364,7 @@ class DaoLeads extends Dao {
     while($obj = $sth->fetchObject(__CLASS__)) {
         $objects[] = $obj;
     }
-    return $objects ? $object : false;
+    return $objects ? $objects : false;
   }
 
 
@@ -614,9 +614,16 @@ class DaoMessage extends Dao {
       }
     }
 
-  public function findAll(){
+    public function findAll(){
+        $sth = Connection::open($localconnection=true)->prepare(
+        "SELECT * FROM wp_news_messages ORDER BY id DESC LIMIT 10");
 
-  }
+        $sth->execute();
+        while($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+        return $objects ? $objects : false;
+      }
 }
 
 class Grupos extends Model {
@@ -753,7 +760,14 @@ class DaoTemplate extends Dao {
   }
 
   public function findAll(){
+      $sth = Connection::open($localconnection=true)->prepare(
+      "SELECT * FROM wp_news_template ORDER BY id DESC LIMIT 10");
 
+      $sth->execute();
+      while($obj = $sth->fetchObject(__CLASS__)) {
+          $objects[] = $obj;
+      }
+      return $objects ? $objects : false;
   }
 }
 

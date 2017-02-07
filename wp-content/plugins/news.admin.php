@@ -8,7 +8,10 @@ GLOBAL $wpdb;
 $dao = new DaoLeads($wpdb);
 $dao->setDataProvider($dataProvider);
 $dao->setTable('wp_news_leads');
-
+$daot = new DaoTemplate();
+$template = $daot->findAll();
+$daom = new DaoMessage();
+$message = $daom->findAll();
 ?>
 <html>
 <head>
@@ -34,6 +37,76 @@ $dao->setTable('wp_news_leads');
   $(function() {
       $("#add-grupo").click(function(){
       $("#myModal").modal('show');
+    });
+
+    $("#add-template").click(function(){
+        $("#templateModal").modal('show');
+    });
+
+    $("#add-message").click(function(){
+        $("#messageModal").modal('show');
+    });
+
+    $(".close").click(function(){
+        $('#templateModal, #messageModal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+    });
+
+        $('#radio_tpl').click(function(event) {
+           event.preventDefault();
+
+           $.ajax(this.href, {
+              success: function(data) {
+                  //dados do form
+                  var data = $('#template-action').serializeArray().reduce(function(obj, item) {
+                      //monta view com o post dos dados do form
+                      var coll = item.value.split(":");
+                      coll[0]; // template Title
+                      obj[item.name] = item.value;
+                      $('#template-title').append(coll[0]);
+                      $('#template-title').append('<input type="hidden" name="template_id_fk" value="' + coll[1] + '"/>');
+                      return obj;
+                  }, {});
+
+
+                  // alert($("#grupos-action").val("160").attr("selected","selected"));
+
+                   $('#test').append('<option val="100">One</option>');
+                 //$('#main').html($(data).find('#main *'));
+                 //$('#notification-bar').text('The page has been successfully loaded');
+              },
+              error: function() {
+                  alert('err');
+                 //$('#notification-bar').text('An error occurred');
+              }
+           });
+        });
+    //refatorar - transformar em uma função
+    $('#radio-msg').click(function(event) {
+       event.preventDefault();
+
+       $.ajax(this.href, {
+          success: function(data) {
+              //dados do form
+              var data = $('#message-action').serializeArray().reduce(function(obj, item) {
+                  //monta view com o post dos dados do form
+                  var coll = item.value.split(":");
+                  coll[0]; // template Title
+                  obj[item.name] = item.value;
+                  $('#message-title').append(coll[0]);
+                  $('#message-title').append('<input type="hidden" name="message_id_fk" value="' + coll[1] + '"/>');
+                  return obj;
+              }, {});
+
+             //$('#main').html($(data).find('#main *'));
+             //$('#notification-bar').text('The page has been successfully loaded');
+          },
+          error: function() {
+              alert('err');
+             //$('#notification-bar').text('An error occurred');
+          }
+       });
     });
 
     $('#grupo_button').click(function(event) {
@@ -211,9 +284,9 @@ $dao->setTable('wp_news_leads');
 </tbody>
 </table>
 
-<!-- modal grupos -->
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- grupos -->
+<!--  -->
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -237,7 +310,64 @@ $dao->setTable('wp_news_leads');
     </div>
   </div>
 </div>
-<!-- /modal grupos -->
+<!--  grupos -->
+
+<!--  grupos -->
+<!--  Template-->
+<div class="modal fade" data-backdrop="static" id="templateModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Template</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="template-action" action="news.admin.php" id="template-action" method="post">
+            <?php foreach($template as $tpl): ?>
+                <input type="radio" name="template" id="radio-template" value="<?php echo $tpl->title; ?>:<?php echo $tpl->id; ?>">
+                <?php echo $tpl->title; ?>
+                <br>
+            <?php endforeach; ?>
+             <input type="button" class="btn btn-primary" name="template" id="radio_tpl" value="add"/>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- templates -->
+
+<!--  Message -->
+<div class="modal fade" id="messageModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="message-action" action="news.admin.php" id="message-action" method="post">
+            <?php foreach($message as $msg): ?>
+                <input type="radio" name="template" id="radio-template" value="<?php echo $msg->title; ?>:<?php echo $msg->id; ?>">
+                <?php echo $msg->title; ?>
+                <br>
+            <?php endforeach; ?>
+             <input type="button" class="btn btn-primary" name="message" id="radio-msg" value="add"/>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- message -->
     <h1>Cadastro de newslleter</h1>
     <form name="newslleter_send" id="news_send" method="post" action="news.core.php">
         <h2>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h2>
@@ -246,9 +376,18 @@ $dao->setTable('wp_news_leads');
             <?php foreach($daog->findAll(5) as $gp): ?>
                 <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
             <?php endforeach; ?>
-
         </select>
-
+        <h2>Adicionar Propriedades de Envio </h2>
+        <h3>Adicionar Template <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-template" id="add-template">Add</button></h3>
+        <h3>Adicionar Mensagem <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-message" id="add-message">Add</button></h3>
+        <h3>Adicionar Periodicidade </h3>
+        Data inicial : <input type="text" name="dataInicial"/><br><br>
+        Data final :  <input type="text" name="dataFinal"/><br>
+        <div id="box-prop-envio">
+            Template Escolhido : <b><span id="template-title"></span></b><br><br>
+            Mensagem Escolhida : <b><span id="message-title"></span></b>
+        </div>
     </form>
+
 </body>
 </html>
