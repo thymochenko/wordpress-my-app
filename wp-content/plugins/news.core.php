@@ -28,13 +28,33 @@ class MessageDataProvider extends DataProvider {
     parent::__construct($object);
   }
 }
+
 class TemplateDataProvider extends DataProvider {
 
   public function __construct($object){
     parent::__construct($object);
   }
 }
+
 class GruposDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class NewslleterDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class EnvioDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class PeriodoDataProvider extends DataProvider {
     public function __construct($object){
       parent::__construct($object);
     }
@@ -99,6 +119,7 @@ final class Connection {
     }
   }
 }
+
 class Dao {
 
     protected $wpdb, $nlDataProvider, $table;
@@ -170,7 +191,9 @@ class DaoLeads extends Dao {
          }
     }
   }
-
+  /*
+  *@Remember : persistir a chave muitos para muitos grupos_id, leads_id
+  */
   public function persistNewslleter($data){
     $dateTime = new DateTime();
     $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
@@ -396,6 +419,112 @@ class DaoGrupos extends Dao {
         }
 
         return $objects;
+    }
+}
+
+class DaoNewslleter extends Dao {
+
+    public function persist(){
+        try {
+            $dateTime = new DateTime();
+            $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+            //persist @Newslleter
+            $sth = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_newslleter
+                (title,campaign_id,newslleter_id, status, porcentagem, datecreated, dateupdated)
+                VALUES (
+                    :title,
+                    :campaign_id,:newslleter_id,:status,
+                    :porcentagem, :datecreated, :dateupdated) RETURNING id
+                    ");
+
+                 $data = $this->nlDataProvider->getData();
+
+                 $sth->bindValue(':title', $data["title"], PDO::PARAM_STR);
+                 $sth->bindValue(':campaign_id', $data["campaign_id"], PDO::PARAM_INT);
+                 $sth->bindValue(':newslleter_id', 1, PDO::PARAM_INT);
+                 $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+                 $sth->bindValue(':porcentagem', $data['porcentagem'], PDO::PARAM_INT);
+                 $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+                 $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+                 $sth->execute();
+
+                 $newslleter_id = $sth->fetch(PDO::FETCH_ASSOC);
+                 //var_dump($newslleter_id['id']);exit;
+                 //persist @Envio
+                 $sth1 = Connection::get($localconnection=true)->prepare('INSERT INTO wp_news_envio
+                     (template_id, message_id, status, datecreated, dateupdated, log_id)
+                     VALUES (:template_id, :message_id, :status, :datecreated, :dateupdated, :log_id) RETURNING id');
+
+                 //persist block
+                 //var_dump($data['envio'][0]->message_id); exit;
+                 for($i=0; $i < count($data['envio']); $i++){
+                     $sth1->bindValue(':template_id', $data['envio'][$i]->template_id, PDO::PARAM_INT);
+                     $sth1->bindValue(':message_id', $data['envio'][$i]->message_id, PDO::PARAM_INT);
+                     $sth1->bindValue(':status', $data['envio'][$i]->status, PDO::PARAM_INT);
+                     $sth1->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+                     $sth1->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+                     $sth1->bindValue(':log_id', 1, PDO::PARAM_INT);
+                     $sth1->execute();
+                     $envio_id[] = $sth1->fetch(PDO::FETCH_ASSOC);
+                 }
+
+                 //var_dump($envio_id);exit;
+                 //recupera todos os ids persistido
+
+                 //persist @Periodo
+                 $sth2 = Connection::get($localconnection=true)->prepare(
+                 'INSERT INTO wp_news_periodo (data_de_envio_fixo)
+                  VALUES (:data_de_envio_fixo) RETURNING id');
+                 //var_dump($data['envio'][0]->periodo[0]->data_de_envio_fixo);exit;
+                 for($x=0; $x < count($data['envio']); $x++){
+                     $sth2->bindValue(':data_de_envio_fixo', $data['envio'][$x]->periodo[0]->data_de_envio_fixo , PDO::PARAM_STR);
+                     $sth2->execute();
+                     $periodo_id[] = $sth2->fetch(PDO::FETCH_ASSOC);
+                 }
+                 //var_dump($periodo_id);exit;
+                 //@grupos_news
+                 $sth3 = Connection::get($localconnection=true)->prepare(
+                 'INSERT INTO wp_grupos_news (grupos_id,newslleter_id)
+                  VALUES (:grupos_id, :newslleter_id)');
+                 //var_dump($data['grupos']['grupos_id']);exit;
+                 for($z=0; $z < count($data['grupos']); $z++){
+                     $sth3->bindValue(':grupos_id', $data["grupos"]['grupos_id'][$z], PDO::PARAM_INT);
+                     $sth3->bindValue(':newslleter_id', $newslleter_id['id'], PDO::PARAM_INT);
+                     $sth3->execute();
+                 }
+                 //@envio_news
+                 $sth4 = Connection::get($localconnection=true)->prepare(
+                 'INSERT INTO wp_envio_news (envio_id,newslleter_id)
+                  VALUES (:envio_id, :newslleter_id)');
+
+                  //$data['envios'] vem de um select dos envios persistidos
+                  for($a=0; $a < count($data['envio']); $a++){
+                      $sth4->bindValue(':envio_id', $envio_id[$a]['id'], PDO::PARAM_INT);
+                      $sth4->bindValue(':newslleter_id', $newslleter_id['id'], PDO::PARAM_INT);
+                      $sth4->execute();
+                  }
+
+                  $sth5 = Connection::get($localconnection=true)->prepare(
+                  'INSERT INTO wp_envio_periodo (envio_id,periodo_id)
+                   VALUES (:envio_id, :periodo_id)');
+
+                  for($y=0; $y < count($data['envio']); $y++){
+                       $sth5->bindValue(':envio_id', $envio_id[$y]['id'], PDO::PARAM_INT);
+                       $sth5->bindValue(':periodo_id', $periodo_id[$y]['id'], PDO::PARAM_INT);
+                       $sth5->execute();
+                   }
+                   return true;
+               } catch (PDOException $e) {
+                 echo 'Connection failed: ' . $e->getMessage();
+               }
+    }
+
+    public function update(){
+
+    }
+
+    public function delete(){
+
     }
 }
 
@@ -635,27 +764,58 @@ class Grupos extends Model {
 }
 
 class Newslleter extends Model {
-    protected $many_to_many = 'grupos_news(grupo_id, newslleter_id)';
-    protected $Envio;
+    /*protected $many_to_many = 'grupos_news(grupo_id, newslleter_id)';
+    protected $envio;
     protected $status;
     protected $title;
-    /*TEST A-B */
+    /*TEST A-B
     protected $Newslleter;
     protected $datecreated, $dateupdated;
     protected $porcentagem = "json";
+    protected $grupos;
+    */
+    public function addEnvio(Envio $envio){
+        $this->data['envio'][] = $envio;
+    }
+
+    public function getEnvio(){
+        return $this->data['envio'];
+    }
+
+    public function addGrupos(array $grupos){
+        $this->data['grupos'] = $grupos;
+    }
+
+    public function getGrupos(){
+        return $this->data['grupos'];
+    }
 }
 
 class Envio extends Model {
+        /*
         protected $manyToMany = 'evio_periodo(envio_id, periodo_id)';
         protected $Log = ['one to one'];
         protected $Template = ['one to one'];
         protected $Message = ['one to onoe'];
         protected $datecreated, $dateupdated;
+        protected $periodo;
+        */
+        public function addPeriodo(Periodo $periodo){
+            $this->data['periodo'][] = $periodo;
+        }
+
+        public function getPeriodo(){
+            return $this->data['periodo'];
+        }
 }
 
-class Periodicidade extends Model {
+class Periodo extends Model {
     protected $diaInicial, $diaFinal;
     protected $status;
+
+    public function get_data_de_envio_fixo(){
+        return $this->data['data_de_envio_fixo'];
+    }
 }
 
 class Template extends Model {
@@ -804,3 +964,11 @@ class MailSender {
 //$sender = new MailSender($news);
 //$sender->
 **/
+
+final class Main {
+    public static function init(){
+        var_dump($_POST);
+    }
+}
+
+Main::init();

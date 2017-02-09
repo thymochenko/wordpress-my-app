@@ -94,11 +94,37 @@ $message = $daom->findAll();
                   var coll = item.value.split(":");
                   coll[0]; // template Title
                   obj[item.name] = item.value;
+
                   $('#message-title').append(coll[0]);
                   $('#message-title').append('<input type="hidden" name="message_id_fk" value="' + coll[1] + '"/>');
                   return obj;
               }, {});
 
+             //$('#main').html($(data).find('#main *'));
+             //$('#notification-bar').text('The page has been successfully loaded');
+          },
+          error: function() {
+              alert('err');
+             //$('#notification-bar').text('An error occurred');
+          }
+       });
+    });
+
+    //refatorar - transformar em uma função
+    $('#newslleter-add').click(function(event) {
+       event.preventDefault();
+
+       $.ajax(this.href, {
+          success: function(data) {
+              //dados do form
+              var data = $('#newslleter-action').serializeArray().reduce(function(obj, item) {
+                  //monta view com o post dos dados do form
+                  var coll = item.value.split(":");
+                  coll[0]; // template Title
+                  alert( item.name  + " : " + item.value);
+                  obj[item.name] = item.value;
+                  return obj;
+              }, {});
              //$('#main').html($(data).find('#main *'));
              //$('#notification-bar').text('The page has been successfully loaded');
           },
@@ -115,10 +141,13 @@ $message = $daom->findAll();
        $.ajax(this.href, {
           success: function(data) {
               var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
-
+                  var coll = item.value.split(":");
+                  var grupo_id = coll[0];
+                  var grupo_name = coll[1];
                   obj[item.name] = item.value;
-                  $('.selectpicker').append('<option  selected="selected" value="' + item.name +
-                   '">' + item.value +'</option>')
+
+                  $('.selectpicker').append('<option  selected="selected" value="' + grupo_id +
+                   '">' + grupo_name +'</option>')
                   .selectpicker('refresh');
 
                   return obj;
@@ -298,7 +327,7 @@ $message = $daom->findAll();
       <div class="modal-body">
         <form name="grupos-action" action="news.admin.php" id="grupos-action" method="post">
             <?php foreach($grupos as $g): ?>
-                <input type="checkbox" name="grupo" id="check-grupo" value="<?php echo $g->name; ?>">
+                <input type="checkbox" name="grupos" id="check-grupo" value="<?php echo $g->id; ?>:<?php echo $g->name; ?>">
                 <?php echo $g->name; ?><br>
             <?php endforeach; ?>
              <input type="button" class="btn btn-primary" name="grupo" id="grupo_button" value="add"/>
@@ -369,10 +398,10 @@ $message = $daom->findAll();
 </div>
 <!-- message -->
     <h1>Cadastro de newslleter</h1>
-    <form name="newslleter_send" id="news_send" method="post" action="news.core.php">
+    <form name="-newslleter-action" id="newslleter-action" method="post" action="news.core.php">
         <h2>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h2>
         <h3>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h3>
-        <select class="selectpicker" name="grupos"  multiple>
+        <select class="selectpicker" name="grupos_id[]"  multiple>
             <?php foreach($daog->findAll(5) as $gp): ?>
                 <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
             <?php endforeach; ?>
@@ -381,12 +410,13 @@ $message = $daom->findAll();
         <h3>Adicionar Template <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-template" id="add-template">Add</button></h3>
         <h3>Adicionar Mensagem <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-message" id="add-message">Add</button></h3>
         <h3>Adicionar Periodicidade </h3>
-        Data inicial : <input type="text" name="dataInicial"/><br><br>
-        Data final :  <input type="text" name="dataFinal"/><br>
+        Data de Envio : <input type="text" name="dataInicial"/><br><br>
         <div id="box-prop-envio">
             Template Escolhido : <b><span id="template-title"></span></b><br><br>
             Mensagem Escolhida : <b><span id="message-title"></span></b>
         </div>
+         <input type="submit" class="btn btn-primary" value="add" name="submit">
+         <!--<input type="button" class="btn btn-primary" name="newslleter" id="-newslleter-add" value="add"/>-->
     </form>
 
 </body>
