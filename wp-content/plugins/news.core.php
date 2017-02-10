@@ -967,7 +967,12 @@ class MailSender {
 
 final class Main {
     public static function init(){
-        var_dump($_POST);
+        //var_dump($_POST);
+        $x = rand(10,100);
+        $array = array(
+            'foo'  => $x
+        );
+        echo json_encode($array);
     }
 }
 

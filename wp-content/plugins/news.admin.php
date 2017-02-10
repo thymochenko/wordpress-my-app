@@ -56,6 +56,8 @@ $message = $daom->findAll();
         $('#radio_tpl').click(function(event) {
            event.preventDefault();
 
+
+
            $.ajax(this.href, {
               success: function(data) {
                   //dados do form
@@ -65,9 +67,12 @@ $message = $daom->findAll();
                       coll[0]; // template Title
                       obj[item.name] = item.value;
                       $('#template-title').append(coll[0]);
-                      $('#template-title').append('<input type="hidden" name="template_id_fk" value="' + coll[1] + '"/>');
+                      $('#template-title').append('<input type="hidden" name="template_id_fk" id="template_id_dinamic_attrib" value="' + coll[1] + '"/>');
+                      ;
                       return obj;
                   }, {});
+
+
 
 
                   // alert($("#grupos-action").val("160").attr("selected","selected"));
@@ -85,33 +90,48 @@ $message = $daom->findAll();
     //refatorar - transformar em uma função
     $('#radio-msg').click(function(event) {
        event.preventDefault();
-
-       $.ajax(this.href, {
-          success: function(data) {
-              //dados do form
-              var data = $('#message-action').serializeArray().reduce(function(obj, item) {
-                  //monta view com o post dos dados do form
-                  var coll = item.value.split(":");
-                  coll[0]; // template Title
-                  obj[item.name] = item.value;
-
-                  $('#message-title').append(coll[0]);
-                  $('#message-title').append('<input type="hidden" name="message_id_fk" value="' + coll[1] + '"/>');
-                  return obj;
-              }, {});
-
-             //$('#main').html($(data).find('#main *'));
-             //$('#notification-bar').text('The page has been successfully loaded');
-          },
-          error: function() {
-              alert('err');
-             //$('#notification-bar').text('An error occurred');
-          }
-       });
+       var data = $('#message-action').serializeArray().reduce(function(obj, item) {
+           //monta view com o post dos dados do form
+           var coll = item.value.split(":");
+           coll[0]; // template Title
+           obj[item.name] = item.value;
+           $('#message-title').append(coll[0]);
+           $('.message_id_fk_div').append(coll[1]);
+           $('#message-title').append('<input type="hidden" name="message_id_fk" value="' + coll[1] + '"/>');
+           return obj;
+       }, {});
     });
 
     //refatorar - transformar em uma função
     $('#newslleter-add').click(function(event) {
+       event.preventDefault();
+       $("#boxDataProperties").append("<h1>Elemento 1 criado</h1>");
+
+       var data = $('#newslleter-action').serializeArray().reduce(function(obj, item) {
+           //monta view com o post dos dados do form
+           obj[item.name] = item.value;
+           return obj;
+       }, {});
+
+       var id = data['rand-value'];
+
+       $("#boxDataProperties").append("<h5>Periodo de Envio</h5>");
+       $("#boxDataProperties").append(data["dataInicial"]);
+       $("#boxDataProperties").append('<input type="hidden" name="periodo:' + id + '" value="' + data["dataInicial"] + '"/>');
+       //template
+       $("#boxDataProperties").append("<h5>Template</h5>");
+       $("#boxDataProperties").append(data["template_id_fk"]);
+       $("#boxDataProperties").append('<input type="hidden" name="template_id_fk:'+ id + '" id="template_id_dinamic_attrib" value="' + data["template_id_fk"] + '"/>');
+       //message
+       $("#boxDataProperties").append("<h5>Mensagem</h5>");
+       $("#boxDataProperties").append('<div class="message_id_fk_div">' + data["message_id_fk"] + "</div>");
+       $("#boxDataProperties").append('<input type="hidden" name="message_id_fk:'+  id +'" value="' + data["message_id_fk"] + '"/>');
+
+    });
+
+
+    //refatorar - transformar em uma função
+    $('#periodicidade-add').click(function(event) {
        event.preventDefault();
 
        $.ajax(this.href, {
@@ -121,8 +141,10 @@ $message = $daom->findAll();
                   //monta view com o post dos dados do form
                   var coll = item.value.split(":");
                   coll[0]; // template Title
-                  alert( item.name  + " : " + item.value);
+                  //alert( item.name  + " : " + item.value);
                   obj[item.name] = item.value;
+                  $('#data-title').append(obj["dataInicial"]);
+                  $('#data-title').append('<input type="hidden" name="periodo" value="' + obj["dataInicial"] + '"/>');
                   return obj;
               }, {});
              //$('#main').html($(data).find('#main *'));
@@ -174,6 +196,12 @@ $message = $daom->findAll();
 
 </head>
 <style>
+#boxDataProperties {
+    border-style: dashed;
+    border-color: #ccc;
+    background-color: #f4f4f4;
+}
+
 .responstable {
     background: #fff none repeat scroll 0 0;
     border: 1px solid #167f92;
@@ -398,7 +426,7 @@ $message = $daom->findAll();
 </div>
 <!-- message -->
     <h1>Cadastro de newslleter</h1>
-    <form name="-newslleter-action" id="newslleter-action" method="post" action="news.core.php">
+    <form name="newslleter-action" id="newslleter-action" method="post" action="news.core.php">
         <h2>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h2>
         <h3>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h3>
         <select class="selectpicker" name="grupos_id[]"  multiple>
@@ -406,17 +434,22 @@ $message = $daom->findAll();
                 <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
             <?php endforeach; ?>
         </select>
-        <h2>Adicionar Propriedades de Envio </h2>
-        <h3>Adicionar Template <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-template" id="add-template">Add</button></h3>
-        <h3>Adicionar Mensagem <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-message" id="add-message">Add</button></h3>
+        <h4>Propriedades de Envio </h4>
+        <h5>Adicionar Template <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-template" id="add-template">Add</button></h5>
+        <h5>Adicionar Mensagem <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-message" id="add-message">Add</button></h5>
         <h3>Adicionar Periodicidade </h3>
-        Data de Envio : <input type="text" name="dataInicial"/><br><br>
-        <div id="box-prop-envio">
-            Template Escolhido : <b><span id="template-title"></span></b><br><br>
-            Mensagem Escolhida : <b><span id="message-title"></span></b>
+        Data de Envio : <input types="text" name="dataInicial"/><button type="button" class="btn btn-primary" data-target="#periodicidade-add" id="periodicidade-add">Add</button><br><br>
+        <!-- caixas para inserção de envio-->
+        <div id="boxDataProperties">
+            <h4>Propriedades de Envio: #número:  <span style="color:red" id="prop-envio-id">1</span></h4>
+            Template e Escolhido : <b><span id="template-title"></span></b><br>
+            Mensagem Escolhida : <b><span id="message-title"></span></b><br>
+            Data de Envio : <b><span id="data-title"></span></b><br>
         </div>
-         <input type="submit" class="btn btn-primary" value="add" name="submit">
-         <!--<input type="button" class="btn btn-primary" name="newslleter" id="-newslleter-add" value="add"/>-->
+        <!-- end -->
+         <!--<input type="submit" class="btn btn-primary" value="add" name="submit"> -->
+         <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
+        <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
     </form>
 
 </body>

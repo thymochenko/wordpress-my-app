@@ -19,7 +19,6 @@ class DaoNewslleterTest extends PHPUnit_Framework_TestCase {
       $periodo1->data_de_envio_fixo = '10/02/2017';
       //add Periodo
       $envio1->addPeriodo($periodo1);
-
       //envio:2
       $envio2 = new Envio();
       $envio2->message_id = 1;
