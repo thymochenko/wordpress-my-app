@@ -966,13 +966,66 @@ class MailSender {
 **/
 
 final class Main {
+
+    protected static $request;
+    /*
+    *
+    /var/www/html/wp-content/plugins/news.core.php:994:
+array (size=4)
+  'grupos_id' =>
+    array (size=3)
+      0 => string '159' (length=3)
+      1 => string '6' (length=1)
+      2 => string '5' (length=1)
+  'message_id_fk' =>
+    array (size=3)
+      0 => string '153' (length=3)
+      1 => string '151' (length=3)
+      2 => string '153' (length=3)
+  'periodo' =>
+    array (size=3)
+      0 => string '18/02/2017' (length=10)
+      1 => string '19/02/2017' (length=10)
+      2 => string '20/02/2017' (length=10)
+  'template_id_fk' =>
+    array (size=3)
+      0 => string '140' (length=3)
+      1 => string '154' (length=3)
+      2 => string '146' (length=3)
+    *
+    */
     public static function init(){
-        //var_dump($_POST);
-        $x = rand(10,100);
-        $array = array(
-            'foo'  => $x
-        );
-        echo json_encode($array);
+        //var_dump(array_chunk($_POST,3));
+        if(isset($_POST)){
+            foreach($_POST as $k=>$post){
+                if("template_id_fk:" == substr($k,0,15)){
+                    $number['template_id_fk'][] = $post;
+                }
+
+                if("message_id_fk:" == substr($k,0,14)){
+                    $number['message_id_fk'][] = $post;
+                }
+
+                if("periodo:" == substr($k,0,8)){
+                    $number['periodo'][] = $post;
+                }
+                if(isset($_POST['grupos_id'])){
+                    $number['grupos_id'] = $_POST['grupos_id'];
+                }
+            }
+
+            self::setRequest($number);
+            //var_dump($number);
+            //var_dump(substr("periodo:115",0,8));exit;
+        }
+    }
+
+    public function setRequest($request){
+        self::$request = $request;
+    }
+
+    public function getRequest(){
+        return self::$request;
     }
 }
 

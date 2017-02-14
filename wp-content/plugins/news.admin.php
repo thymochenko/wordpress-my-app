@@ -55,9 +55,6 @@ $message = $daom->findAll();
 
         $('#radio_tpl').click(function(event) {
            event.preventDefault();
-
-
-
            $.ajax(this.href, {
               success: function(data) {
                   //dados do form
@@ -66,21 +63,11 @@ $message = $daom->findAll();
                       var coll = item.value.split(":");
                       coll[0]; // template Title
                       obj[item.name] = item.value;
-                      $('#template-title').append(coll[0]);
+                      $('#template-title').append(coll[0] + " | ").hide().fadeIn();
                       $('#template-title').append('<input type="hidden" name="template_id_fk" id="template_id_dinamic_attrib" value="' + coll[1] + '"/>');
                       $('#template-title').append('<input type="hidden" name="template_title_fk" id="template_title_dinamic_attrib" value="' + coll[0] + '"/>');
-                      ;
                       return obj;
                   }, {});
-
-
-
-
-                  // alert($("#grupos-action").val("160").attr("selected","selected"));
-
-                   $('#test').append('<option val="100">One</option>');
-                 //$('#main').html($(data).find('#main *'));
-                 //$('#notification-bar').text('The page has been successfully loaded');
               },
               error: function() {
                   alert('err');
@@ -96,9 +83,9 @@ $message = $daom->findAll();
            var coll = item.value.split(":");
            coll[0]; // template Title
            obj[item.name] = item.value;
-           $('#message-title').append(coll[0]);
+           $('#message-title').append(coll[0]  + " | ").hide().fadeIn(1000);
            //adiciona um elemento via ajax diretamente na div que exibe as propriedades de envio
-           //$('.message_id_fk_div').append(coll[1]);
+           $('.message_id_fk_div').append(coll[1]);
            $('#message-title').append('<input type="hidden" name="message_id_fk" value="' + coll[1] + '"/>');
            $('#message-title').append('<input type="hidden" name="message_title_fk" value="' + coll[0] + '"/>');
            return obj;
@@ -106,11 +93,9 @@ $message = $daom->findAll();
     });
 
     //refatorar - transformar em uma função
-    $('#newslleter-add').click(function(event) {
+    $('#newslleter-action').on('click', '#newslleter-add',function(event) {
        event.preventDefault();
-
-       $("#boxDataProperties").append('<h1 class="animation-el">Elemento 1 criado</h1>');
-
+       var count = 0;
        var data = $('#newslleter-action').serializeArray().reduce(function(obj, item) {
            //monta view com o post dos dados do form
            var valueName = item.value.split(":");
@@ -120,18 +105,27 @@ $message = $daom->findAll();
        }, {});
        //alert(data['valueName'][1]);
        //gera números randomicos para os Ids
-       var id = Math.floor(Math.random() * 999);
+       function getRandomInt(min, max) {
+           return Math.floor(Math.random() * (max - min)) + min;
+       }
+
+       var id = getRandomInt(100,200);
        //saida para a visualização de envios para a newslleter
-       $("#boxDataProperties").append('<h3 class="alert alert-success">Periodo de Envio: | <b><i>'
+       $("#boxDataProperties").append('<h4 class="alert alert-success">Periodo de Envio: | <b><i>'
         + data["dataInicial"] + '</i></b> | ' + " Template: | <b><i>" + data["template_title_fk"] + '</b></i> | Mensagem: | <b><i>' +
-    '<span class="message_id_fk_div">' + data["message_title_fk"] + " | </span></h3>");
+    '<span class="message_id_fk_div">' + data["message_title_fk"] + " | </span></h4>").hide().fadeIn(1000);
 
        //fks
+
+       $("#prop-envio-id").html(function(i,count){
+           var count = 0;
+           return parseInt(++count);
+       });
+
        $("#boxDataProperties").append('<input type="hidden" name="message_id_fk:'+  id +'" value="' + data["message_id_fk"] + '"/>');
        $("#boxDataProperties").append('<input type="hidden" name="periodo:' + id + '" value="' + data["dataInicial"] + '"/>');
        $("#boxDataProperties").append('<input type="hidden" name="template_id_fk:'+ id + '" id="template_id_dinamic_attrib" value="' + data["template_id_fk"] + '"/>');
     });
-
 
     //refatorar - transformar em uma função
     $('#periodicidade-add').click(function(event) {
@@ -146,7 +140,7 @@ $message = $daom->findAll();
                   coll[0]; // template Title
                   //alert( item.name  + " : " + item.value);
                   obj[item.name] = item.value;
-                  $('#data-title').append(obj["dataInicial"]);
+                  $('#data-title').append(obj["dataInicial"]  + " | ").hide().fadeIn();
                   $('#data-title').append('<input type="hidden" name="periodo" value="' + obj["dataInicial"] + '"/>');
                   return obj;
               }, {});
@@ -444,14 +438,14 @@ $message = $daom->findAll();
         Data de Envio : <input types="text" name="dataInicial"/><button type="button" class="btn btn-primary" data-target="#periodicidade-add" id="periodicidade-add">Add</button><br><br>
         <!-- caixas para inserção de envio-->
         <div id="boxDataProperties">
-            <h4>Propriedades de Envio: #número:  <span style="color:red" id="prop-envio-id">1</span></h4>
+            <h4>Propriedades de Envio: #número:  <span style="color:red" id="prop-envio-id"></span></h4>
             Template e Escolhido : <b><span id="template-title"></span></b><br>
             Mensagem Escolhida : <b><span id="message-title"></span></b><br>
             Data de Envio : <b><span id="data-title"></span></b><br>
         </div>
 
         <!-- end -->
-         <!--<input type="submit" class="btn btn-primary" value="add" name="submit"> -->
+         <input type="submit" class="btn btn-primary" value="submit" name="submit">
          <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
         <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
     </form>
