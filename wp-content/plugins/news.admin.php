@@ -12,6 +12,12 @@ $daot = new DaoTemplate();
 $template = $daot->findAll();
 $daom = new DaoMessage();
 $message = $daom->findAll();
+
+if($_POST){
+    $news = new NewslleterController();
+    $news->init($_POST);
+    $news->persitAction();
+}
 ?>
 <html>
 <head>
@@ -423,7 +429,11 @@ $message = $daom->findAll();
 </div>
 <!-- message -->
     <h1>Cadastro de newslleter</h1>
-    <form name="newslleter-action" id="newslleter-action" method="post" action="news.core.php">
+    <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
+        <h2>Título da Newslleter: </h2>
+        <input type="text" name="newslleter-title" value=""><br>
+        <h2>Porcentagem total do Envio: </h2>
+        <input type="text" name="porcentagem" value=""><br>
         <h2>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h2>
         <h3>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h3>
         <select class="selectpicker" name="grupos_id[]"  multiple>

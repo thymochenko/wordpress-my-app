@@ -487,8 +487,9 @@ class DaoNewslleter extends Dao {
                  'INSERT INTO wp_grupos_news (grupos_id,newslleter_id)
                   VALUES (:grupos_id, :newslleter_id)');
                  //var_dump($data['grupos']['grupos_id']);exit;
+
                  for($z=0; $z < count($data['grupos']); $z++){
-                     $sth3->bindValue(':grupos_id', $data["grupos"]['grupos_id'][$z], PDO::PARAM_INT);
+                     $sth3->bindValue(':grupos_id', $data["grupos"][$z], PDO::PARAM_INT);
                      $sth3->bindValue(':newslleter_id', $newslleter_id['id'], PDO::PARAM_INT);
                      $sth3->execute();
                  }
@@ -965,7 +966,7 @@ class MailSender {
 //$sender->
 **/
 
-final class Main {
+class NewslleterController {
 
     protected static $request;
     /*
@@ -994,10 +995,10 @@ array (size=4)
       2 => string '146' (length=3)
     *
     */
-    public static function init(){
+    public static function init($array){
         //var_dump(array_chunk($_POST,3));
-        if(isset($_POST)){
-            foreach($_POST as $k=>$post){
+        if(isset($array)){
+            foreach($array as $k=>$post){
                 if("template_id_fk:" == substr($k,0,15)){
                     $number['template_id_fk'][] = $post;
                 }
@@ -1009,13 +1010,14 @@ array (size=4)
                 if("periodo:" == substr($k,0,8)){
                     $number['periodo'][] = $post;
                 }
-                if(isset($_POST['grupos_id'])){
+                if(isset($array['grupos_id'])){
                     $number['grupos_id'] = $_POST['grupos_id'];
                 }
             }
-
+            $number['newslleter-title'] = $_POST['newslleter-title'];
+            $number['porcentagem'] = $_POST['porcentagem'];
             self::setRequest($number);
-            //var_dump($number);
+            //var_dump($_POST);exit;
             //var_dump(substr("periodo:115",0,8));exit;
         }
     }
@@ -1027,6 +1029,35 @@ array (size=4)
     public function getRequest(){
         return self::$request;
     }
-}
 
-Main::init();
+    public function persitAction(){
+        $post = self::getRequest();
+        $news = new Newslleter();
+        $news->title = $post['newslleter-title'];
+        $news->campaign_id = 1;
+        $news->status = 1;
+        $news->porcentagem = $post['porcentagem'];
+
+        for($z=0; $z < count($post)-1; $z++){
+           $envio1 = new Envio();
+           $envio1->message_id = $post['message_id_fk'][$z];
+           $envio1->template_id = $post['template_id_fk'][$z];
+           $envio1->status = 1;
+            //periodo:1
+           $periodo1 = new Periodo;
+           $periodo1->data_de_envio_fixo = $post['periodo'][$z];
+            //add Periodo
+           $envio1->addPeriodo($periodo1);
+
+            //add envio a newslleter
+           $news->addEnvio($envio1);
+        }
+        //var_dump($post['grupos_id']);exit;
+        $news->addGrupos($post['grupos_id']);
+        //var_dump($news->envio[0]->periodo);exit;
+        $dataProvider = new NewslleterDataProvider($news);
+        $dao = new DaoNewslleter();
+        $dao->setDataProvider($dataProvider);
+        $dao->persist();
+    }
+}

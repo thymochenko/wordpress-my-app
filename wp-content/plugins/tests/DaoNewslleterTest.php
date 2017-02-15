@@ -51,4 +51,40 @@ class DaoNewslleterTest extends PHPUnit_Framework_TestCase {
       $dao->setDataProvider($dataProvider);
       $this->assertTrue($dao->persist());
   }
+
+  public function testPersistWebRequest(){
+      $posts = array('grupos_id'=>array(0=>'159', 1=>'6', 2=>'5'),
+        'message_id_fk' => array(0=>'153',1=>'151', 2=>'153'),
+        'periodo'=> array(0=>'18/02/2017',1=> '19/02/2017', 2=>'20/02/2017'),
+        'template_id_fk'=>array(0=>'140',1=>'154', 2=>'146')
+       );
+
+      $news = new Newslleter();
+      $news->title = "SOAP OPERA SEQUENCE ";
+      $news->campaign_id = 1;
+      $news->status = 1;
+      $news->porcentagem = 10;
+
+      for($z=0; $z < count($posts)-1; $z++){
+         $envio1 = new Envio();
+         $envio1->message_id = $posts['message_id_fk'][$z];
+         $envio1->template_id = $posts['template_id_fk'][$z];
+         $envio1->status = 1;
+          //periodo:1
+         $periodo1 = new Periodo;
+         $periodo1->data_de_envio_fixo = $posts['periodo'][$z];
+          //add Periodo
+         $envio1->addPeriodo($periodo1);
+
+          //add envio a newslleter
+         $news->addEnvio($envio1);
+      }
+
+      $news->addGrupos($posts['grupos_id']);
+      //var_dump($news->envio[0]->periodo);exit;
+      $dataProvider = new NewslleterDataProvider($news);
+      $dao = new DaoNewslleter();
+      $dao->setDataProvider($dataProvider);
+      $this->assertTrue($dao->persist());
+  }
 }
