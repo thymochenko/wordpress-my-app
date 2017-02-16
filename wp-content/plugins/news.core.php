@@ -15,49 +15,44 @@ class DataProvider {
     }
 }
 
-class LeadsDataProvider extends DataProvider {
+abstract class Model {
 
-  public function __construct($object){
-    parent::__construct($object);
-  }
-}
+    protected $data;
 
-class MessageDataProvider extends DataProvider {
-
-  public function __construct($object){
-    parent::__construct($object);
-  }
-}
-
-class TemplateDataProvider extends DataProvider {
-
-  public function __construct($object){
-    parent::__construct($object);
-  }
-}
-
-class GruposDataProvider extends DataProvider {
-    public function __construct($object){
-      parent::__construct($object);
+    public function __construct(){
     }
-}
 
-class NewslleterDataProvider extends DataProvider {
-    public function __construct($object){
-      parent::__construct($object);
+    public function getData(){
+      if(isset($this->data)){
+          return $this->data;
+      }else{
+        return array();
+      }
     }
-}
 
-class EnvioDataProvider extends DataProvider {
-    public function __construct($object){
-      parent::__construct($object);
+    public function __set($prop, $value) {
+        if (method_exists($this, 'set_' . $prop)) {
+            call_user_func(array(
+                $this,
+                'set_' . $prop
+                    ), $value);
+        } else {
+            //atribui o valor a propriedade
+            $this->data[$prop] = $value;
+        }
     }
-}
 
-class PeriodoDataProvider extends DataProvider {
-    public function __construct($object){
-      parent::__construct($object);
-    }
+    public function __get(string $prop) {
+         if (method_exists($this, 'get_' . $prop)) {
+             return call_user_func(array(
+                 $this,
+                 'get_' . $prop
+             ));
+         } else {
+             //atribui o valor a propriedade
+             return $this->data[$prop];
+         }
+     }
 }
 
 final class Connection {
@@ -138,6 +133,59 @@ class Dao {
       $this->table = $this->wpdb->prefix .  $table;
     }
 }
+
+class LeadsDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
+  }
+}
+
+class MessageDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
+  }
+}
+
+class TemplateDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
+  }
+}
+
+class GruposDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class NewslleterDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class EnvioDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class PeriodoDataProvider extends DataProvider {
+    public function __construct($object){
+      parent::__construct($object);
+    }
+}
+
+class CampanhaDataProvider extends DataProvider {
+
+  public function __construct($object){
+    parent::__construct($object);
+  }
+}
+
 
 class DaoLeads extends Dao {
 
@@ -457,10 +505,11 @@ class DaoNewslleter extends Dao {
 
                  //persist block
                  //var_dump($data['envio'][0]->message_id); exit;
+
                  for($i=0; $i < count($data['envio']); $i++){
-                     $sth1->bindValue(':template_id', $data['envio'][$i]->template_id, PDO::PARAM_INT);
-                     $sth1->bindValue(':message_id', $data['envio'][$i]->message_id, PDO::PARAM_INT);
-                     $sth1->bindValue(':status', $data['envio'][$i]->status, PDO::PARAM_INT);
+                     $sth1->bindValue(':template_id', (int)$data['envio'][$i]->template_id, PDO::PARAM_INT);
+                     $sth1->bindValue(':message_id', (int)$data['envio'][$i]->message_id, PDO::PARAM_INT);
+                     $sth1->bindValue(':status', (int)$data['envio'][$i]->status, PDO::PARAM_INT);
                      $sth1->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
                      $sth1->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
                      $sth1->bindValue(':log_id', 1, PDO::PARAM_INT);
@@ -486,13 +535,15 @@ class DaoNewslleter extends Dao {
                  $sth3 = Connection::get($localconnection=true)->prepare(
                  'INSERT INTO wp_grupos_news (grupos_id,newslleter_id)
                   VALUES (:grupos_id, :newslleter_id)');
-                 //var_dump($data['grupos']['grupos_id']);exit;
+                 //var_dump($data['grupos'][0]);exit;
 
                  for($z=0; $z < count($data['grupos']); $z++){
-                     $sth3->bindValue(':grupos_id', $data["grupos"][$z], PDO::PARAM_INT);
-                     $sth3->bindValue(':newslleter_id', $newslleter_id['id'], PDO::PARAM_INT);
+                     $sth3->bindValue(':grupos_id', (int)$data["grupos"][$z], PDO::PARAM_INT);
+                     $sth3->bindValue(':newslleter_id', (int)$newslleter_id['id'], PDO::PARAM_INT);
                      $sth3->execute();
                  }
+
+                 //var_dump($envio_id);exit;
                  //@envio_news
                  $sth4 = Connection::get($localconnection=true)->prepare(
                  'INSERT INTO wp_envio_news (envio_id,newslleter_id)
@@ -500,8 +551,8 @@ class DaoNewslleter extends Dao {
 
                   //$data['envios'] vem de um select dos envios persistidos
                   for($a=0; $a < count($data['envio']); $a++){
-                      $sth4->bindValue(':envio_id', $envio_id[$a]['id'], PDO::PARAM_INT);
-                      $sth4->bindValue(':newslleter_id', $newslleter_id['id'], PDO::PARAM_INT);
+                      $sth4->bindValue(':envio_id', (int)$envio_id[$a]['id'], PDO::PARAM_INT);
+                      $sth4->bindValue(':newslleter_id', (int)$newslleter_id['id'], PDO::PARAM_INT);
                       $sth4->execute();
                   }
 
@@ -510,8 +561,8 @@ class DaoNewslleter extends Dao {
                    VALUES (:envio_id, :periodo_id)');
 
                   for($y=0; $y < count($data['envio']); $y++){
-                       $sth5->bindValue(':envio_id', $envio_id[$y]['id'], PDO::PARAM_INT);
-                       $sth5->bindValue(':periodo_id', $periodo_id[$y]['id'], PDO::PARAM_INT);
+                       $sth5->bindValue(':envio_id', (int)$envio_id[$y]['id'], PDO::PARAM_INT);
+                       $sth5->bindValue(':periodo_id', (int)$periodo_id[$y]['id'], PDO::PARAM_INT);
                        $sth5->execute();
                    }
                    return true;
@@ -527,137 +578,6 @@ class DaoNewslleter extends Dao {
     public function delete(){
 
     }
-}
-
-abstract class Model {
-
-    protected $data;
-
-    public function __construct(){
-    }
-
-    public function getData(){
-      if(isset($this->data)){
-          return $this->data;
-      }else{
-        return array();
-      }
-    }
-
-    public function __set($prop, $value) {
-        if (method_exists($this, 'set_' . $prop)) {
-            call_user_func(array(
-                $this,
-                'set_' . $prop
-                    ), $value);
-        } else {
-            //atribui o valor a propriedade
-            $this->data[$prop] = $value;
-        }
-    }
-
-    public function __get(string $prop) {
-         if (method_exists($this, 'get_' . $prop)) {
-             return call_user_func(array(
-                 $this,
-                 'get_' . $prop
-             ));
-         } else {
-             //atribui o valor a propriedade
-             return $this->data[$prop];
-         }
-     }
-}
-
-class Leads extends Model {
-
-  const active_newslleter = 1;
-  const inactive = 2;
-  const canceled = 3;
-  const ebook_request = 4;
-  const msg = 5;
-  const modal = 6;
-
-  public function set_name($name){
-    $this->data['name'] = (isset($name)) ? filter_var(trim($name), FILTER_SANITIZE_STRING) : null;
-  }
-
-  public function get_name() {
-    return $this->data['name'];
-  }
-
-  public function set_email($email){
-      $this->data['email'] = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
-  }
-
-  public function get_email(){
-    return $this->data['email'];
-  }
-
-  public function set_msg($msg){
-    $this->data['msg'] = (isset($msg)) ? strip_tags(trim($msg)) : null;
-  }
-
-  public function get_msg(){
-    return $this->data['msg'];
-  }
-
-  public function set_ebookHidden($ebookHidden){
-    $this->data['button_book'] = (isset($ebookHidden)) ? filter_var(trim($ebookHidden), FILTER_SANITIZE_STRING) : null;
-    $booksMeta = explode(":", substr($this->data['button_book'], 0));
-    $this->data["book_name"] = $booksMeta[0];
-    $this->data['button_book'] = $booksMeta[1] . $booksMeta[2];
-  }
-
-  public function get_ebookHidden() {
-    return $this->data['button_book'];
-  }
-
-  public function set_bookName($bookName){
-    $this->data['book_name'] = $bookName;
-  }
-
-  /*@method set_status int $status
-  *
-  *     a variável status será passada para a chave estrangeira grupos_id
-  *     se a variável status tiver o mesmo valor de uma constante da classe Leads
-  */
-  public function set_status($status){
-
-      if($status == 1 || $status > 3  || $status < 7){
-         $this->data['grupos_id'] = $status;
-         $this->data['status'] = $status;
-      }
-      else{
-          $this->data['status'] = $status;
-      }
-  }
-
-  public function get_bookName(){
-    return $this->data['book_name'];
-  }
-}
-
-class Message extends Model {
-
-  const active = 1;
-  const inactive = 0;
-
-  public function set_title($title){
-      $this->data['title'] = (isset($title)) ? strip_tags(trim($title)) : null;
-  }
-
-  public function get_title(){
-      return $this->data['title'];
-  }
-
-  public function set_body($body){
-      $this->data['body'] = (isset($body)) ? strip_tags($body) : null;
-  }
-
-  public function get_body(){
-      return $this->data['body'];
-  }
 }
 
 class DaoMessage extends Dao {
@@ -754,6 +674,277 @@ class DaoMessage extends Dao {
         }
         return $objects ? $objects : false;
       }
+}
+
+class DaoTemplate extends Dao {
+  public function persist(){
+    try {
+      $data = $this->nlDataProvider->getData();
+      $sth = Connection::open($localconnection=true)->prepare(
+         "INSERT INTO wp_news_template (title, body_template, message_id, status)
+          VALUES (
+            :title, :body_template, :message_id, :status)
+         ");
+
+      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+      $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
+      $sth->bindValue(':message_id', $data['message_id'], PDO::PARAM_INT);
+      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
+
+      return ($sth->execute()) ? true : false;
+
+      } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+      }
+  }
+
+
+  public function update(){
+    try {
+      $data = $this->nlDataProvider->getData();
+      $sth = Connection::open($localconnection=true)->prepare(
+         "UPDATE wp_news_template SET title = :title, body_template = :body_template,
+          message_id = :message_id, status = :status
+          WHERE id = :id
+        ");
+
+      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+      $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
+      $sth->bindValue(':message_id', (int)$data['message_id'], PDO::PARAM_INT);
+      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
+      $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
+
+      return ($sth->execute()) ? true : false;
+
+      } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+      }
+  }
+
+  public function delete(){
+      try {
+        $data = $this->nlDataProvider->getData();
+        $sth = Connection::open($localconnection=true)->prepare(
+           "UPDATE wp_news_template SET status = :status
+            WHERE id = :id
+          ");
+
+        $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+        $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
+
+        return ($sth->execute()) ? true : false;
+
+        } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+        }
+  }
+
+  public function findAll(){
+      $sth = Connection::open($localconnection=true)->prepare(
+      "SELECT * FROM wp_news_template ORDER BY id DESC LIMIT 10");
+
+      $sth->execute();
+      while($obj = $sth->fetchObject(__CLASS__)) {
+          $objects[] = $obj;
+      }
+      return $objects ? $objects : false;
+  }
+}
+
+class DaoCampanha extends Dao {
+
+    public function persist(){
+      try {
+        $dateTime = new DateTime();
+        $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+        $data = $this->nlDataProvider->getData();
+        $sth = Connection::open($localconnection=true)->prepare(
+           "INSERT INTO wp_news_campanha (title, status,datecreated, dateupdated)
+            VALUES (
+              :title, :status, :datecreated, :dateupdated)
+           ");
+
+        $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+        $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+        $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+        $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+
+        return ($sth->execute()) ? true : false;
+
+        } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+
+    public function update(){
+      try {
+          $dateTime = new DateTime();
+          $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+        $data = $this->nlDataProvider->getData();
+        $sth = Connection::open($localconnection=true)->prepare(
+           "UPDATE wp_news_campanha SET title = :title, status = :status,
+            dateupdated = :dateupdated
+            WHERE id = :id
+          ");
+
+          $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
+          $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+          $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+          $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
+
+        return ($sth->execute()) ? true : false;
+
+        } catch (PDOException $e) {
+          echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public function delete(){
+        try {
+            $dateTime = new DateTime();
+            $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+          $data = $this->nlDataProvider->getData();
+          $sth = Connection::open($localconnection=true)->prepare(
+             "UPDATE wp_news_campanha SET status = :status
+              WHERE id = :id
+            ");
+
+          $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+          $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
+
+          return ($sth->execute()) ? true : false;
+
+          } catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+          }
+    }
+
+    public function findAll(){
+        $sth = Connection::open($localconnection=true)->prepare(
+        "SELECT * FROM wp_news_campanha ORDER BY id DESC LIMIT 10");
+
+        $sth->execute();
+        while($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+
+        return $objects ? $objects : false;
+    }
+
+    public function findFirst(){
+        $sth = Connection::open($localconnection=true)->prepare(
+        "SELECT * FROM wp_news_campanha ORDER BY id DESC LIMIT 1");
+
+        $sth->execute();
+        while($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+
+        return $objects ? $objects : false;
+    }
+}
+
+class Leads extends Model {
+
+  const active_newslleter = 1;
+  const inactive = 2;
+  const canceled = 3;
+  const ebook_request = 4;
+  const msg = 5;
+  const modal = 6;
+
+  public function set_name($name){
+    $this->data['name'] = (isset($name)) ? filter_var(trim($name), FILTER_SANITIZE_STRING) : null;
+  }
+
+  public function get_name() {
+    return $this->data['name'];
+  }
+
+  public function set_email($email){
+      $this->data['email'] = filter_var(trim($email), FILTER_VALIDATE_EMAIL);
+  }
+
+  public function get_email(){
+    return $this->data['email'];
+  }
+
+  public function set_msg($msg){
+    $this->data['msg'] = (isset($msg)) ? strip_tags(trim($msg)) : null;
+  }
+
+  public function get_msg(){
+    return $this->data['msg'];
+  }
+
+  public function set_ebookHidden($ebookHidden){
+    $this->data['button_book'] = (isset($ebookHidden)) ? filter_var(trim($ebookHidden), FILTER_SANITIZE_STRING) : null;
+    $booksMeta = explode(":", substr($this->data['button_book'], 0));
+    $this->data["book_name"] = $booksMeta[0];
+    $this->data['button_book'] = $booksMeta[1] . $booksMeta[2];
+  }
+
+  public function get_ebookHidden() {
+    return $this->data['button_book'];
+  }
+
+  public function set_bookName($bookName){
+    $this->data['book_name'] = $bookName;
+  }
+
+  /*@method set_status int $status
+  *
+  *     a variável status será passada para a chave estrangeira grupos_id
+  *     se a variável status tiver o mesmo valor de uma constante da classe Leads
+  */
+  public function set_status($status){
+
+      if($status == 1 || $status > 3  || $status < 7){
+         $this->data['grupos_id'] = $status;
+         $this->data['status'] = $status;
+      }
+      else{
+          $this->data['status'] = $status;
+      }
+  }
+
+  public function get_bookName(){
+    return $this->data['book_name'];
+  }
+}
+
+class Message extends Model {
+
+  const active = 1;
+  const inactive = 0;
+
+  public function set_title($title){
+      $this->data['title'] = (isset($title)) ? strip_tags(trim($title)) : null;
+  }
+
+  public function get_title(){
+      return $this->data['title'];
+  }
+
+  public function set_body($body){
+      $this->data['body'] = (isset($body)) ? strip_tags($body) : null;
+  }
+
+  public function get_body(){
+      return $this->data['body'];
+  }
+}
+
+class Campanha extends Model {
+    const ATIVO = 1;
+    const INATIVO = 2;
+    const EM_ANDAMENTO = 3;
+    const ENVIADA = 4;
+    const PROBLEMA_ENVIO = 5;
 }
 
 class Grupos extends Model {
@@ -857,144 +1048,12 @@ class Template extends Model {
   }
 }
 
-class DaoTemplate extends Dao {
-  public function persist(){
-    try {
-      $data = $this->nlDataProvider->getData();
-      $sth = Connection::open($localconnection=true)->prepare(
-         "INSERT INTO wp_news_template (title, body_template, message_id, status)
-          VALUES (
-            :title, :body_template, :message_id, :status)
-         ");
-
-      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
-      $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
-      $sth->bindValue(':message_id', $data['message_id'], PDO::PARAM_INT);
-      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
-
-      return ($sth->execute()) ? true : false;
-
-      } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
-      }
-  }
-
-
-  public function update(){
-    try {
-      $data = $this->nlDataProvider->getData();
-      $sth = Connection::open($localconnection=true)->prepare(
-         "UPDATE wp_news_template SET title = :title, body_template = :body_template,
-          message_id = :message_id, status = :status
-          WHERE id = :id
-        ");
-
-      $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
-      $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
-      $sth->bindValue(':message_id', (int)$data['message_id'], PDO::PARAM_INT);
-      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
-      $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
-
-      return ($sth->execute()) ? true : false;
-
-      } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
-      }
-  }
-
-  public function delete(){
-      try {
-        $data = $this->nlDataProvider->getData();
-        $sth = Connection::open($localconnection=true)->prepare(
-           "UPDATE wp_news_template SET status = :status
-            WHERE id = :id
-          ");
-
-        $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
-        $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
-
-        return ($sth->execute()) ? true : false;
-
-        } catch (PDOException $e) {
-          echo 'Connection failed: ' . $e->getMessage();
-        }
-  }
-
-  public function findAll(){
-      $sth = Connection::open($localconnection=true)->prepare(
-      "SELECT * FROM wp_news_template ORDER BY id DESC LIMIT 10");
-
-      $sth->execute();
-      while($obj = $sth->fetchObject(__CLASS__)) {
-          $objects[] = $obj;
-      }
-      return $objects ? $objects : false;
-  }
-}
-
-class Logs extends Model {
-
-}
-/*
-class MailSender {
-
-    protected $data;
-
-    public function __construct(NewslleterDataProvider $dataProvider){
-      $dataProvider->setReturnType('array');
-      $this->data = $dataProvider->getData();
-    }
-
-    public function phpMailerWrapper(PHPMailer $mailer){
-        $this->phpMailer = $mailer;
-        return $this->phpMailer;
-    }
-
-    public function send($behavior){
-      $closure = function() use ($behavior){
-        $behavior();
-      };
-
-      $closure();
-    }
-
-    public function getData(){
-      return $this->data;
-    }
-}
-//$sender = new MailSender($news);
-//$sender->
-**/
+class Logs extends Model {}
 
 class NewslleterController {
 
     protected static $request;
-    /*
-    *
-    /var/www/html/wp-content/plugins/news.core.php:994:
-array (size=4)
-  'grupos_id' =>
-    array (size=3)
-      0 => string '159' (length=3)
-      1 => string '6' (length=1)
-      2 => string '5' (length=1)
-  'message_id_fk' =>
-    array (size=3)
-      0 => string '153' (length=3)
-      1 => string '151' (length=3)
-      2 => string '153' (length=3)
-  'periodo' =>
-    array (size=3)
-      0 => string '18/02/2017' (length=10)
-      1 => string '19/02/2017' (length=10)
-      2 => string '20/02/2017' (length=10)
-  'template_id_fk' =>
-    array (size=3)
-      0 => string '140' (length=3)
-      1 => string '154' (length=3)
-      2 => string '146' (length=3)
-    *
-    */
+
     public static function init($array){
         //var_dump(array_chunk($_POST,3));
         if(isset($array)){
@@ -1061,3 +1120,23 @@ array (size=4)
         $dao->persist();
     }
 }
+
+class CampanhaController{
+    public static function actionPersist(){
+        if($_POST["campanha-request-persist"]){
+            $campanha = new Campanha;
+            $campanha->title = $_POST['campanha-title'];
+            $campanha->status = Campanha::ATIVO;
+            $campanha->date_created = date("Y-m-d H:i:s");
+            $campanha->date_updated = date("Y-m-d H:i:s");
+            $dataProvider = new CampanhaDataProvider($campanha);
+            $daoc = new DaoCampanha();
+            $daoc->setDataProvider($dataProvider);
+            $daoc->persist();
+            $result = $daoc->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
+}
+
+CampanhaController::actionPersist();

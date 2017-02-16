@@ -12,12 +12,20 @@ $daot = new DaoTemplate();
 $template = $daot->findAll();
 $daom = new DaoMessage();
 $message = $daom->findAll();
+$daocampanha = new DaoCampanha();
+$_campanha = $daocampanha->findAll();
 
+/*
 if($_POST){
+    var_dump($_POST);exit;
     $news = new NewslleterController();
     $news->init($_POST);
     $news->persitAction();
 }
+*/
+
+
+
 ?>
 <html>
 <head>
@@ -192,6 +200,44 @@ if($_POST){
        });
     });
 
+    //links
+    $(".campanhas-block-content").hide();
+
+    $('.campanhas-link').click(function(event) {
+         event.preventDefault();
+         $(".newslleter-block-content").hide();
+         $(".campanhas-block-content").show().hide().fadeIn();
+
+         $('#campanha-action-send').click(function(event){
+                    /*$.ajax({
+                       type: "POST",
+                       url : this.href,
+                       success: function(data) {
+                           //dados do form
+                           var data = $('#campanha-action-form').serializeArray().reduce(function(obj, item) {
+                               obj[item.name] = item.value;
+                               alert("deu rock");
+                               return obj;
+                           }, {});
+                          //$('#main').html($(data).find('#main *'));
+                          //$('#notification-bar').text('The page has been successfully loaded');
+                       },
+                       error: function() {
+                           alert('err');
+                          //$('#notification-bar').text('An error occurred');
+                       }
+                   });*/
+                   $.post("news.core.php", $('#campanha-action-form').serializeArray())
+                   .done(function( data ) {
+                       alert( "Campanha Cadastrada Com Sucesso" + data);
+                       var json = $.parseJSON(data);
+                       for (var i=0;i<json.length;++i)
+                       {
+                           $('#test').append('<div class="name">'+json[i].title +'</>');
+                       }
+                   });
+         });
+    });
   });
 </script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
@@ -428,14 +474,25 @@ if($_POST){
   </div>
 </div>
 <!-- message -->
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#">Newslleter</a></li>
+  <li><a class="campanhas-link" href="#">Campanhas</a></li>
+  <li><a class="templates-link" href="#">Templates</a></li>
+  <li><a class="messages-link" href="#">Mensagens</a></li>
+  <li><a class="relatorios-link" href="#">Relatórios</a></li>
+  <li><a class="agendados-link"href="#">Agendados</a></li>
+  <li><a class="logs-link" href="#">Logs</a></li>
+  <li><a class="leads-link" href="#">Leads</a></li>
+</ul>
+ <div class="newslleter-block-content">
     <h1>Cadastro de newslleter</h1>
     <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
-        <h2>Título da Newslleter: </h2>
+        <h4>Título da Newslleter: </h4>
         <input type="text" name="newslleter-title" value=""><br>
-        <h2>Porcentagem total do Envio: </h2>
+        <h4>Porcentagem total do Envio: </h4>
         <input type="text" name="porcentagem" value=""><br>
-        <h2>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h2>
-        <h3>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h3>
+        <h4>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h4>
+        <h4>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h4>
         <select class="selectpicker" name="grupos_id[]"  multiple>
             <?php foreach($daog->findAll(5) as $gp): ?>
                 <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
@@ -459,6 +516,44 @@ if($_POST){
          <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
         <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
     </form>
+</div>
 
+<!-- campanhas-block-content  -->
+<div class="campanhas-block-content">
+<h1>Cadastro de campanhas</h1>
+<h4>Titulo da campanha</h4>
+    <form name="campanha-action-form" id="campanha-action-form" method="post" action="admin.php?page=news.admin.php">
+        <input type="text" name="campanha-title" value="">
+        <input type="submit" class="btn btn-primary" value="submit" name="submit">
+        <input type="button" id="campanha-action-send" class="btn btn-primary" name="campanha" value="add"/>
+        <input type="hidden" name="campanha-request-persist"  value="1">
+    </form>
+
+    <h1>Campanhas Cadastradas</h1>
+    <table class="responstable">
+    <thead>
+    <tr>
+    <th>Nome</th>
+    <th>data criação</th>
+    <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+      <?php
+       foreach($_campanha as $camp):?>
+    <tr>
+        <td style=""><?php  echo $camp->title ?></td>
+        <td><?php  echo $camp->datecreated ?></td>
+        <td> <?php  if ($camp->status == Campanha::ATIVO):?> ATIVO <?php endif; ?>
+          <?php  if ($lead->status == Campanha::INATIVO):?> INATIVO <?php endif; ?>
+          <?php  if ($lead->status == Campanha::EM_ANDAMENTO):?> EM ANDAMENTO <?php endif; ?>
+          <?php  if ($lead->status == Campanha::ENVIADA):?> ENVIADA <?php endif; ?>
+          <?php  if ($lead->status == Campanha::PROBLEMA_ENVIO):?> PROBLEMA ENVIO <?php endif; ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    <div id="test">Aqui Porra</div>
+</div>
 </body>
 </html>
+<!-- end campanhas-block-content  -->
