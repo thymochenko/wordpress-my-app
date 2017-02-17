@@ -15,16 +15,11 @@ $message = $daom->findAll();
 $daocampanha = new DaoCampanha();
 $_campanha = $daocampanha->findAll();
 
-/*
-if($_POST){
-    var_dump($_POST);exit;
+if($_POST['newslleter-title']){
     $news = new NewslleterController();
     $news->init($_POST);
     $news->persitAction();
 }
-*/
-
-
 
 ?>
 <html>
@@ -171,70 +166,71 @@ if($_POST){
     $('#grupo_button').click(function(event) {
        event.preventDefault();
 
-       $.ajax(this.href, {
-          success: function(data) {
-              var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
-                  var coll = item.value.split(":");
-                  var grupo_id = coll[0];
-                  var grupo_name = coll[1];
-                  obj[item.name] = item.value;
-
-                  $('.selectpicker').append('<option  selected="selected" value="' + grupo_id +
-                   '">' + grupo_name +'</option>')
-                  .selectpicker('refresh');
-
-                  return obj;
-              }, {});
-
-
-              // alert($("#grupos-action").val("160").attr("selected","selected"));
-
-               $('#test').append('<option val="100">One</option>');
-             //$('#main').html($(data).find('#main *'));
-             //$('#notification-bar').text('The page has been successfully loaded');
-          },
-          error: function() {
-              alert('err');
-             //$('#notification-bar').text('An error occurred');
-          }
-       });
     });
 
     //links
     $(".campanhas-block-content").hide();
+    $(".campanhaModal").hide();
+    //campanha-update-table-button chamada-update-form
+    $(".campanha-update-table-button").click(function(event) {
+        $("#campanhaModal").modal("show");
+        //alert("aq");
+        //var data = $('#campanha-event-update').serializeArray();
+        //alert(data[0].id);
+        //alert($("#campanha-value-id").attr('value'));
+               var campanhaId = $("#campanha_value_id").val();
+
+               $.ajax("news.core.php?id="+ campanhaId + "&action=campanha-update-action", {
+                  success: function(data) {
+                      /*var obj = $('#campanha-event-update').serializeArray().reduce(function(obj, item) {
+                        //alert("chave: " + item.name +  " valor:  " + item.value);
+                        obj[item.name] = item.value;
+                        return obj;
+                      }, {});
+                      */
+                      var camp_resource = $.parseJSON(data);
+                      //alert(camp_resource[0].id);-
+                      //alert(obj.campanha_value_id);
+                      // alert($("#gru-pos-action").val("160").attr("selected","selected"));
+                       $('.campanha-title-upd').val(camp_resource[0].title);
+                     //$('#main').html($(data).find('#main *'));
+                     //$('#notification-bar').text('The page has been successfully loaded');
+                  },
+                  error: function() {-
+                      alert('err');
+                     //$('#notification-bar').text('An error occurred');
+                  }
+               });
+
+               //alert(data1[0]);
+              //var data1 = $('#campanha-update-form').serializeArray();
+        });
+     //campanha-action-update
 
     $('.campanhas-link').click(function(event) {
          event.preventDefault();
          $(".newslleter-block-content").hide();
+         $("#inicial-block-content").hide();
          $(".campanhas-block-content").show().hide().fadeIn();
-
          $('#campanha-action-send').click(function(event){
-                    /*$.ajax({
-                       type: "POST",
-                       url : this.href,
-                       success: function(data) {
-                           //dados do form
-                           var data = $('#campanha-action-form').serializeArray().reduce(function(obj, item) {
-                               obj[item.name] = item.value;
-                               alert("deu rock");
-                               return obj;
-                           }, {});
-                          //$('#main').html($(data).find('#main *'));
-                          //$('#notification-bar').text('The page has been successfully loaded');
-                       },
-                       error: function() {
-                           alert('err');
-                          //$('#notification-bar').text('An error occurred');
-                       }
-                   });*/
+
                    $.post("news.core.php", $('#campanha-action-form').serializeArray())
                    .done(function( data ) {
-                       alert( "Campanha Cadastrada Com Sucesso" + data);
-                       var json = $.parseJSON(data);
-                       for (var i=0;i<json.length;++i)
-                       {
-                           $('#test').append('<div class="name">'+json[i].title +'</>');
-                       }
+                       var resource = $.parseJSON(data);
+
+                        var line = '<tr> <td style="background-color:#B0C4DE" class="campanha-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
+                           '<td style="background-color:#B0C4DE" class="campanha-date-td">' + resource[0].datecreated + '</td>' +
+                           '<td style="background-color:#B0C4DE" class="campanha-status-td">' + resource[0].status + '</td>' +
+                           '<td style="background-color:#B0C4DE" class="campanha-actions-td"> <button type="button" class="btn btn-default campanha-update-action">' +
+                               '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
+                           '</button>' +
+                           '<button type="button" class="btn btn-default campanha-destroy-action">' +
+                              '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
+                           '</button></td>' +
+                       '</tr>';
+
+                           $('.campanha-tbody').append(line).hide().fadeIn('slow');
+
                    });
          });
     });
@@ -304,6 +300,7 @@ if($_POST){
     display: table-cell;
     text-align: center;
 }
+
 @media (min-width: 480px) {
 .responstable td {
     border: 1px solid #d9e4e6;
@@ -322,6 +319,21 @@ if($_POST){
 </style>
 </head>
 <body>
+
+    <!-- menu -->
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#">Newslleter</a></li>
+      <li><a class="campanhas-link" href="#">Campanhas</a></li>
+      <li><a class="templates-link" href="#">Templates</a></li>
+      <li><a class="messages-link" href="#">Mensagens</a></li>
+      <li><a class="relatorios-link" href="#">Relatórios</a></li>
+      <li><a class="agendados-link"href="#">Agendados</a></li>
+      <li><a class="logs-link" href="#">Logs</a></li>
+      <li><a class="leads-link" href="#">Leads</a></li>
+    </ul>
+<!-- /menu -->
+<!-- inicial bloc content -->
+<div id="inicial-block-content">
 <div id="last-msg">
   <h2>Últimas Leads recebidas nos últmos 5 dias :
      <span style="color:red">[<?php echo count($collMsgForLast5Days);?>]</span></h2>
@@ -389,6 +401,8 @@ if($_POST){
 
 </tbody>
 </table>
+</div>
+<!-- inicial bloc content -->
 
 <!-- grupos -->
 <!--  -->
@@ -473,17 +487,7 @@ if($_POST){
     </div>
   </div>
 </div>
-<!-- message -->
-<ul class="nav nav-tabs">
-  <li class="active"><a href="#">Newslleter</a></li>
-  <li><a class="campanhas-link" href="#">Campanhas</a></li>
-  <li><a class="templates-link" href="#">Templates</a></li>
-  <li><a class="messages-link" href="#">Mensagens</a></li>
-  <li><a class="relatorios-link" href="#">Relatórios</a></li>
-  <li><a class="agendados-link"href="#">Agendados</a></li>
-  <li><a class="logs-link" href="#">Logs</a></li>
-  <li><a class="leads-link" href="#">Leads</a></li>
-</ul>
+
  <div class="newslleter-block-content">
     <h1>Cadastro de newslleter</h1>
     <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
@@ -512,7 +516,7 @@ if($_POST){
         </div>
 
         <!-- end -->
-         <input type="submit" class="btn btn-primary" value="submit" name="submit">
+         <!-- <input type="submit" class="btn btn-primary" value="submit" name="submit">-->
          <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
         <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
     </form>
@@ -520,6 +524,7 @@ if($_POST){
 
 <!-- campanhas-block-content  -->
 <div class="campanhas-block-content">
+<!-- Home campanha-->
 <h1>Cadastro de campanhas</h1>
 <h4>Titulo da campanha</h4>
     <form name="campanha-action-form" id="campanha-action-form" method="post" action="admin.php?page=news.admin.php">
@@ -536,23 +541,81 @@ if($_POST){
     <th>Nome</th>
     <th>data criação</th>
     <th>Status</th>
+    <th>Ações</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody class="campanha-tbody">
+<form name="campanha-event-update" id="campanha-event-update" method="GET" action="news.core.php">
       <?php
        foreach($_campanha as $camp):?>
     <tr>
-        <td style=""><?php  echo $camp->title ?></td>
-        <td><?php  echo $camp->datecreated ?></td>
-        <td> <?php  if ($camp->status == Campanha::ATIVO):?> ATIVO <?php endif; ?>
-          <?php  if ($lead->status == Campanha::INATIVO):?> INATIVO <?php endif; ?>
-          <?php  if ($lead->status == Campanha::EM_ANDAMENTO):?> EM ANDAMENTO <?php endif; ?>
-          <?php  if ($lead->status == Campanha::ENVIADA):?> ENVIADA <?php endif; ?>
-          <?php  if ($lead->status == Campanha::PROBLEMA_ENVIO):?> PROBLEMA ENVIO <?php endif; ?>
+        <td class="campanha-title-td"><?php  echo $camp->title ?></td>
+        <td class="campanha-date-td"><?php  echo $camp->datecreated ?></td>
+        <td class="campanha-status-td"> <?php  if ($camp->status == Campanha::ATIVO):?> ATIVO <?php endif; ?>
+          <?php  if ($camp->status == Campanha::INATIVO):?> INATIVO <?php endif; ?>
+          <?php  if ($camp->status == Campanha::EM_ANDAMENTO):?> EM ANDAMENTO <?php endif; ?>
+          <?php  if ($camp->status == Campanha::ENVIADA):?> ENVIADA <?php endif; ?>
+          <?php  if ($camp->status == Campanha::PROBLEMA_ENVIO):?> PROBLEMA ENVIO <?php endif; ?>
         </td>
+        <td class="campanha-actions-td">
+
+            <button type="button" class="campanha-update-table-button" class="btn btn-default ">
+                <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
+            </button>
+
+
+                <input type="hidden" name="campanha_value_id" id="campanha_value_id" value="<?php  echo $camp->id ?>"/>
+                <input type="hidden" value="" name="campanha-action-request" value="campanha-update-action"/>
+
+        <button type="button" class="btn btn-default campanha-destroy-action">
+            <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
+        </button>
+     </td>
     </tr>
     <?php endforeach; ?>
-    <div id="test">Aqui Porra</div>
+    </form>
+    <!-- Home campanha-->
+
+    <!-- Modal campanha (action:update) -->
+    <div class="modal fade" id="campanhaModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">campanha : Atualizando Registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <!-- form update campanha -->
+            <div id="chamada-form-view">
+                <form name="campanha-action-update" action="news.core.php" class="campanha-action-update" method="post">
+                        Título : <br><br><input type="text" name="campanha-title-upd" class="campanha-title-upd" value="">
+                        <br><br>
+                        Status:
+                        <select class="selectpicker" name="campanha-status-upd">
+                            <option class="option-chamada-ativo" value="1">ATIVO</option>
+                            <option class="option-chamada-inativo" value="2">INATIVO</option>
+                            <option class="option-chamada-e_andamento" value="3">EM ANDAMENTO</option>
+                            <option class="option-chamada-enviada" value="4">ENVIADA</option>
+                            <option class="option-chamada-pro_de_envio" value="5">PROBLEMA DE ENVIO</option>
+                        </select>
+                        <br><br>
+                        <input type="hidden" name="campanha-id-upd" class="campanha-id-upd" value="5001">
+                        <br>
+                     <input type="button" class="btn btn-primary" name="campanha-update-button" class="campanha-update-button" value="atualizar"/>
+                </form>
+            </div>
+            <!-- /update campanha form -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /modal campanha-->
 </div>
 </body>
 </html>

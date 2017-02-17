@@ -403,7 +403,7 @@ class DaoLeads extends Dao {
   }
 
   public function getAll(){
-    $sth = Connection::open($localconnection=true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC");
+    $sth = Connection::open($localconnection=true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC LIMIT 3");
     $sth->execute();
     while($obj = $sth->fetchObject(__CLASS__)) {
         $objects[] = $obj;
@@ -825,7 +825,7 @@ class DaoCampanha extends Dao {
 
     public function findAll(){
         $sth = Connection::open($localconnection=true)->prepare(
-        "SELECT * FROM wp_news_campanha ORDER BY id DESC LIMIT 10");
+        "SELECT * FROM wp_news_campanha ORDER BY id DESC LIMIT 3");
 
         $sth->execute();
         while($obj = $sth->fetchObject(__CLASS__)) {
@@ -845,6 +845,21 @@ class DaoCampanha extends Dao {
         }
 
         return $objects ? $objects : false;
+    }
+
+    public function findById($id){
+        if(is_integer($id)){
+            $sth = Connection::open($localconnection=true)->prepare(
+            "SELECT * FROM wp_news_campanha WHERE id = :id ORDER BY id DESC LIMIT 1");
+            $sth->bindValue(":id", $id, PDO::PARAM_INT);
+            $sth->execute();
+
+            while($obj = $sth->fetchObject(__CLASS__)) {
+                $objects[] = $obj;
+            }
+
+            return $objects ? $objects : false;
+        }
     }
 }
 
@@ -1137,6 +1152,15 @@ class CampanhaController{
             echo(json_encode($result));exit;
         }
     }
+
+    public function actionUpdate(){
+        if($_GET['id']){
+            $daocampanha = new DaoCampanha;
+            $campanhaResult = $daocampanha->findById((int)$_GET['id']);
+            echo(json_encode($campanhaResult)); exit;
+        }
+    }
 }
 
 CampanhaController::actionPersist();
+CampanhaController::actionUpdate();
