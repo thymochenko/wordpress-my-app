@@ -161,6 +161,7 @@ if($_POST['newslleter-title']){
              //$('#notification-bar').text('An error occurred');
           }
        });
+
     });
 
     $('#grupo_button').click(function(event) {
@@ -172,35 +173,72 @@ if($_POST['newslleter-title']){
     $(".campanhas-block-content").hide();
     $(".campanhaModal").hide();
     //campanha-update-table-button chamada-update-form
-    $(".campanha-update-table-button").click(function(event) {
+    $(".campanha-link-update").click(function(event) {
+        event.preventDefault();
         $("#campanhaModal").modal("show");
-        //alert("aq");
-        //var data = $('#campanha-event-update').serializeArray();
-        //alert(data[0].id);
-        //alert($("#campanha-value-id").attr('value'));
-               var campanhaId = $("#campanha_value_id").val();
 
-               $.ajax("news.core.php?id="+ campanhaId + "&action=campanha-update-action", {
+      $.ajax(this.href, {
                   success: function(data) {
-                      /*var obj = $('#campanha-event-update').serializeArray().reduce(function(obj, item) {
-                        //alert("chave: " + item.name +  " valor:  " + item.value);
-                        obj[item.name] = item.value;
-                        return obj;
-                      }, {});
-                      */
-                      var camp_resource = $.parseJSON(data);
-                      //alert(camp_resource[0].id);-
-                      //alert(obj.campanha_value_id);
-                      // alert($("#gru-pos-action").val("160").attr("selected","selected"));
-                       $('.campanha-title-upd').val(camp_resource[0].title);
+                      //dados do form
+                      var campresource = $.parseJSON(data);
+                      alert(campresource[0].id);
                      //$('#main').html($(data).find('#main *'));
                      //$('#notification-bar').text('The page has been successfully loaded');
                   },
-                  error: function() {-
+                  error: function() {
                       alert('err');
                      //$('#notification-bar').text('An error occurred');
                   }
                });
+        //$( "#campanha-event-update" ).submit(function( event ) {
+        //    alert("aqo");
+        //});
+        //alert("aq");
+        //var data = $('#campanha-event-update').serializeArray();
+        //alert(data[0].id);
+        //alert($("#campanha-value-id").attr('value'));
+        /*
+                alert(event);
+                var campanhaId = $(".campanha_value_id").val();
+
+                var result = $(".campanha_value_id").each( function( i, el ) {
+                    var element = $(el);
+                    var objects = [];
+                    objects[i] = element.val();
+                    //alert(" i : " + i + " el: "  + element.val());
+
+                    //element.val()
+                    return objects;
+                });
+
+                //alert($("input[name*='campanha_value_id']").val());
+
+                //alert(campanhaId);
+                $.ajax("news.core.php?id="+ campanhaId + "&action=campanha-update-action", {
+                   success: function(data) {
+                       /*var obj = $('#campanha-event-update').serializeArray().reduce(function(obj, item) {
+                         //alert("chave: " + item.name +  " valor:  " + item.value);
+                         obj[item.name] = item.value;
+                         return obj;
+                       }, {});
+
+                       var camp_resource = $.parseJSON(data);
+                       //alert(camp_resource[0].id);-
+                       //alert(obj.campanha_value_id);
+                       // alert($("#gru-pos-action").val("160").attr("selected","selected"));
+                        $('.campanha-title-upd').val(camp_resource[0].id);
+                        return true;
+                      //$('#main').html($(data).find('#main *'));
+                      //$('#notification-bar').text('The page has been successfully loaded');
+                   },
+                   error: function() {-
+                       alert('err');
+                      //$('#notification-bar').text('An error occurred');
+                   }
+               }); // end ajax
+*/
+               //alert(campanhaId);
+
 
                //alert(data1[0]);
               //var data1 = $('#campanha-update-form').serializeArray();
@@ -545,7 +583,6 @@ if($_POST['newslleter-title']){
     </tr>
     </thead>
     <tbody class="campanha-tbody">
-<form name="campanha-event-update" id="campanha-event-update" method="GET" action="news.core.php">
       <?php
        foreach($_campanha as $camp):?>
     <tr>
@@ -558,14 +595,13 @@ if($_POST['newslleter-title']){
           <?php  if ($camp->status == Campanha::PROBLEMA_ENVIO):?> PROBLEMA ENVIO <?php endif; ?>
         </td>
         <td class="campanha-actions-td">
-
+            <a class="campanha-link-update" href="news.core.php?campanha_value_id=<?php  echo $camp->id ?>">
             <button type="button" class="campanha-update-table-button" class="btn btn-default ">
                 <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
             </button>
+            </a>
 
-
-                <input type="hidden" name="campanha_value_id" id="campanha_value_id" value="<?php  echo $camp->id ?>"/>
-                <input type="hidden" value="" name="campanha-action-request" value="campanha-update-action"/>
+                <!--<input type="hidden" value="" name="campanha-action-request" value="campanha-update-action"/>-->
 
         <button type="button" class="btn btn-default campanha-destroy-action">
             <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
@@ -589,7 +625,6 @@ if($_POST['newslleter-title']){
           <div class="modal-body">
               <!-- form update campanha -->
             <div id="chamada-form-view">
-                <form name="campanha-action-update" action="news.core.php" class="campanha-action-update" method="post">
                         Título : <br><br><input type="text" name="campanha-title-upd" class="campanha-title-upd" value="">
                         <br><br>
                         Status:
@@ -601,6 +636,7 @@ if($_POST['newslleter-title']){
                             <option class="option-chamada-pro_de_envio" value="5">PROBLEMA DE ENVIO</option>
                         </select>
                         <br><br>
+                    <form name="campanha-action-update" action="news.core.php" class="campanha-action-update" method="get">
                         <input type="hidden" name="campanha-id-upd" class="campanha-id-upd" value="5001">
                         <br>
                      <input type="button" class="btn btn-primary" name="campanha-update-button" class="campanha-update-button" value="atualizar"/>

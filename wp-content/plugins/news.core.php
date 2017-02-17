@@ -1154,9 +1154,10 @@ class CampanhaController{
     }
 
     public function actionUpdate(){
-        if($_GET['id']){
+        //var_dump($_GET[]);exit;
+        if($_GET['campanha_value_id']){
             $daocampanha = new DaoCampanha;
-            $campanhaResult = $daocampanha->findById((int)$_GET['id']);
+            $campanhaResult = $daocampanha->findById((int)$_GET['campanha_value_id']);
             echo(json_encode($campanhaResult)); exit;
         }
     }
