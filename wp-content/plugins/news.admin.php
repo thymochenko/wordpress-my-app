@@ -167,8 +167,26 @@ if($_POST['newslleter-title']){
     $('#grupo_button').click(function(event) {
        event.preventDefault();
 
-    });
+       $.ajax(this.href, {
+          success: function(data) {
+              var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
+                  var coll = item.value.split(":");
+                  var grupo_id = coll[0];
+                  var grupo_name = coll[1];
+                  obj[item.name] = item.value;
 
+                  $('.selectpicker').append('<option  selected="selected" value="' + grupo_id +
+                   '">' + grupo_name +'</option>').selectpicker('refresh');
+
+                  return obj;
+              }, {});
+          },
+          error: function() {
+              alert('err');
+             //$('#notification-bar').text('An error occurred');
+         }
+       });
+    });
     //links
     $(".campanhas-block-content").hide();
     $(".campanhaModal").hide();
@@ -258,10 +276,14 @@ if($_POST['newslleter-title']){
                    $.post("news.core.php", $('#campanha-action-form').serializeArray())
                    .done(function( data ) {
                        var resource = $.parseJSON(data);
+                       var status = "";
+                       if(resource[0].status == "1"){
+                            status = "ATIVO";
+                       }
 
                         var line = '<tr> <td style="background-color:#B0C4DE" class="campanha-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
                            '<td style="background-color:#B0C4DE" class="campanha-date-td">' + resource[0].datecreated + '</td>' +
-                           '<td style="background-color:#B0C4DE" class="campanha-status-td">' + resource[0].status + '</td>' +
+                           '<td style="background-color:#B0C4DE" class="campanha-status-td">' + status + '</td>' +
                            '<td style="background-color:#B0C4DE" class="campanha-actions-td">' +
                            '<a class="campanha-link-update" href="news.core.php?campanha_value_id=' + resource[0].id + '">' +
                            '<button type="button" class="campanha-update-table-button" class="btn btn-default ">' +
@@ -283,7 +305,8 @@ if($_POST['newslleter-title']){
          $.post("news.core.php", $('.campanha-action-update').serializeArray())
          .done(function( data ) {
           var resource = $.parseJSON(data);
-            alert("ok");
+            alert("Campanha Atualizada com Sucesso");
+            location.reload();
         });
     });
   });
