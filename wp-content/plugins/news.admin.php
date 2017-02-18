@@ -173,15 +173,18 @@ if($_POST['newslleter-title']){
     $(".campanhas-block-content").hide();
     $(".campanhaModal").hide();
     //campanha-update-table-button chamada-update-form
-    $(".campanha-link-update").click(function(event) {
+    $(".campanha-link-update").on('click', function(event){
         event.preventDefault();
         $("#campanhaModal").modal("show");
 
       $.ajax(this.href, {
                   success: function(data) {
                       //dados do form
-                      var campresource = $.parseJSON(data);
-                      alert(campresource[0].id);
+                      var resource = $.parseJSON(data);
+                      //alert(campresource[0].id);
+                      $('.campanha-title-upd').val(resource[0].title);
+                      $('.campanha-id-upd').val(resource[0].id);
+
                      //$('#main').html($(data).find('#main *'));
                      //$('#notification-bar').text('The page has been successfully loaded');
                   },
@@ -259,10 +262,12 @@ if($_POST['newslleter-title']){
                         var line = '<tr> <td style="background-color:#B0C4DE" class="campanha-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
                            '<td style="background-color:#B0C4DE" class="campanha-date-td">' + resource[0].datecreated + '</td>' +
                            '<td style="background-color:#B0C4DE" class="campanha-status-td">' + resource[0].status + '</td>' +
-                           '<td style="background-color:#B0C4DE" class="campanha-actions-td"> <button type="button" class="btn btn-default campanha-update-action">' +
-                               '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
-                           '</button>' +
-                           '<button type="button" class="btn btn-default campanha-destroy-action">' +
+                           '<td style="background-color:#B0C4DE" class="campanha-actions-td">' +
+                           '<a class="campanha-link-update" href="news.core.php?campanha_value_id=' + resource[0].id + '">' +
+                           '<button type="button" class="campanha-update-table-button" class="btn btn-default ">' +
+                              '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
+                           '</button></a>' +
+                            '<button type="button" class="btn btn-default campanha-destroy-action">' +
                               '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
                            '</button></td>' +
                        '</tr>';
@@ -271,6 +276,15 @@ if($_POST['newslleter-title']){
 
                    });
          });
+    });
+
+    $('.campanha-update-button').click(function(event) {
+         event.preventDefault();
+         $.post("news.core.php", $('.campanha-action-update').serializeArray())
+         .done(function( data ) {
+          var resource = $.parseJSON(data);
+            alert("ok");
+        });
     });
   });
 </script>
@@ -554,7 +568,7 @@ if($_POST['newslleter-title']){
         </div>
 
         <!-- end -->
-         <!-- <input type="submit" class="btn btn-primary" value="submit" name="submit">-->
+         <input type="submit" class="btn btn-primary" value="Registrar todos os Envios" name="submit">
          <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
         <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
     </form>
@@ -600,7 +614,6 @@ if($_POST['newslleter-title']){
                 <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
             </button>
             </a>
-
                 <!--<input type="hidden" value="" name="campanha-action-request" value="campanha-update-action"/>-->
 
         <button type="button" class="btn btn-default campanha-destroy-action">
@@ -625,10 +638,11 @@ if($_POST['newslleter-title']){
           <div class="modal-body">
               <!-- form update campanha -->
             <div id="chamada-form-view">
+                <form name="campanha-action-update" action="news.core.php" class="campanha-action-update" method="post">
                         Título : <br><br><input type="text" name="campanha-title-upd" class="campanha-title-upd" value="">
                         <br><br>
                         Status:
-                        <select class="selectpicker" name="campanha-status-upd">
+                        <select name="campanha-status-upd">
                             <option class="option-chamada-ativo" value="1">ATIVO</option>
                             <option class="option-chamada-inativo" value="2">INATIVO</option>
                             <option class="option-chamada-e_andamento" value="3">EM ANDAMENTO</option>
@@ -636,10 +650,10 @@ if($_POST['newslleter-title']){
                             <option class="option-chamada-pro_de_envio" value="5">PROBLEMA DE ENVIO</option>
                         </select>
                         <br><br>
-                    <form name="campanha-action-update" action="news.core.php" class="campanha-action-update" method="get">
-                        <input type="hidden" name="campanha-id-upd" class="campanha-id-upd" value="5001">
+                         <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
+                        <input type="hidden" name="campanha-id-upd" class="campanha-id-upd" value="">
                         <br>
-                     <input type="button" class="btn btn-primary" name="campanha-update-button" class="campanha-update-button" value="atualizar"/>
+                     <input type="button" class="btn btn-primary campanha-update-button" name="campanha-update-button" value="atualizar"/>
                 </form>
             </div>
             <!-- /update campanha form -->

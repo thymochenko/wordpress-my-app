@@ -791,7 +791,7 @@ class DaoCampanha extends Dao {
           ");
 
           $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
-          $sth->bindValue(':status', $data['status'], PDO::PARAM_INT);
+          $sth->bindValue(':status', (int)$data['status'], PDO::PARAM_INT);
           $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
           $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
 
@@ -1161,7 +1161,26 @@ class CampanhaController{
             echo(json_encode($campanhaResult)); exit;
         }
     }
+
+    public function actionPostUpdate(){
+        if($_POST['campanha-id-upd']){
+            //var_dump($_POST);exit;
+            $campanha = new Campanha;
+            $campanha->id = $_POST['campanha-id-upd'];
+            $campanha->title = $_POST['campanha-title-upd'];
+            $campanha->status = $_POST['campanha-status-upd'];
+            $campanha->date_created = date("Y-m-d H:i:s");
+            $campanha->date_updated = date("Y-m-d H:i:s");
+            $dataProvider = new CampanhaDataProvider($campanha);
+            $daoc = new DaoCampanha();
+            $daoc->setDataProvider($dataProvider);
+            $daoc->update();
+            $result = $daoc->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
 }
 
 CampanhaController::actionPersist();
 CampanhaController::actionUpdate();
+CampanhaController::actionPostUpdate();
