@@ -173,7 +173,7 @@ if($_POST['newslleter-title']){
     $(".campanhas-block-content").hide();
     $(".campanhaModal").hide();
     //campanha-update-table-button chamada-update-form
-    $(".campanha-link-update").on('click', function(event){
+    $(document).on('click',".campanha-link-update", function(event){
         event.preventDefault();
         $("#campanhaModal").modal("show");
 
@@ -248,12 +248,12 @@ if($_POST['newslleter-title']){
         });
      //campanha-action-update
 
-    $('.campanhas-link').click(function(event) {
+    $(document).on("click", '.campanhas-link', function(event) {
          event.preventDefault();
          $(".newslleter-block-content").hide();
          $("#inicial-block-content").hide();
          $(".campanhas-block-content").show().hide().fadeIn();
-         $('#campanha-action-send').click(function(event){
+         $(document).on('click', '#campanha-action-send',function(event){
 
                    $.post("news.core.php", $('#campanha-action-form').serializeArray())
                    .done(function( data ) {
