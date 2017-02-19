@@ -25,9 +25,9 @@ if($_POST['newslleter-title']){
 <html>
 <head>
     <script type="text/javascript"
-    			  src="https://code.jquery.com/jquery-3.1.1.min.js"
-    			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    			  crossorigin="anonymous"></script>
+                  src="https://code.jquery.com/jquery-3.1.1.min.js"
+                  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+                  crossorigin="anonymous"></script>
 
 
               <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -38,30 +38,35 @@ if($_POST['newslleter-title']){
           <!-- Latest compiled and minified JavaScript -->
           <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
           <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
 
-<!-- Latest compiled and minified JavaScript -->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-<script type="text/javascript">
-  $(function() {
+    <!-- Latest compiled and minified JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+      //exibe modal de persistẽncia de grupo
       $("#add-grupo").click(function(){
       $("#myModal").modal('show');
     });
-
+    //exibe modal de persistẽncia de templates
     $("#add-template").click(function(){
         $("#templateModal").modal('show');
     });
-
+    //exibe modal de persistẽncia de mensagens
     $("#add-message").click(function(){
         $("#messageModal").modal('show');
     });
-
+    //fecha todas as janelas
     $(".close").click(function(){
         $('#templateModal, #messageModal').modal('hide');
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
     });
 
+            /*
+            *@newslleter-form
+            *adiciona um template a newslleter
+            */
         $('#radio_tpl').click(function(event) {
            event.preventDefault();
            $.ajax(this.href, {
@@ -84,7 +89,11 @@ if($_POST['newslleter-title']){
               }
            });
         });
-    //refatorar - transformar em uma função
+
+        /*
+        *@newslleter-form
+        *adiciona uma mensagem a newslleter
+        */
     $('#radio-msg').click(function(event) {
        event.preventDefault();
        var data = $('#message-action').serializeArray().reduce(function(obj, item) {
@@ -101,7 +110,8 @@ if($_POST['newslleter-title']){
        }, {});
     });
 
-    //refatorar - transformar em uma função
+    /*method: persist domain:@newslleter
+    */
     $('#newslleter-action').on('click', '#newslleter-add',function(event) {
        event.preventDefault();
        var count = 0;
@@ -117,7 +127,6 @@ if($_POST['newslleter-title']){
        function getRandomInt(min, max) {
            return Math.floor(Math.random() * (max - min)) + min;
        }
-
        var id = getRandomInt(100,200);
        //saida para a visualização de envios para a newslleter
        $("#boxDataProperties").append('<h4 class="alert alert-success">Periodo de Envio: | <b><i>'
@@ -136,7 +145,9 @@ if($_POST['newslleter-title']){
        $("#boxDataProperties").append('<input type="hidden" name="template_id_fk:'+ id + '" id="template_id_dinamic_attrib" value="' + data["template_id_fk"] + '"/>');
     });
 
-    //refatorar - transformar em uma função
+    /*@newslleter-form
+    *adiciona dados de periodicidade ao form de news
+    */
     $('#periodicidade-add').click(function(event) {
        event.preventDefault();
 
@@ -153,20 +164,19 @@ if($_POST['newslleter-title']){
                   $('#data-title').append('<input type="hidden" name="periodo" value="' + obj["dataInicial"] + '"/>');
                   return obj;
               }, {});
-             //$('#main').html($(data).find('#main *'));
-             //$('#notification-bar').text('The page has been successfully loaded');
           },
           error: function() {
               alert('err');
-             //$('#notification-bar').text('An error occurred');
           }
        });
 
     });
 
-    $('#grupo_button').click(function(event) {
+    /*@newslleter-form
+    *method:load grupos para o formulário de cadastro de newslleter
+    */
+    $("#grupos-action").on('click', '#grupo_button', function(event) {
        event.preventDefault();
-
        $.ajax(this.href, {
           success: function(data) {
               var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
@@ -174,7 +184,6 @@ if($_POST['newslleter-title']){
                   var grupo_id = coll[0];
                   var grupo_name = coll[1];
                   obj[item.name] = item.value;
-
                   $('.selectpicker').append('<option  selected="selected" value="' + grupo_id +
                    '">' + grupo_name +'</option>').selectpicker('refresh');
 
@@ -188,118 +197,86 @@ if($_POST['newslleter-title']){
        });
     });
     //links
+
+    //Ao inicializar a página esconde o conteudo de campanhas
     $(".campanhas-block-content").hide();
+    //esconde o modal campanhas
     $(".campanhaModal").hide();
-    //campanha-update-table-button chamada-update-form
+
+    /*@Campanha
+    *method: carrega dados para o form de update domain:@Campanha
+    */
     $(document).on('click',".campanha-link-update", function(event){
         event.preventDefault();
+        //mostra form de atualização
         $("#campanhaModal").modal("show");
 
-      $.ajax(this.href, {
-                  success: function(data) {
-                      //dados do form
-                      var resource = $.parseJSON(data);
-                      //alert(campresource[0].id);
-                      $('.campanha-title-upd').val(resource[0].title);
-                      $('.campanha-id-upd').val(resource[0].id);
-
-                     //$('#main').html($(data).find('#main *'));
-                     //$('#notification-bar').text('The page has been successfully loaded');
-                  },
-                  error: function() {
-                      alert('err');
-                     //$('#notification-bar').text('An error occurred');
+        $.ajax(this.href, { success: function(data) {
+            //dados do form
+            var resource = $.parseJSON(data);
+            $('.campanha-title-upd').val(resource[0].title);
+            $('.campanha-id-upd').val(resource[0].id);
+            },
+            error: function() {
+                      alert('error');
                   }
-               });
-        //$( "#campanha-event-update" ).submit(function( event ) {
-        //    alert("aqo");
-        //});
-        //alert("aq");
-        //var data = $('#campanha-event-update').serializeArray();
-        //alert(data[0].id);
-        //alert($("#campanha-value-id").attr('value'));
-        /*
-                alert(event);
-                var campanhaId = $(".campanha_value_id").val();
-
-                var result = $(".campanha_value_id").each( function( i, el ) {
-                    var element = $(el);
-                    var objects = [];
-                    objects[i] = element.val();
-                    //alert(" i : " + i + " el: "  + element.val());
-
-                    //element.val()
-                    return objects;
-                });
-
-                //alert($("input[name*='campanha_value_id']").val());
-
-                //alert(campanhaId);
-                $.ajax("news.core.php?id="+ campanhaId + "&action=campanha-update-action", {
-                   success: function(data) {
-                       /*var obj = $('#campanha-event-update').serializeArray().reduce(function(obj, item) {
-                         //alert("chave: " + item.name +  " valor:  " + item.value);
-                         obj[item.name] = item.value;
-                         return obj;
-                       }, {});
-
-                       var camp_resource = $.parseJSON(data);
-                       //alert(camp_resource[0].id);-
-                       //alert(obj.campanha_value_id);
-                       // alert($("#gru-pos-action").val("160").attr("selected","selected"));
-                        $('.campanha-title-upd').val(camp_resource[0].id);
-                        return true;
-                      //$('#main').html($(data).find('#main *'));
-                      //$('#notification-bar').text('The page has been successfully loaded');
-                   },
-                   error: function() {-
-                       alert('err');
-                      //$('#notification-bar').text('An error occurred');
-                   }
-               }); // end ajax
-*/
-               //alert(campanhaId);
-
-
-               //alert(data1[0]);
-              //var data1 = $('#campanha-update-form').serializeArray();
-        });
-     //campanha-action-update
-
-    $(document).on("click", '.campanhas-link', function(event) {
-         event.preventDefault();
-         $(".newslleter-block-content").hide();
-         $("#inicial-block-content").hide();
-         $(".campanhas-block-content").show().hide().fadeIn();
-         $(document).on('click', '#campanha-action-send',function(event){
-
-                   $.post("news.core.php", $('#campanha-action-form').serializeArray())
-                   .done(function( data ) {
-                       var resource = $.parseJSON(data);
-                       var status = "";
-                       if(resource[0].status == "1"){
-                            status = "ATIVO";
-                       }
-
-                        var line = '<tr> <td style="background-color:#B0C4DE" class="campanha-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
-                           '<td style="background-color:#B0C4DE" class="campanha-date-td">' + resource[0].datecreated + '</td>' +
-                           '<td style="background-color:#B0C4DE" class="campanha-status-td">' + status + '</td>' +
-                           '<td style="background-color:#B0C4DE" class="campanha-actions-td">' +
-                           '<a class="campanha-link-update" href="news.core.php?campanha_value_id=' + resource[0].id + '">' +
-                           '<button type="button" class="campanha-update-table-button" class="btn btn-default ">' +
-                              '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
-                           '</button></a>' +
-                            '<button type="button" class="btn btn-default campanha-destroy-action">' +
-                              '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
-                           '</button></td>' +
-                       '</tr>';
-
-                           $('.campanha-tbody').append(line).hide().fadeIn('slow');
-
-                   });
-         });
+            });
     });
 
+     /**
+     * method:link domain:@campanha
+     *
+     **/
+    $(document).on("click", '.campanhas-link', function(event) {
+         event.preventDefault();
+         //fecha bloco de template
+         $(".template-block-info-inicial").hide();
+         $("#template-responstable").hide();
+         $(".template-tbody").hide();
+         //fecha bloco de newslleter
+         $(".newslleter-block-content").hide();
+         //bloco index (default)
+         $("#inicial-block-content").hide();
+         //abre o bloco de conteúdo com fadeIn
+         $(".campanhas-block-content").show().hide().fadeIn();
+
+    });
+
+
+    /* method:persist domain:@Campanha
+    *
+    */
+    $(document).on('click', '#cadastro-campanha-send',function(event){
+               //ajax post
+              $.post("news.core.php", $('#campanha-action-form').serializeArray())
+              .done(function( data ) {
+                  var resource = $.parseJSON(data);
+                  var status = "";
+                  if(resource[0].status == "1"){
+                       status = "ATIVO";
+                  }
+                  //view (exibe os dados persistidos em uma tabela)
+                   var line = '<tr> <td style="background-color:#B0C4DE" class="campanha-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
+                      '<td style="background-color:#B0C4DE" class="campanha-date-td">' + resource[0].datecreated + '</td>' +
+                      '<td style="background-color:#B0C4DE" class="campanha-status-td">' + status + '</td>' +
+                      '<td style="background-color:#B0C4DE" class="campanha-actions-td">' +
+                      '<a class="campanha-link-update" href="news.core.php?campanha_value_id=' + resource[0].id + '">' +
+                      '<button type="button" class="campanha-update-table-button" class="btn btn-default ">' +
+                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
+                      '</button></a>' +
+                       '<button type="button" class="btn btn-default campanha-destroy-action">' +
+                         '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
+                      '</button></td>' +
+                  '</tr>';
+
+                      $('.campanha-tbody').append(line).hide().fadeIn('slow');
+
+              });
+    });
+
+    /* method:update domain:@Campanha
+    *
+    */
     $('.campanha-update-button').click(function(event) {
          event.preventDefault();
          $.post("news.core.php", $('.campanha-action-update').serializeArray())
@@ -309,10 +286,66 @@ if($_POST['newslleter-title']){
             location.reload();
         });
     });
-  });
-</script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+
+    /* ================================= @Template Context =====================================*/
+    /* =========================================================================================*/
+    /**
+    * method:link domain:@Template
+    *
+    **/
+    $(document).on("click", '.templates-link', function(event) {
+        event.preventDefault();
+        //fecha bloco de newslleter
+    //    $("#test-template").load('template_block_content.php');
+    //fecha bloco de newslleter
+        $("#inicial-block-content").hide();
+        $(".newslleter-block-content").hide();
+        //bloco index (default)
+        alert("vai dar certo");
+
+        $(".campanha-block-info-inicial").hide();
+        $("#campanha-responstable").hide();
+        $(".campanha-tbody").hide();
+
+        //$(".campanhas-block-content").show();
+        $(".template-block-info-inicial").show();
+        $("#template-responstable").show();
+        $(".template-tbody").show();
+    //
+
+    });
+    /* method:persist domain:@Campanha
+    *
+    */
+    $(document).on('click', '#cadastro-template-send',function(event){
+               //ajax post
+              $.post("news.core.php", $('#template-action-form').serializeArray())
+              .done(function( data ) {
+                  var resource = $.parseJSON(data);
+                  var status = "";
+                  if(resource[0].status == "1"){
+                       status = "ATIVO";
+                  }
+                  //view (exibe os dados persistidos em uma tabela)
+                   var line = '<tr> <td style="background-color:#B0C4DE" class="template-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
+                      '<td style="background-color:#B0C4DE" class="template-date-td">' + resource[0].datecreated + '</td>' +
+                      '<td style="background-color:#B0C4DE" class="template-status-td">' + status + '</td>' +
+                      '<td style="background-color:#B0C4DE" class="template-actions-td">' +
+                      '<a class="campanha-link-update" href="news.core.php?template_value_id=' + resource[0].id + '">' +
+                      '<button type="button" class="template-update-table-button" class="btn btn-default ">' +
+                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
+                      '</button></a>' +
+                       '<button type="button" class="btn btn-default campanha-destroy-action">' +
+                         '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
+                      '</button></td>' +
+                  '</tr>';
+
+                      $('.template-tbody').append(line).hide().fadeIn('slow');
+
+              });
+          });
+    });
+    </script>
 
 </head>
 <style>
@@ -536,7 +569,7 @@ if($_POST['newslleter-title']){
 </div>
 <!-- templates -->
 
-<!--  Message -->
+<!--  Message Modal -->
 <div class="modal fade" id="messageModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -563,6 +596,7 @@ if($_POST['newslleter-title']){
   </div>
 </div>
 
+<!-- cadastro Newslleter -->
  <div class="newslleter-block-content">
     <h1>Cadastro de newslleter</h1>
     <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
@@ -598,19 +632,26 @@ if($_POST['newslleter-title']){
 </div>
 
 <!-- campanhas-block-content  -->
+<?php //include_once "campanha_block_content.php"; ?>
+<!-- end campanhas-block-content  -->
+
+<!-- template-block-content  -->
+<?php //include_once "template_block_content.php"; ?>
 <div class="campanhas-block-content">
 <!-- Home campanha-->
+<div class="campanha-block-info-inicial">
 <h1>Cadastro de campanhas</h1>
 <h4>Titulo da campanha</h4>
     <form name="campanha-action-form" id="campanha-action-form" method="post" action="admin.php?page=news.admin.php">
         <input type="text" name="campanha-title" value="">
         <input type="submit" class="btn btn-primary" value="submit" name="submit">
-        <input type="button" id="campanha-action-send" class="btn btn-primary" name="campanha" value="add"/>
+        <input type="button" id="cadastro-campanha-send" class="btn btn-primary" name="campanha" value="add"/>
         <input type="hidden" name="campanha-request-persist"  value="1">
     </form>
 
     <h1>Campanhas Cadastradas</h1>
-    <table class="responstable">
+</div>
+    <table id="campanha-responstable" class="responstable">
     <thead>
     <tr>
     <th>Nome</th>
@@ -690,6 +731,100 @@ if($_POST['newslleter-title']){
 
     <!-- /modal campanha-->
 </div>
+<!-- end campanha-block-template -->
+<!-- template-block-template -->
+<div class="template-block-content">
+<!-- Home template-->
+<div class="template-block-info-inicial">
+<h1 id="test-template">{Cadastro de Templates}</h1>
+<h4>Titulo do Template</h4>
+    <form name="template-action-form" id="template-action-form" method="post" action="admin.php?page=news.admin.php">
+        <input type="text" name="template-title" value="">
+        <input type="submit" class="btn btn-primary" value="submit" name="submit">
+        <input type="button" id="cadastro-template-send" class="btn btn-primary" name="template" value="add"/>
+        <input type="hidden" name="template-request-persist"  value="1">
+    </form>
+
+    <h1>templates Cadastradas</h1>
+</div>
+    <table id="template-responstable" class="responstable">
+    <thead>
+    <tr>
+    <th>Nome</th>
+    <th>data criação</th>
+    <th>Status</th>
+    <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody class="template-tbody">
+      <?php
+       foreach($template as $tpl):?>
+    <tr>
+        <td class="template-title-td"><?php  echo $tpl->title ?></td>
+        <td class="template-date-td"><?php  echo $tpl->datecreated ?></td>
+        <td class="template-status-td"> <?php  if ($tpl->status == Template::ATIVO):?> ATIVO <?php endif; ?>
+          <?php  if ($tpl->status == Template::INATIVO):?> INATIVO <?php endif; ?>
+
+        </td>
+        <td class="template-actions-td">
+            <a class="template-link-update" href="news.core.php?template_value_id=<?php  echo $tpl->id ?>">
+            <button type="button" class="template-update-table-button" class="btn btn-default ">
+                <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
+            </button>
+            </a>
+                <!--<input type="hidden" value="" name="template-action-request" value="template-update-action"/>-->
+
+        <button type="button" class="btn btn-default template-destroy-action">
+            <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
+        </button>
+     </td>
+    </tr>
+    <?php endforeach; ?>
+    </form>
+    <!-- Home template-->
+
+    <!-- Modal template (action:update) -->
+    <div class="modal fade" id="templateModalUpdate" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">template : Atualizando Registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <!-- form update template -->
+            <div id="template-form-view">
+                <form name="template-action-update" action="news.core.php" class="template-action-update" method="post">
+                        Título : <br><br><input type="text" name="template-title-upd" class="template-title-upd" value="">
+                        <br><br>
+                        Template:
+                        <?php //include_once "text_editor.php"; ?>
+                        Status:
+                        <select name="template-status-upd">
+                            <option class="option-template-ativo" value="1">ATIVO</option>
+                            <option class="option-template-inativo" value="2">INATIVO</option>
+                        </select>
+                        <br><br>
+                         <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
+                        <input type="hidden" name="template-id-upd" class="template-id-upd" value="">
+                        <br>
+                     <input type="button" class="btn btn-primary template-update-button" name="template-update-button" value="atualizar"/>
+                </form>
+            </div>
+            <!--  update template form -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal template-->
+</div>
+
+<!-- end template-block-content  -->
+
 </body>
 </html>
-<!-- end campanhas-block-content  -->

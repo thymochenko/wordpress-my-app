@@ -689,7 +689,7 @@ class DaoTemplate extends Dao {
       $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
       $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
       $sth->bindValue(':message_id', $data['message_id'], PDO::PARAM_INT);
-      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
+      $sth->bindValue(':status', Template::ATIVO, PDO::PARAM_INT);
 
       return ($sth->execute()) ? true : false;
 
@@ -711,7 +711,7 @@ class DaoTemplate extends Dao {
       $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
       $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
       $sth->bindValue(':message_id', (int)$data['message_id'], PDO::PARAM_INT);
-      $sth->bindValue(':status', Template::active, PDO::PARAM_INT);
+      $sth->bindValue(':status', Template::ATIVO, PDO::PARAM_INT);
       $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
 
       return ($sth->execute()) ? true : false;
@@ -1026,8 +1026,8 @@ class Periodo extends Model {
 }
 
 class Template extends Model {
-  const active = 1;
-  const inactive = 0;
+  const ATIVO = 1;
+  const INATIVO = 0;
 
   public function set_title($title){
       $this->data['title'] = (isset($title)) ? strip_tags($title) : null;
