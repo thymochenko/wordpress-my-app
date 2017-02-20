@@ -238,7 +238,14 @@ if($_POST['newslleter-title']){
          //bloco index (default)
          $("#inicial-block-content").hide();
          //abre o bloco de conteúdo com fadeIn
+         //hide message
+         $(".message-block-info-inicial").hide();
+         $("#message-responstable").hide();
+         $(".message-tbody").hide();
+
          $(".campanhas-block-content").show().hide().fadeIn();
+
+
 
     });
 
@@ -301,12 +308,16 @@ if($_POST['newslleter-title']){
         $("#inicial-block-content").hide();
         $(".newslleter-block-content").hide();
         //bloco index (default)
-        alert("vai dar certo");
+        //alert("vai dar certo");
 
         $(".campanha-block-info-inicial").hide();
         $("#campanha-responstable").hide();
         $(".campanha-tbody").hide();
 
+        //hide message
+        $(".message-block-info-inicial").hide();
+        $("#message-responstable").hide();
+        $(".message-tbody").hide();
         //$(".campanhas-block-content").show();
         $(".template-block-info-inicial").show();
         $("#template-responstable").show();
@@ -373,10 +384,107 @@ if($_POST['newslleter-title']){
                $.post("news.core.php", $('.template-action-update').serializeArray())
                .done(function( data ) {
                 var resource = $.parseJSON(data);
-                  alert("Campanha Atualizada com Sucesso");
+                  alert("Template Atualizada com Sucesso");
                   location.reload();
               });
           });
+
+          /* ================================= @Message Context =====================================*/
+          /* =========================================================================================*/
+          /**
+          * method:link domain:@Message
+          *
+          **/
+          $(document).on("click", '.message-link', function(event) {
+              event.preventDefault();
+              //fecha bloco de newslleter
+          //    $("#test-template").load('template_block_content.php');
+          //fecha bloco de newslleter
+              $("#inicial-block-content").hide();
+              $(".newslleter-block-content").hide();
+              //bloco index (default)
+              //alert("vai dar certo");
+
+              $(".campanha-block-info-inicial").hide();
+              $("#campanha-responstable").hide();
+              $(".campanha-tbody").hide();
+
+              //$(".campanhas-block-content").show();
+              $(".template-block-info-inicial").hide();
+              $("#template-responstable").hide();
+              $(".template-tbody").hide();
+          //
+              //show message
+              $(".message-block-info-inicial").show();
+              $("#message-responstable").show();
+              $(".message-tbody").show();
+          });
+
+          /* method:persist domain:@Message
+          *
+          */
+          $(document).on('click', '#cadastro-message-send',function(event){
+                     //ajax post
+                    $.post("news.core.php", $('#message-action-form').serializeArray())
+                    .done(function( data ) {
+                        var resource = $.parseJSON(data);
+                        var status = "";
+                        if(resource[0].status == "1"){
+                             status = "ATIVO";
+                        }
+                        //view (exibe os dados persistidos em uma tabela)
+                         var line = '<tr> <td style="background-color:#B0C4DE" class="message-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
+                            '<td style="background-color:#B0C4DE" class="message-status-td">' + status + '</td>' +
+                            '<td style="background-color:#B0C4DE" class="message-body-td">' + resource[0].body + '</td>' +
+                            '<td style="background-color:#B0C4DE" class="message-actions-td">' +
+                            '<a class="message-link-update" href="news.core.php?message_value_id=' + resource[0].id + '">' +
+                            '<button type="button" class="message-update-table-button" class="btn btn-default ">' +
+                               '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
+                            '</button></a>' +
+                             '<button type="button" class="btn btn-default campanha-destroy-action">' +
+                               '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
+                            '</button></td>' +
+                        '</tr>';
+
+                            $('.message-tbody').append(line).hide().fadeIn('slow');
+
+                    });
+                });
+
+                /*@Template update Modal
+                *method: carrega dados para o form de update domain:@Template
+                */
+                $(document).on('click',".message-link-update", function(event){
+                    event.preventDefault();
+                    //mostra form de atualização
+                    $("#messageModalUpdate").modal("show");
+
+                    $.ajax(this.href, { success: function(data) {
+                        //dados do form
+                        var resource = $.parseJSON(data);
+                        alert(resource[0].body);
+                        $('.message-title-upd').val(resource[0].title);
+                        $('.message-body-upd').val(resource[0].body);
+                        $('.message-id-upd').val(resource[0].id);
+                        },
+                        error: function() {
+                                  alert('error');
+                              }
+                        });
+                });
+
+                /* method:update domain:@Template
+                * Método que atualiza as informações do form via post e atualiza a página
+                */
+                $('.message-update-button').click(function(event) {
+                     event.preventDefault();
+                     $.post("news.core.php", $('.message-action-update').serializeArray())
+                     .done(function( data ) {
+                      var resource = $.parseJSON(data);
+                        alert("Mensagem Atualizada com Sucesso");
+                        location.reload();
+                    });
+                });
     });
     </script>
 
@@ -466,7 +574,7 @@ if($_POST['newslleter-title']){
       <li class="active"><a href="#">Newslleter</a></li>
       <li><a class="campanhas-link" href="#">Campanhas</a></li>
       <li><a class="templates-link" href="#">Templates</a></li>
-      <li><a class="messages-link" href="#">Mensagens</a></li>
+      <li><a class="message-link" href="#">Mensagens</a></li>
       <li><a class="relatorios-link" href="#">Relatórios</a></li>
       <li><a class="agendados-link"href="#">Agendados</a></li>
       <li><a class="logs-link" href="#">Logs</a></li>
@@ -857,6 +965,102 @@ if($_POST['newslleter-title']){
 </div>
 
 <!-- end template-block-content  -->
+
+<!-- end template-block-template -->
+<!-- message-block-template -->
+<div class="message-block-content">
+<!-- Home template-->
+<div class="message-block-info-inicial">
+<h1 id="test-template">{Cadastro de Mensagens}</h1>
+<h4>Titulo da Messagem</h4>
+    <form name="message-action-form" id="message-action-form" method="post" action="admin.php?page=news.admin.php">
+        <input type="text" name="message-title" value=""><br>
+        Corpo da Mensagem <br><textarea name="message-body"></textarea><br>
+        <input type="submit" class="btn btn-primary" value="submit" name="submit">
+        <input type="button" id="cadastro-message-send" class="btn btn-primary" name="message" value="add"/>
+        <input type="hidden" name="message-request-persist"  value="1">
+    </form>
+
+    <h1>Mensagens Cadastradas</h1>
+</div>
+    <table id="message-responstable" class="responstable">
+    <thead>
+    <tr>
+    <th>Nome</th>
+    <th>Status</th>
+    <th>Mensagem</th>
+    <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody class="message-tbody">
+      <?php
+       foreach($message as $msg):?>
+    <tr>
+        <td class="message-title-td"><?php  echo $msg->title ?></td>
+        <td class="message-status-td"> <?php  if ($msg->status == Message::ATIVO):?> ATIVO <?php endif; ?>
+          <?php  if ($msg->status == Message::INATIVO):?> INATIVO <?php endif; ?>
+
+        </td>
+        <td class="message-body-td"><?php  echo $msg->body ?></td>
+        <td class="message-actions-td">
+            <a class="message-link-update" href="news.core.php?message_value_id=<?php  echo $msg->id ?>">
+            <button type="button" class="message-update-table-button" class="btn btn-default ">
+                <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
+            </button>
+            </a>
+                <!--<input type="hidden" value="" name="template-action-request" value="template-update-action"/>-->
+
+        <button type="button" class="btn btn-default message-destroy-action">
+            <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
+        </button>
+     </td>
+    </tr>
+    <?php endforeach; ?>
+    </form>
+    <!-- Home message-->
+
+    <!-- Modal message (action:update) -->
+    <div class="modal fade" id="messageModalUpdate" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">template : Atualizando Registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <!-- form update template -->
+            <div id="message-form-view">
+                <form name="message-action-update" action="news.core.php" class="message-action-update" method="post">
+                        Título : <br><br><input type="text" name="message-title-upd" class="message-title-upd" value="">
+                        <br><br>
+                        Corpo:
+                        <textarea class="message-body-upd" name="message-body-upd"></textarea><br>
+                        Status:
+                        <select name="message-status-upd">
+                            <option class="option-message-ativo" value="1">ATIVO</option>
+                            <option class="option-message-inativo" value="0">INATIVO</option>
+                        </select>
+                        <br><br>
+                         <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
+                        <input type="hidden" name="message-id-upd" class="message-id-upd" value="">
+                        <br>
+                     <input type="button" class="btn btn-primary message-update-button" name="message-update-button" value="atualizar"/>
+                </form>
+            </div>
+            <!--  update message form -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal message-->
+</div>
+
+<!-- end message-block-content  -->
 
 </body>
 </html>

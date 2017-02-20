@@ -666,13 +666,40 @@ class DaoMessage extends Dao {
 
     public function findAll(){
         $sth = Connection::open($localconnection=true)->prepare(
-        "SELECT * FROM wp_news_messages ORDER BY id DESC LIMIT 10");
+        "SELECT * FROM wp_news_messages ORDER BY id DESC LIMIT 5");
 
         $sth->execute();
         while($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
         }
         return $objects ? $objects : false;
+      }
+
+      public function findFirst(){
+          $sth = Connection::open($localconnection=true)->prepare(
+          "SELECT * FROM wp_news_messages ORDER BY id DESC LIMIT 1");
+
+          $sth->execute();
+          while($obj = $sth->fetchObject(__CLASS__)) {
+              $objects[] = $obj;
+          }
+
+          return $objects ? $objects : false;
+      }
+
+      public function findById($id){
+          if(is_integer($id)){
+              $sth = Connection::open($localconnection=true)->prepare(
+              "SELECT * FROM wp_news_messages WHERE id = :id ORDER BY id DESC LIMIT 1");
+              $sth->bindValue(":id", $id, PDO::PARAM_INT);
+              $sth->execute();
+
+              while($obj = $sth->fetchObject(__CLASS__)) {
+                  $objects[] = $obj;
+              }
+
+              return $objects ? $objects : false;
+          }
       }
 }
 
@@ -961,8 +988,8 @@ class Leads extends Model {
 
 class Message extends Model {
 
-  const active = 1;
-  const inactive = 0;
+  const ATIVO = 1;
+  const INATIVO = 0;
 
   public function set_title($title){
       $this->data['title'] = (isset($title)) ? strip_tags(trim($title)) : null;
@@ -1193,7 +1220,7 @@ class CampanhaController {
         if($_POST['campanha-id-upd']){
             //var_dump($_POST);exit;
             $campanha = new Campanha;
-            $campanha->id = $_POST['campanha-id-upd'];
+            $campanha->id = (int)$_POST['campanha-id-upd'];
             $campanha->title = $_POST['campanha-title-upd'];
             $campanha->status = $_POST['campanha-status-upd'];
             $campanha->date_created = date("Y-m-d H:i:s");
@@ -1239,13 +1266,58 @@ class TemplateController {
         if($_POST['template-id-upd']){
             //var_dump($_POST);exit;
             $tpl = new Template;
-            $tpl->id = $_POST['template-id-upd'];
+            $tpl->id = (int)$_POST['template-id-upd'];
             $tpl->title = $_POST['template-title-upd'];
             $tpl->status = $_POST['template-status-upd'];
             $tpl->message_id = 87;
             $tpl->body_template = $_POST['template-body-upd'];
             $dataProvider = new TemplateDataProvider($tpl);
             $dao = new DaoTemplate();
+            $dao->setDataProvider($dataProvider);
+            $dao->update();
+            $result = $dao->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
+}
+
+class MessageController {
+    public static function actionPersist(){
+        if($_POST["message-request-persist"]){
+            $msg = new Message;
+            $msg->title = $_POST['message-title'];
+            $msg->body = $_POST['message-body'];
+            $msg->status = Message::ATIVO;
+            $msg->date_created = date("Y-m-d H:i:s");
+            $msg->date_updated = date("Y-m-d H:i:s");
+            $dataProvider = new MessageDataProvider($msg);
+            $dao = new DaoMessage();
+            $dao->setDataProvider($dataProvider);
+            $dao->persist();
+            $result = $dao->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
+
+    public function actionLoadDataForm(){
+        //var_dump($_GET[]);exit;
+        if($_GET['message_value_id']){
+            $dao = new DaoMessage;
+            $result = $dao->findById((int)$_GET['message_value_id']);
+            echo(json_encode($result));exit;
+        }
+    }
+
+    public function actionUpdate(){
+        if($_POST['message-id-upd']){
+            //var_dump($_POST);exit;
+            $msg = new Message;
+            $msg->id = (int)$_POST['message-id-upd'];
+            $msg->title = $_POST['message-title-upd'];
+            $msg->status = $_POST['message-status-upd'];
+            $msg->body = $_POST['message-body-upd'];
+            $dataProvider = new MessageDataProvider($msg);
+            $dao = new DaoMessage();
             $dao->setDataProvider($dataProvider);
             $dao->update();
             $result = $dao->findFirst();
@@ -1261,4 +1333,7 @@ CampanhaController::actionPostUpdate();
 TemplateController::actionPersist();
 TemplateController::actionLoadDataForm();
 TemplateController::actionUpdate();
-//Message Controller Methods
+//@Message Controller Methods
+MessageController::actionPersist();
+MessageController::actionLoadDataForm();
+MessageController::actionUpdate();
