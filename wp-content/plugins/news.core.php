@@ -578,6 +578,44 @@ class DaoNewslleter extends Dao {
     public function delete(){
 
     }
+
+    public function findAll(){
+        $sth = Connection::open($localconnection=true)->prepare(
+        "SELECT * FROM wp_news_newslleter ORDER BY id DESC LIMIT 3");
+
+        $sth->execute();
+        while($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+        return $objects ? $objects : false;
+      }
+
+      public function findFirst(){
+          $sth = Connection::open($localconnection=true)->prepare(
+          "SELECT * FROM wp_news__newslleter ORDER BY id DESC LIMIT 1");
+
+          $sth->execute();
+          while($obj = $sth->fetchObject(__CLASS__)) {
+              $objects[] = $obj;
+          }
+
+          return $objects ? $objects : false;
+      }
+
+      public function findById($id){
+          if(is_integer($id)){
+              $sth = Connection::open($localconnection=true)->prepare(
+              "SELECT * FROM wp_news_newslleter WHERE id = :id ORDER BY id DESC LIMIT 1");
+              $sth->bindValue(":id", $id, PDO::PARAM_INT);
+              $sth->execute();
+
+              while($obj = $sth->fetchObject(__CLASS__)) {
+                  $objects[] = $obj;
+              }
+
+              return $objects ? $objects : false;
+          }
+      }
 }
 
 class DaoMessage extends Dao {
@@ -1025,6 +1063,12 @@ class Grupos extends Model {
 }
 
 class Newslleter extends Model {
+
+    const ATIVO = 1;
+    const INATIVO = 0;
+    const EM_ANDAMENTO = 3;
+    const ENVIADA = 4;
+    const PROBLEMA_ENVIO = 5;
     /*protected $many_to_many = 'grupos_news(grupo_id, newslleter_id)';
     protected $envio;
     protected $status;

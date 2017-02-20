@@ -14,6 +14,8 @@ $daom = new DaoMessage();
 $message = $daom->findAll();
 $daocampanha = new DaoCampanha();
 $_campanha = $daocampanha->findAll();
+$daon = new DaoNewslleter();
+$newslleter = $daon->findAll();
 
 if($_POST['newslleter-title']){
     $news = new NewslleterController();
@@ -62,8 +64,26 @@ if($_POST['newslleter-title']){
         $('body').removeClass('modal-open');
         $('.modal-backdrop').remove();
     });
+/*
+    $(".campanha-block-info-inicial").hide();
+    $("#campanha-responstable").hide();
+    $(".campanha-tbody").hide();
 
-            /*
+    //$(".campanhas-block-content").show();
+    $(".template-block-info-inicial").hide();
+    $("#template-responstable").hide();
+    $(".template-tbody").hide();
+//
+    //show message
+    $(".message-block-info-inicial").hide();
+    $("#message-responstable").hide();
+    $(".message-tbody").hide();
+    */
+    //$(".newslleter-block-content").show();
+
+    //bloco das leads
+    //$("#inicial-block-content").hide();
+                /*
             *@newslleter-form
             *adiciona um template a newslleter
             */
@@ -198,11 +218,6 @@ if($_POST['newslleter-title']){
     });
     //links
 
-    //Ao inicializar a página esconde o conteudo de campanhas
-    $(".campanhas-block-content").hide();
-    //esconde o modal campanhas
-    $(".campanhaModal").hide();
-
     /*@Campanha
     *method: carrega dados para o form de update domain:@Campanha
     */
@@ -230,21 +245,28 @@ if($_POST['newslleter-title']){
     $(document).on("click", '.campanhas-link', function(event) {
          event.preventDefault();
          //fecha bloco de template
-         $(".template-block-info-inicial").hide();
-         $("#template-responstable").hide();
-         $(".template-tbody").hide();
+         alert("ok");
+         //$(".template-block-info-inicial").hide();
+         //$("#template-responstable").hide();
+         //$(".template-tbody").hide();
          //fecha bloco de newslleter
-         $(".newslleter-block-content").hide();
+        // $(".newslleter-block-content").hide();
          //bloco index (default)
-         $("#inicial-block-content").hide();
+         //$("#inicial-block-content").hide();
          //abre o bloco de conteúdo com fadeIn
          //hide message
-         $(".message-block-info-inicial").hide();
+         //$(".message-block-info-inicial").hide();
+         //$("#message-responstable").hide();
+         //$(".message-tbody").hide();
+         $("#newslleter-action").hide();
+         $("#inicial-block-content").hide();
+         $(".newslleter-block-info-inicial").hide();
+         $("#newslleter-responstable").hide();
+         $("#template-responstable").hide();
          $("#message-responstable").hide();
-         $(".message-tbody").hide();
 
-         $(".campanhas-block-content").show().hide().fadeIn();
-
+         $(".template-block-info-inicial").hide();
+         $(".message-block-info-inicial").hide();
 
 
     });
@@ -305,23 +327,23 @@ if($_POST['newslleter-title']){
         //fecha bloco de newslleter
     //    $("#test-template").load('template_block_content.php');
     //fecha bloco de newslleter
-        $("#inicial-block-content").hide();
-        $(".newslleter-block-content").hide();
+        //$("#inicial-block-content").hide();
+        //$(".newslleter-block-content").show();
         //bloco index (default)
         //alert("vai dar certo");
 
-        $(".campanha-block-info-inicial").hide();
-        $("#campanha-responstable").hide();
-        $(".campanha-tbody").hide();
+        //$(".campanha-block-info-inicial").hide();
+        //$("#campanha-responstable").hide();
+        //$(".campanha-tbody").hide();
 
         //hide message
-        $(".message-block-info-inicial").hide();
-        $("#message-responstable").hide();
-        $(".message-tbody").hide();
+        //$(".message-block-info-inicial").hide();
+        //$("#message-responstable").hide();
+        //$(".message-tbody").hide();
         //$(".campanhas-block-content").show();
-        $(".template-block-info-inicial").show();
-        $("#template-responstable").show();
-        $(".template-tbody").show();
+        //$(".template-block-info-inicial").show();
+        //$("#template-responstable").show();
+        //$(".template-tbody").show();
     //
 
     });
@@ -400,24 +422,24 @@ if($_POST['newslleter-title']){
               //fecha bloco de newslleter
           //    $("#test-template").load('template_block_content.php');
           //fecha bloco de newslleter
-              $("#inicial-block-content").hide();
-              $(".newslleter-block-content").hide();
+        //      $("#inicial-block-content").hide();
+        //      $(".newslleter-block-content").hide();
               //bloco index (default)
               //alert("vai dar certo");
 
-              $(".campanha-block-info-inicial").hide();
-              $("#campanha-responstable").hide();
-              $(".campanha-tbody").hide();
+              //$(".campanha-block-info-inicial").hide();
+            //  $("#campanha-responstable").hide();
+              //$(".campanha-tbody").hide();
 
               //$(".campanhas-block-content").show();
-              $(".template-block-info-inicial").hide();
-              $("#template-responstable").hide();
-              $(".template-tbody").hide();
+        //      $(".template-block-info-inicial").hide();
+        //      $("#template-responstable").hide();
+        //      $(".template-tbody").hide();
           //
               //show message
-              $(".message-block-info-inicial").show();
-              $("#message-responstable").show();
-              $(".message-tbody").show();
+        //      $(".message-block-info-inicial").show();
+        //      $("#message-responstable").show();
+        //      $(".message-tbody").show();
           });
 
           /* method:persist domain:@Message
@@ -581,6 +603,8 @@ if($_POST['newslleter-title']){
       <li><a class="leads-link" href="#">Leads</a></li>
     </ul>
 <!-- /menu -->
+<!-- inicial block content -->
+
 <!-- inicial bloc content -->
 <div id="inicial-block-content">
 <div id="last-msg">
@@ -651,7 +675,113 @@ if($_POST['newslleter-title']){
 </tbody>
 </table>
 </div>
-<!-- inicial bloc content -->
+<!-- block inicial -->
+
+<section class="newslleter-block-content">
+
+   <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
+       <h1>Cadastro de newslleter</h1>
+       <h4>Título da Newslleter: </h4>
+       <input type="text" name="newslleter-title" value=""><br>
+       <h4>Porcentagem total do Envio: </h4>
+       <input type="text" name="porcentagem" value=""><br>
+       <h4>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h4>
+       <h4>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h4>
+       <select class="selectpicker" name="grupos_id[]"  multiple>
+           <?php foreach($daog->findAll(5) as $gp): ?>
+               <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
+           <?php endforeach; ?>
+       </select>
+       <h4>Propriedades de Envio </h4>
+       <h5>Adicionar Template <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-template" id="add-template">Add</button></h5>
+       <h5>Adicionar Mensagem <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-message" id="add-message">Add</button></h5>
+       <h3>Adicionar Periodicidade </h3>
+       Data de Envio : <input types="text" name="dataInicial"/><button type="button" class="btn btn-primary" data-target="#periodicidade-add" id="periodicidade-add">Add</button><br><br>
+       <!-- caixas para inserção de envio-->
+       <div id="boxDataProperties">
+           <h4>Propriedades de Envio: #número:  <span style="color:red" id="prop-envio-id"></span></h4>
+           Template e Escolhido : <b><span id="template-title"></span></b><br>
+           Mensagem Escolhida : <b><span id="message-title"></span></b><br>
+           Data de Envio : <b><span id="data-title"></span></b><br>
+       </div>
+
+       <!-- end -->
+        <input type="submit" class="btn btn-primary" value="Registrar todos os Envios" name="submit">
+        <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
+       <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
+   </form>
+
+
+<div class="newslleter-block-info-inicial">
+
+<h1>Newslleter Cadastradas</h1>
+</div>
+<table id="newslleter-responstable" class="responstable">
+<thead>
+<tr>
+<th>Nome</th>
+<th>Status</th>
+<th>Ações</th>
+</tr>
+</thead>
+<tbody class="newslleter-tbody">
+ <?php
+  foreach($newslleter as $news):?>
+<tr>
+   <td class="newslleter-title-td"><?php  echo $news->title ?></td>
+   <td class="newslleter-status-td"> <?php  if ($news->status == Newslleter::ATIVO):?> ATIVO <?php endif; ?>
+     <?php  if ($news->status == Message::INATIVO):?> INATIVO <?php endif; ?>
+   </td>
+   <td class="newslleter-actions-td">
+       <a class="newslleter-link-update" href="news.core.php?newslleter_value_id=<?php  echo $news->id ?>">
+       <button type="button" class="newslleter-update-table-button" class="btn btn-default ">
+           <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
+       </button>
+       </a>
+           <!--<input type="hidden" value="" name="template-action-request" value="template-update-action"/>-->
+
+   <button type="button" class="btn btn-default newslleter-destroy-action">
+       <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
+   </button>
+</td>
+</tr>
+<?php endforeach; ?>
+</form>
+<!-- Modal message (action:update) -->
+<div class="modal fade" id="newslleterModalUpdate" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <h5 class="modal-title" id="exampleModalLabel">template : Atualizando Registro</h5>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+       <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+         <!-- form update template -->
+       <div id="newslleter-form-view">
+           <form name="newslleter-action-update" action="news.core.php" class="newslleter-action-update" method="post">
+                   Título : <br><br><input type="text" name="newslleter-title-upd" class="newslleter-title-upd" value="">
+                   <br><br>
+                   <select name="message-status-upd">
+                       <option class="option-newslleter-ativo" value="1">ATIVO</option>
+                       <option class="option-newslleter-inativo" value="0">INATIVO</option>
+                   </select>
+                   <br><br>
+                    <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
+                   <input type="hidden" name="newslleter-id-upd" class="newslleter-id-upd" value="">
+                   <br>
+                <input type="button" class="btn btn-primary newslleter-update-button" name="newslleter-update-button" value="atualizar"/>
+           </form>
+       </div>
+       <!--  update message form -->
+     </div>
+     <div class="modal-footer">
+       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+     </div>
+   </div>
+ </div>
+</div>
 
 <!-- grupos -->
 <!--  -->
@@ -736,41 +866,18 @@ if($_POST['newslleter-title']){
     </div>
   </div>
 </div>
-
-<!-- cadastro Newslleter -->
- <div class="newslleter-block-content">
-    <h1>Cadastro de newslleter</h1>
-    <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
-        <h4>Título da Newslleter: </h4>
-        <input type="text" name="newslleter-title" value=""><br>
-        <h4>Porcentagem total do Envio: </h4>
-        <input type="text" name="porcentagem" value=""><br>
-        <h4>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h4>
-        <h4>Selecione os grupos de Leads - <span style="font-size:13px;">Total de leads selecionadas para este envio <span style="color:red">(3)</span></span> </h4>
-        <select class="selectpicker" name="grupos_id[]"  multiple>
-            <?php foreach($daog->findAll(5) as $gp): ?>
-                <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
-            <?php endforeach; ?>
-        </select>
-        <h4>Propriedades de Envio </h4>
-        <h5>Adicionar Template <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-template" id="add-template">Add</button></h5>
-        <h5>Adicionar Mensagem <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-message" id="add-message">Add</button></h5>
-        <h3>Adicionar Periodicidade </h3>
-        Data de Envio : <input types="text" name="dataInicial"/><button type="button" class="btn btn-primary" data-target="#periodicidade-add" id="periodicidade-add">Add</button><br><br>
-        <!-- caixas para inserção de envio-->
-        <div id="boxDataProperties">
-            <h4>Propriedades de Envio: #número:  <span style="color:red" id="prop-envio-id"></span></h4>
-            Template e Escolhido : <b><span id="template-title"></span></b><br>
-            Mensagem Escolhida : <b><span id="message-title"></span></b><br>
-            Data de Envio : <b><span id="data-title"></span></b><br>
-        </div>
-
-        <!-- end -->
-         <input type="submit" class="btn btn-primary" value="Registrar todos os Envios" name="submit">
-         <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
-        <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
-    </form>
 </div>
+</section>
+<!-- Home message-->
+
+<!-- modal message-->
+
+<!-- end newslleter-block-content  -->
+<!-- inicial bloc content -->
+
+<!-- close inicial block content -->
+
+
 
 <!-- campanhas-block-content  -->
 <?php //include_once "campanha_block_content.php"; ?>
@@ -778,7 +885,7 @@ if($_POST['newslleter-title']){
 
 <!-- template-block-content  -->
 <?php //include_once "template_block_content.php"; ?>
-<div class="campanhas-block-content">
+<section class="campanhas-block-content">
 <!-- Home campanha-->
 <div class="campanha-block-info-inicial">
 <h1>Cadastro de campanhas</h1>
@@ -791,7 +898,6 @@ if($_POST['newslleter-title']){
     </form>
 
     <h1>Campanhas Cadastradas</h1>
-</div>
     <table id="campanha-responstable" class="responstable">
     <thead>
     <tr>
@@ -871,10 +977,11 @@ if($_POST['newslleter-title']){
     </div>
 
     <!-- /modal campanha-->
-</div>
+</section>
 <!-- end campanha-block-template -->
+
 <!-- template-block-template -->
-<div class="template-block-content">
+<section class="template-block-content">
 <!-- Home template-->
 <div class="template-block-info-inicial">
 <h1 id="test-template">{Cadastro de Templates}</h1>
@@ -962,13 +1069,13 @@ if($_POST['newslleter-title']){
       </div>
     </div>
     <!-- modal template-->
-</div>
+</section>
 
 <!-- end template-block-content  -->
 
 <!-- end template-block-template -->
 <!-- message-block-template -->
-<div class="message-block-content">
+<section class="message-block-content">
 <!-- Home template-->
 <div class="message-block-info-inicial">
 <h1 id="test-template">{Cadastro de Mensagens}</h1>
@@ -1058,9 +1165,13 @@ if($_POST['newslleter-title']){
       </div>
     </div>
     <!-- modal message-->
-</div>
+</section>
 
 <!-- end message-block-content  -->
+<!-- newslleter-block-template -->
+
+<!-- cadastro Newslleter -->
+
 
 </body>
 </html>
