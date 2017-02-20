@@ -689,7 +689,7 @@ class DaoTemplate extends Dao {
       $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
       $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
       $sth->bindValue(':message_id', $data['message_id'], PDO::PARAM_INT);
-      $sth->bindValue(':status', Template::ATIVO, PDO::PARAM_INT);
+      $sth->bindValue(':status', (int)$data['status'], PDO::PARAM_INT);
 
       return ($sth->execute()) ? true : false;
 
@@ -711,7 +711,7 @@ class DaoTemplate extends Dao {
       $sth->bindValue(':title', $data['title'], PDO::PARAM_STR);
       $sth->bindValue(':body_template', $data['body_template'], PDO::PARAM_STR);
       $sth->bindValue(':message_id', (int)$data['message_id'], PDO::PARAM_INT);
-      $sth->bindValue(':status', Template::ATIVO, PDO::PARAM_INT);
+      $sth->bindValue(':status', (int)$data['status'], PDO::PARAM_INT);
       $sth->bindValue(':id', (int)$data['id'], PDO::PARAM_INT);
 
       return ($sth->execute()) ? true : false;
@@ -741,13 +741,40 @@ class DaoTemplate extends Dao {
 
   public function findAll(){
       $sth = Connection::open($localconnection=true)->prepare(
-      "SELECT * FROM wp_news_template ORDER BY id DESC LIMIT 10");
+      "SELECT * FROM wp_news_template ORDER BY id DESC LIMIT 3");
 
       $sth->execute();
       while($obj = $sth->fetchObject(__CLASS__)) {
           $objects[] = $obj;
       }
       return $objects ? $objects : false;
+  }
+
+  public function findFirst(){
+      $sth = Connection::open($localconnection=true)->prepare(
+      "SELECT * FROM wp_news_template ORDER BY id DESC LIMIT 1");
+
+      $sth->execute();
+      while($obj = $sth->fetchObject(__CLASS__)) {
+          $objects[] = $obj;
+      }
+
+      return $objects ? $objects : false;
+  }
+
+  public function findById($id){
+      if(is_integer($id)){
+          $sth = Connection::open($localconnection=true)->prepare(
+          "SELECT * FROM wp_news_template WHERE id = :id ORDER BY id DESC LIMIT 1");
+          $sth->bindValue(":id", $id, PDO::PARAM_INT);
+          $sth->execute();
+
+          while($obj = $sth->fetchObject(__CLASS__)) {
+              $objects[] = $obj;
+          }
+
+          return $objects ? $objects : false;
+      }
   }
 }
 
@@ -1136,7 +1163,7 @@ class NewslleterController {
     }
 }
 
-class CampanhaController{
+class CampanhaController {
     public static function actionPersist(){
         if($_POST["campanha-request-persist"]){
             $campanha = new Campanha;
@@ -1181,6 +1208,57 @@ class CampanhaController{
     }
 }
 
+class TemplateController {
+    public static function actionPersist(){
+        if($_POST["template-request-persist"]){
+            $tpl = new Template;
+            $tpl->title = $_POST['template-title'];
+            $tpl->body_template = $_POST['template-body'];
+            $tpl->status = Template::ATIVO;
+            $tpl->date_created = date("Y-m-d H:i:s");
+            $tpl->date_updated = date("Y-m-d H:i:s");
+            $dataProvider = new TemplateDataProvider($tpl);
+            $daot = new DaoTemplate();
+            $daot->setDataProvider($dataProvider);
+            $daot->persist();
+            $result = $daot->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
+
+    public function actionLoadDataForm(){
+        //var_dump($_GET[]);exit;
+        if($_GET['template_value_id']){
+            $dao = new DaoTemplate;
+            $result = $dao->findById((int)$_GET['template_value_id']);
+            echo(json_encode($result));exit;
+        }
+    }
+
+    public function actionUpdate(){
+        if($_POST['template-id-upd']){
+            //var_dump($_POST);exit;
+            $tpl = new Template;
+            $tpl->id = $_POST['template-id-upd'];
+            $tpl->title = $_POST['template-title-upd'];
+            $tpl->status = $_POST['template-status-upd'];
+            $tpl->message_id = 87;
+            $tpl->body_template = $_POST['template-body-upd'];
+            $dataProvider = new TemplateDataProvider($tpl);
+            $dao = new DaoTemplate();
+            $dao->setDataProvider($dataProvider);
+            $dao->update();
+            $result = $dao->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
+}
+//@Campanha Controller Methods
 CampanhaController::actionPersist();
 CampanhaController::actionUpdate();
 CampanhaController::actionPostUpdate();
+//@Template Controller Methods
+TemplateController::actionPersist();
+TemplateController::actionLoadDataForm();
+TemplateController::actionUpdate();
+//Message Controller Methods

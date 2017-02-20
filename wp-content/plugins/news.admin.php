@@ -328,10 +328,9 @@ if($_POST['newslleter-title']){
                   }
                   //view (exibe os dados persistidos em uma tabela)
                    var line = '<tr> <td style="background-color:#B0C4DE" class="template-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
-                      '<td style="background-color:#B0C4DE" class="template-date-td">' + resource[0].datecreated + '</td>' +
                       '<td style="background-color:#B0C4DE" class="template-status-td">' + status + '</td>' +
                       '<td style="background-color:#B0C4DE" class="template-actions-td">' +
-                      '<a class="campanha-link-update" href="news.core.php?template_value_id=' + resource[0].id + '">' +
+                      '<a class="template-link-update" href="news.core.php?template_value_id=' + resource[0].id + '">' +
                       '<button type="button" class="template-update-table-button" class="btn btn-default ">' +
                          '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
                       '</button></a>' +
@@ -342,6 +341,40 @@ if($_POST['newslleter-title']){
 
                       $('.template-tbody').append(line).hide().fadeIn('slow');
 
+              });
+          });
+
+          /*@Template update Modal
+          *method: carrega dados para o form de update domain:@Template
+          */
+          $(document).on('click',".template-link-update", function(event){
+              event.preventDefault();
+              //mostra form de atualização
+              $("#templateModalUpdate").modal("show");
+
+              $.ajax(this.href, { success: function(data) {
+                  //dados do form
+                  var resource = $.parseJSON(data);
+                  $('.template-title-upd').val(resource[0].title);
+                  $('.template-body-upd').val(resource[0].body_template);
+                  $('.template-id-upd').val(resource[0].id);
+                  },
+                  error: function() {
+                            alert('error');
+                        }
+                  });
+          });
+
+          /* method:update domain:@Template
+          * Método que atualiza as informações do form via post e atualiza a página
+          */
+          $('.template-update-button').click(function(event) {
+               event.preventDefault();
+               $.post("news.core.php", $('.template-action-update').serializeArray())
+               .done(function( data ) {
+                var resource = $.parseJSON(data);
+                  alert("Campanha Atualizada com Sucesso");
+                  location.reload();
               });
           });
     });
@@ -740,6 +773,7 @@ if($_POST['newslleter-title']){
 <h4>Titulo do Template</h4>
     <form name="template-action-form" id="template-action-form" method="post" action="admin.php?page=news.admin.php">
         <input type="text" name="template-title" value="">
+        Corpo do Template <br><textarea name="template-body"></textarea>
         <input type="submit" class="btn btn-primary" value="submit" name="submit">
         <input type="button" id="cadastro-template-send" class="btn btn-primary" name="template" value="add"/>
         <input type="hidden" name="template-request-persist"  value="1">
@@ -751,7 +785,6 @@ if($_POST['newslleter-title']){
     <thead>
     <tr>
     <th>Nome</th>
-    <th>data criação</th>
     <th>Status</th>
     <th>Ações</th>
     </tr>
@@ -761,7 +794,6 @@ if($_POST['newslleter-title']){
        foreach($template as $tpl):?>
     <tr>
         <td class="template-title-td"><?php  echo $tpl->title ?></td>
-        <td class="template-date-td"><?php  echo $tpl->datecreated ?></td>
         <td class="template-status-td"> <?php  if ($tpl->status == Template::ATIVO):?> ATIVO <?php endif; ?>
           <?php  if ($tpl->status == Template::INATIVO):?> INATIVO <?php endif; ?>
 
@@ -800,11 +832,11 @@ if($_POST['newslleter-title']){
                         Título : <br><br><input type="text" name="template-title-upd" class="template-title-upd" value="">
                         <br><br>
                         Template:
-                        <?php //include_once "text_editor.php"; ?>
+                        <textarea class="template-body-upd" name="template-body-upd"></textarea><br>
                         Status:
                         <select name="template-status-upd">
                             <option class="option-template-ativo" value="1">ATIVO</option>
-                            <option class="option-template-inativo" value="2">INATIVO</option>
+                            <option class="option-template-inativo" value="0">INATIVO</option>
                         </select>
                         <br><br>
                          <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
