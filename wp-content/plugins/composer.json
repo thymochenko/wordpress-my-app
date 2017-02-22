@@ -4,5 +4,8 @@
         "phpunit/php-invoker": "*",
         "phpunit/dbunit": ">=1.2",
         "phpunit/phpunit-selenium": ">=1.2"
+    },
+    "require": {
+        "aws/aws-sdk-php": "^3.22"
     }
 }
