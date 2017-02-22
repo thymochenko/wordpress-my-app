@@ -17,12 +17,6 @@ $_campanha = $daocampanha->findAll();
 $daon = new DaoNewslleter();
 $newslleter = $daon->findAll();
 
-if($_POST['newslleter-title']){
-    $news = new NewslleterController();
-    $news->init($_POST);
-    $news->persitAction();
-}
-
 ?>
 <html>
 <head>
@@ -132,7 +126,7 @@ if($_POST['newslleter-title']){
 
     /*method: persist domain:@newslleter
     */
-    $('#newslleter-action').on('click', '#newslleter-add',function(event) {
+    $(document).on('click', '#newslleter-add',function(event) {
        event.preventDefault();
        var count = 0;
        var data = $('#newslleter-action').serializeArray().reduce(function(obj, item) {
@@ -165,6 +159,51 @@ if($_POST['newslleter-title']){
        $("#boxDataProperties").append('<input type="hidden" name="template_id_fk:'+ id + '" id="template_id_dinamic_attrib" value="' + data["template_id_fk"] + '"/>');
     });
 
+    /*@Newslleter
+    *persist block information
+
+    $(document).on('click', '#newslleter-register-all', function(event) {
+         event.preventDefault();
+         $.post("news.core.php", $('.newslleter-action').serializeArray())
+         .done(function( data ) {
+             alert(data);
+            alert("Newslleter Inserida com Sucesso");
+            location.reload();
+        });
+    });*/
+    /*@Template update Modal
+    *method: carrega dados para o form de update domain:@Template
+    */
+    $(document).on('click',".newslleter-link-update", function(event){
+        event.preventDefault();
+        //mostra form de atualização
+        $("#newslleterModalUpdate").modal("show");
+
+        $.ajax(this.href, { success: function(data) {
+            //dados do form
+            var resource = $.parseJSON(data);
+            $('.newslleter-title-upd').val(resource[0].title);
+            $('.newslleter-porcentagem-upd').val(resource[0].porcentagem);
+            $('.newslleter-id-upd').val(resource[0].id);
+            },
+            error: function() {
+                      alert('error');
+                  }
+            });
+    });
+    /* method:update domain:@Template
+    * Método que atualiza as informações do form via post e atualiza a página
+    */
+    $('.newslleter-update-button').click(function(event) {
+         event.preventDefault();
+         $.post("news.core.php", $('.newslleter-action-update').serializeArray())
+         .done(function( data ) {
+          var resource = $.parseJSON(data);
+            alert("Newslleter (" +  resource[0].title + ") Atualizada com Sucesso" );
+            location.reload();
+        });
+    });
+
     /*@newslleter-form
     *adiciona dados de periodicidade ao form de news
     */
@@ -195,8 +234,10 @@ if($_POST['newslleter-title']){
     /*@newslleter-form
     *method:load grupos para o formulário de cadastro de newslleter
     */
-    $("#grupos-action").on('click', '#grupo_button', function(event) {
+    $(document).on('click', '#grupo_button', function(event) {
+       //alert('no evento');
        event.preventDefault();
+
        $.ajax(this.href, {
           success: function(data) {
               var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
@@ -245,7 +286,6 @@ if($_POST['newslleter-title']){
     $(document).on("click", '.campanhas-link', function(event) {
          event.preventDefault();
          //fecha bloco de template
-         alert("ok");
          //$(".template-block-info-inicial").hide();
          //$("#template-responstable").hide();
          //$(".template-tbody").hide();
@@ -268,10 +308,25 @@ if($_POST['newslleter-title']){
          $(".template-block-info-inicial").hide();
          $(".message-block-info-inicial").hide();
 
-
+         $(".campanha-block-info-inicial").show();
+         $("#campanha-responstable").show();
+         $(".campanha-tbody").show();
     });
 
 
+    $("#inicial-block-content").hide();
+    //$("#newslleter-action").hide();
+    //$(".newslleter-block-info-inicial").hide();
+    //$("#newslleter-responstable").hide();
+    $("#template-responstable").hide();
+    $("#message-responstable").hide();
+
+    $(".template-block-info-inicial").hide();
+    $(".message-block-info-inicial").hide();
+
+    $(".campanha-block-info-inicial").hide();
+    $("#campanha-responstable").hide();
+    $(".campanha-tbody").hide();
     /* method:persist domain:@Campanha
     *
     */
@@ -345,6 +400,22 @@ if($_POST['newslleter-title']){
         //$("#template-responstable").show();
         //$(".template-tbody").show();
     //
+    $("#inicial-block-content").hide();
+    $("#newslleter-action").hide();
+    $("#newslleter-responstable").hide();
+    $(".newslleter-block-info-inicial").hide();
+
+    $("#template-responstable").show();
+    $(".template-block-info-inicial").show();
+    $(".template-tbody").show();
+
+    $("#message-responstable").hide();
+    $(".message-block-info-inicial").hide();
+    $(".message-tbody").hide();
+
+    $(".campanha-block-info-inicial").hide();
+    $("#campanha-responstable").hide();
+    $(".campanha-tbody").hide();
 
     });
     /* method:persist domain:@Campanha
@@ -419,6 +490,22 @@ if($_POST['newslleter-title']){
           **/
           $(document).on("click", '.message-link', function(event) {
               event.preventDefault();
+              $("#inicial-block-content").hide();
+              $("#newslleter-action").hide();
+              $("#newslleter-responstable").hide();
+              $(".newslleter-block-info-inicial").hide();
+
+              $("#template-responstable").hide();
+              $(".template-block-info-inicial").hide();
+              $(".template-tbody").hide();
+
+              $("#message-responstable").show();
+              $(".message-block-info-inicial").show();
+              $(".message-tbody").show();
+
+              $(".campanha-block-info-inicial").hide();
+              $("#campanha-responstable").hide();
+              $(".campanha-tbody").hide();
               //fecha bloco de newslleter
           //    $("#test-template").load('template_block_content.php');
           //fecha bloco de newslleter
@@ -484,7 +571,6 @@ if($_POST['newslleter-title']){
                     $.ajax(this.href, { success: function(data) {
                         //dados do form
                         var resource = $.parseJSON(data);
-                        alert(resource[0].body);
                         $('.message-title-upd').val(resource[0].title);
                         $('.message-body-upd').val(resource[0].body);
                         $('.message-id-upd').val(resource[0].id);
@@ -706,7 +792,7 @@ if($_POST['newslleter-title']){
        </div>
 
        <!-- end -->
-        <input type="submit" class="btn btn-primary" value="Registrar todos os Envios" name="submit">
+        <input type="submit" id="newslleter-register-all" class="btn btn-primary" value="Registrar todos os Envios" name="submit">
         <input type="hidden" name="rand-value" value="<?php echo rand(1,100) ?>">
        <input type="button" class="btn btn-primary" name="newslleter" id="newslleter-add" value="add"/>
    </form>
@@ -752,7 +838,7 @@ if($_POST['newslleter-title']){
  <div class="modal-dialog" role="document">
    <div class="modal-content">
      <div class="modal-header">
-       <h5 class="modal-title" id="exampleModalLabel">template : Atualizando Registro</h5>
+       <h5 class="modal-title" id="exampleModalLabel">Atualizando Registro</h5>
        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
        <span aria-hidden="true">&times;</span>
        </button>
@@ -762,6 +848,8 @@ if($_POST['newslleter-title']){
        <div id="newslleter-form-view">
            <form name="newslleter-action-update" action="news.core.php" class="newslleter-action-update" method="post">
                    Título : <br><br><input type="text" name="newslleter-title-upd" class="newslleter-title-upd" value="">
+                   <br><br>
+                   Porcentagem : <br><br><input type="text" name="newslleter-porcentagem-upd" class="newslleter-porcentagem-upd" value="">
                    <br><br>
                    <select name="message-status-upd">
                        <option class="option-newslleter-ativo" value="1">ATIVO</option>
@@ -897,7 +985,7 @@ if($_POST['newslleter-title']){
         <input type="hidden" name="campanha-request-persist"  value="1">
     </form>
 
-    <h1>Campanhas Cadastradas</h1>
+    <br><br><h4>Campanhas Cadastradas</h4>
     <table id="campanha-responstable" class="responstable">
     <thead>
     <tr>
@@ -984,17 +1072,18 @@ if($_POST['newslleter-title']){
 <section class="template-block-content">
 <!-- Home template-->
 <div class="template-block-info-inicial">
-<h1 id="test-template">{Cadastro de Templates}</h1>
+<h1 id="test-template"> Cadastro de Templates</h1>
 <h4>Titulo do Template</h4>
     <form name="template-action-form" id="template-action-form" method="post" action="admin.php?page=news.admin.php">
         <input type="text" name="template-title" value="">
-        Corpo do Template <br><textarea name="template-body"></textarea>
+        <br><br>Corpo do Template <br><br><textarea name="template-body"></textarea><br><br>
         <input type="submit" class="btn btn-primary" value="submit" name="submit">
         <input type="button" id="cadastro-template-send" class="btn btn-primary" name="template" value="add"/>
         <input type="hidden" name="template-request-persist"  value="1">
     </form>
-
-    <h1>templates Cadastradas</h1>
+    <br><br>
+    <h4>Templates Cadastradas</h4>
+    <br>
 </div>
     <table id="template-responstable" class="responstable">
     <thead>
@@ -1078,17 +1167,17 @@ if($_POST['newslleter-title']){
 <section class="message-block-content">
 <!-- Home template-->
 <div class="message-block-info-inicial">
-<h1 id="test-template">{Cadastro de Mensagens}</h1>
+<h1 id="test-template"> Cadastro de Mensagens </h1>
 <h4>Titulo da Messagem</h4>
     <form name="message-action-form" id="message-action-form" method="post" action="admin.php?page=news.admin.php">
         <input type="text" name="message-title" value=""><br>
-        Corpo da Mensagem <br><textarea name="message-body"></textarea><br>
+        <br>Corpo da Mensagem <br><textarea name="message-body"></textarea><br><br>
         <input type="submit" class="btn btn-primary" value="submit" name="submit">
         <input type="button" id="cadastro-message-send" class="btn btn-primary" name="message" value="add"/>
         <input type="hidden" name="message-request-persist"  value="1">
     </form>
-
-    <h1>Mensagens Cadastradas</h1>
+    <br><br>
+    <h4>Mensagens Cadastradas</h4><br>
 </div>
     <table id="message-responstable" class="responstable">
     <thead>

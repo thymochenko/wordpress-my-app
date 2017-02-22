@@ -572,7 +572,24 @@ class DaoNewslleter extends Dao {
     }
 
     public function update(){
+        $dateTime = new DateTime();
+        $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+        //persist @Newslleter
+        $sth = Connection::open($localconnection=true)->prepare("UPDATE wp_news_newslleter
+            SET title = :title, campaign_id = :campaign_id, newslleter_id = :newslleter_id, status = :status,
+            porcentagem = :porcentagem, dateupdated = :dateupdated
+            WHERE id = :id");
 
+             $data = $this->nlDataProvider->getData();
+             $sth->bindValue(':title', $data["title"], PDO::PARAM_STR);
+             $sth->bindValue(':campaign_id', 1, PDO::PARAM_INT);
+             $sth->bindValue(':newslleter_id', 1, PDO::PARAM_INT);
+             $sth->bindValue(':status', (int)$data['status'], PDO::PARAM_INT);
+             $sth->bindValue(':porcentagem', (int)$data['porcentagem'], PDO::PARAM_INT);
+             $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+             $sth->bindValue(':id', (int)$data['id'] , PDO::PARAM_INT);
+             $sth->execute();
+             return true;
     }
 
     public function delete(){
@@ -592,7 +609,7 @@ class DaoNewslleter extends Dao {
 
       public function findFirst(){
           $sth = Connection::open($localconnection=true)->prepare(
-          "SELECT * FROM wp_news__newslleter ORDER BY id DESC LIMIT 1");
+          "SELECT * FROM wp_news_newslleter ORDER BY id DESC LIMIT 1");
 
           $sth->execute();
           while($obj = $sth->fetchObject(__CLASS__)) {
@@ -1202,7 +1219,7 @@ class NewslleterController {
         return self::$request;
     }
 
-    public function persitAction(){
+    public static function persitAction(){
         $post = self::getRequest();
         $news = new Newslleter();
         $news->title = $post['newslleter-title'];
@@ -1231,6 +1248,55 @@ class NewslleterController {
         $dao = new DaoNewslleter();
         $dao->setDataProvider($dataProvider);
         $dao->persist();
+        $redirect = "http://localhost/wp-admin/admin.php?page=news.admin.php";
+        header("location:$redirect");
+    }
+
+    public function actionUpdate(){
+        //var_dump($_GET[]);exit;
+        if($_GET['newslleter_value_id']){
+            $dao = new DaoNewslleter;
+            $result = $dao->findById((int)$_GET['newslleter_value_id']);
+            echo(json_encode($result)); exit;
+        }
+    }
+
+    public function actionPostUpdate(){
+        if($_POST['newslleter-id-upd']){
+            //var_dump($_POST);exit;
+
+            $news = new Newslleter();
+            $news->id = $_POST['newslleter-id-upd'];
+            $news->campaign_id = 1;
+            $news->title = $_POST['newslleter-title-upd'];
+            $news->status = $_POST['newslleter-status-upd'];
+            $news->porcentagem = $_POST['newslleter-porcentagem-upd'];
+            /*
+            for($z=0; $z < count($post)-1; $z++){
+               $envio1 = new Envio();
+               $envio1->message_id = $post['message_id_fk'][$z];
+               $envio1->template_id = $post['template_id_fk'][$z];
+               $envio1->status = 1;
+                //periodo:1
+               $periodo1 = new Periodo;
+               $periodo1->data_de_envio_fixo = $post['periodo'][$z];
+                //add Periodo
+               $envio1->addPeriodo($periodo1);
+
+                //add envio a newslleter
+               $news->addEnvio($envio1);
+            }
+            */
+            //var_dump($post['grupos_id']);exit;
+            //$news->addGrupos($post['grupos_id']);
+            //var_dump($news->envio[0]->periodo);exit;
+            $dataProvider = new NewslleterDataProvider($news);
+            $dao = new DaoNewslleter();
+            $dao->setDataProvider($dataProvider);
+            $dao->update();
+            $result = $dao->findFirst();
+            echo(json_encode($result));exit;
+        }
     }
 }
 
@@ -1381,3 +1447,10 @@ TemplateController::actionUpdate();
 MessageController::actionPersist();
 MessageController::actionLoadDataForm();
 MessageController::actionUpdate();
+
+if($_POST['newslleter-title']){
+    NewslleterController::init($_POST);
+    NewslleterController::persitAction();
+}
+NewslleterController::actionUpdate();
+NewslleterController::actionPostUpdate();
