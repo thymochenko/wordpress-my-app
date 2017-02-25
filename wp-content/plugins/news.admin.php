@@ -17,6 +17,9 @@ $_campanha = $daocampanha->findAll();
 $daon = new DaoNewslleter();
 $newslleter = $daon->findAll();
 
+//$leads = new DaoLeads;
+//$_leads = $leads->findAll();
+
 ?>
 <html>
 <head>
@@ -38,563 +41,7 @@ $newslleter = $daon->findAll();
 
     <!-- Latest compiled and minified JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
-    <script type="text/javascript">
-    $(function() {
-      //exibe modal de persistẽncia de grupo
-      $("#add-grupo").click(function(){
-      $("#myModal").modal('show');
-    });
-    //exibe modal de persistẽncia de templates
-    $("#add-template").click(function(){
-        $("#templateModal").modal('show');
-    });
-    //exibe modal de persistẽncia de mensagens
-    $("#add-message").click(function(){
-        $("#messageModal").modal('show');
-    });
-    //fecha todas as janelas
-    $(".close").click(function(){
-        $('#templateModal, #messageModal').modal('hide');
-        $('body').removeClass('modal-open');
-        $('.modal-backdrop').remove();
-    });
-/*
-    $(".campanha-block-info-inicial").hide();
-    $("#campanha-responstable").hide();
-    $(".campanha-tbody").hide();
-
-    //$(".campanhas-block-content").show();
-    $(".template-block-info-inicial").hide();
-    $("#template-responstable").hide();
-    $(".template-tbody").hide();
-//
-    //show message
-    $(".message-block-info-inicial").hide();
-    $("#message-responstable").hide();
-    $(".message-tbody").hide();
-    */
-    //$(".newslleter-block-content").show();
-
-    //bloco das leads
-    //$("#inicial-block-content").hide();
-                /*
-            *@newslleter-form
-            *adiciona um template a newslleter
-            */
-        $('#radio_tpl').click(function(event) {
-           event.preventDefault();
-           $.ajax(this.href, {
-              success: function(data) {
-                  //dados do form
-                  var data = $('#template-action').serializeArray().reduce(function(obj, item) {
-                      //monta view com o post dos dados do form
-                      var coll = item.value.split(":");
-                      coll[0]; // template Title
-                      obj[item.name] = item.value;
-                      $('#template-title').append(coll[0] + " | ").hide().fadeIn();
-                      $('#template-title').append('<input type="hidden" name="template_id_fk" id="template_id_dinamic_attrib" value="' + coll[1] + '"/>');
-                      $('#template-title').append('<input type="hidden" name="template_title_fk" id="template_title_dinamic_attrib" value="' + coll[0] + '"/>');
-                      return obj;
-                  }, {});
-              },
-              error: function() {
-                  alert('err');
-                 //$('#notification-bar').text('An error occurred');
-              }
-           });
-        });
-
-        /*
-        *@newslleter-form
-        *adiciona uma mensagem a newslleter
-        */
-    $('#radio-msg').click(function(event) {
-       event.preventDefault();
-       var data = $('#message-action').serializeArray().reduce(function(obj, item) {
-           //monta view com o post dos dados do form
-           var coll = item.value.split(":");
-           coll[0]; // template Title
-           obj[item.name] = item.value;
-           $('#message-title').append(coll[0]  + " | ").hide().fadeIn(1000);
-           //adiciona um elemento via ajax diretamente na div que exibe as propriedades de envio
-           $('.message_id_fk_div').append(coll[1]);
-           $('#message-title').append('<input type="hidden" name="message_id_fk" value="' + coll[1] + '"/>');
-           $('#message-title').append('<input type="hidden" name="message_title_fk" value="' + coll[0] + '"/>');
-           return obj;
-       }, {});
-    });
-
-    /*method: persist domain:@newslleter
-    */
-    $(document).on('click', '#newslleter-add',function(event) {
-       event.preventDefault();
-       var count = 0;
-       var data = $('#newslleter-action').serializeArray().reduce(function(obj, item) {
-           //monta view com o post dos dados do form
-           var valueName = item.value.split(":");
-           obj['valueName'] = valueName;
-           obj[item.name] = item.value;
-           return obj;
-       }, {});
-       //alert(data['valueName'][1]);
-       //gera números randomicos para os Ids
-       function getRandomInt(min, max) {
-           return Math.floor(Math.random() * (max - min)) + min;
-       }
-       var id = getRandomInt(100,200);
-       //saida para a visualização de envios para a newslleter
-       $("#boxDataProperties").append('<h4 class="alert alert-success">Periodo de Envio: | <b><i>'
-        + data["dataInicial"] + '</i></b> | ' + " Template: | <b><i>" + data["template_title_fk"] + '</b></i> | Mensagem: | <b><i>' +
-    '<span class="message_id_fk_div">' + data["message_title_fk"] + " | </span></h4>").hide().fadeIn(1000);
-
-       //fks
-
-       $("#prop-envio-id").html(function(i,count){
-           var count = 0;
-           return parseInt(++count);
-       });
-
-       $("#boxDataProperties").append('<input type="hidden" name="message_id_fk:'+  id +'" value="' + data["message_id_fk"] + '"/>');
-       $("#boxDataProperties").append('<input type="hidden" name="periodo:' + id + '" value="' + data["dataInicial"] + '"/>');
-       $("#boxDataProperties").append('<input type="hidden" name="template_id_fk:'+ id + '" id="template_id_dinamic_attrib" value="' + data["template_id_fk"] + '"/>');
-    });
-
-    /*@Newslleter
-    *persist block information
-
-    $(document).on('click', '#newslleter-register-all', function(event) {
-         event.preventDefault();
-         $.post("news.core.php", $('.newslleter-action').serializeArray())
-         .done(function( data ) {
-             alert(data);
-            alert("Newslleter Inserida com Sucesso");
-            location.reload();
-        });
-    });*/
-    /*@Template update Modal
-    *method: carrega dados para o form de update domain:@Template
-    */
-    $(document).on('click',".newslleter-link-update", function(event){
-        event.preventDefault();
-        //mostra form de atualização
-        $("#newslleterModalUpdate").modal("show");
-
-        $.ajax(this.href, { success: function(data) {
-            //dados do form
-            var resource = $.parseJSON(data);
-            $('.newslleter-title-upd').val(resource[0].title);
-            $('.newslleter-porcentagem-upd').val(resource[0].porcentagem);
-            $('.newslleter-id-upd').val(resource[0].id);
-            },
-            error: function() {
-                      alert('error');
-                  }
-            });
-    });
-    /* method:update domain:@Template
-    * Método que atualiza as informações do form via post e atualiza a página
-    */
-    $('.newslleter-update-button').click(function(event) {
-         event.preventDefault();
-         $.post("news.core.php", $('.newslleter-action-update').serializeArray())
-         .done(function( data ) {
-          var resource = $.parseJSON(data);
-            alert("Newslleter (" +  resource[0].title + ") Atualizada com Sucesso" );
-            location.reload();
-        });
-    });
-
-    /*@newslleter-form
-    *adiciona dados de periodicidade ao form de news
-    */
-    $('#periodicidade-add').click(function(event) {
-       event.preventDefault();
-
-       $.ajax(this.href, {
-          success: function(data) {
-              //dados do form
-              var data = $('#newslleter-action').serializeArray().reduce(function(obj, item) {
-                  //monta view com o post dos dados do form
-                  var coll = item.value.split(":");
-                  coll[0]; // template Title
-                  //alert( item.name  + " : " + item.value);
-                  obj[item.name] = item.value;
-                  $('#data-title').append(obj["dataInicial"]  + " | ").hide().fadeIn();
-                  $('#data-title').append('<input type="hidden" name="periodo" value="' + obj["dataInicial"] + '"/>');
-                  return obj;
-              }, {});
-          },
-          error: function() {
-              alert('err');
-          }
-       });
-
-    });
-
-    /*@newslleter-form
-    *method:load grupos para o formulário de cadastro de newslleter
-    */
-    $(document).on('click', '#grupo_button', function(event) {
-       //alert('no evento');
-       event.preventDefault();
-
-       $.ajax(this.href, {
-          success: function(data) {
-              var data = $('#grupos-action').serializeArray().reduce(function(obj, item) {
-                  var coll = item.value.split(":");
-                  var grupo_id = coll[0];
-                  var grupo_name = coll[1];
-                  obj[item.name] = item.value;
-                  $('.selectpicker').append('<option  selected="selected" value="' + grupo_id +
-                   '">' + grupo_name +'</option>').selectpicker('refresh');
-
-                  return obj;
-              }, {});
-          },
-          error: function() {
-              alert('err');
-             //$('#notification-bar').text('An error occurred');
-         }
-       });
-    });
-    //links
-
-    /*@Campanha
-    *method: carrega dados para o form de update domain:@Campanha
-    */
-    $(document).on('click',".campanha-link-update", function(event){
-        event.preventDefault();
-        //mostra form de atualização
-        $("#campanhaModal").modal("show");
-
-        $.ajax(this.href, { success: function(data) {
-            //dados do form
-            var resource = $.parseJSON(data);
-            $('.campanha-title-upd').val(resource[0].title);
-            $('.campanha-id-upd').val(resource[0].id);
-            },
-            error: function() {
-                      alert('error');
-                  }
-            });
-    });
-
-     /**
-     * method:link domain:@campanha
-     *
-     **/
-    $(document).on("click", '.campanhas-link', function(event) {
-         event.preventDefault();
-         //fecha bloco de template
-         //$(".template-block-info-inicial").hide();
-         //$("#template-responstable").hide();
-         //$(".template-tbody").hide();
-         //fecha bloco de newslleter
-        // $(".newslleter-block-content").hide();
-         //bloco index (default)
-         //$("#inicial-block-content").hide();
-         //abre o bloco de conteúdo com fadeIn
-         //hide message
-         //$(".message-block-info-inicial").hide();
-         //$("#message-responstable").hide();
-         //$(".message-tbody").hide();
-         $("#newslleter-action").hide();
-         $("#inicial-block-content").hide();
-         $(".newslleter-block-info-inicial").hide();
-         $("#newslleter-responstable").hide();
-         $("#template-responstable").hide();
-         $("#message-responstable").hide();
-
-         $(".template-block-info-inicial").hide();
-         $(".message-block-info-inicial").hide();
-
-         $(".campanha-block-info-inicial").show();
-         $("#campanha-responstable").show();
-         $(".campanha-tbody").show();
-    });
-
-
-    $("#inicial-block-content").hide();
-    //$("#newslleter-action").hide();
-    //$(".newslleter-block-info-inicial").hide();
-    //$("#newslleter-responstable").hide();
-    $("#template-responstable").hide();
-    $("#message-responstable").hide();
-
-    $(".template-block-info-inicial").hide();
-    $(".message-block-info-inicial").hide();
-
-    $(".campanha-block-info-inicial").hide();
-    $("#campanha-responstable").hide();
-    $(".campanha-tbody").hide();
-    /* method:persist domain:@Campanha
-    *
-    */
-    $(document).on('click', '#cadastro-campanha-send',function(event){
-               //ajax post
-              $.post("news.core.php", $('#campanha-action-form').serializeArray())
-              .done(function( data ) {
-                  var resource = $.parseJSON(data);
-                  var status = "";
-                  if(resource[0].status == "1"){
-                       status = "ATIVO";
-                  }
-                  //view (exibe os dados persistidos em uma tabela)
-                   var line = '<tr> <td style="background-color:#B0C4DE" class="campanha-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
-                      '<td style="background-color:#B0C4DE" class="campanha-date-td">' + resource[0].datecreated + '</td>' +
-                      '<td style="background-color:#B0C4DE" class="campanha-status-td">' + status + '</td>' +
-                      '<td style="background-color:#B0C4DE" class="campanha-actions-td">' +
-                      '<a class="campanha-link-update" href="news.core.php?campanha_value_id=' + resource[0].id + '">' +
-                      '<button type="button" class="campanha-update-table-button" class="btn btn-default ">' +
-                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
-                      '</button></a>' +
-                       '<button type="button" class="btn btn-default campanha-destroy-action">' +
-                         '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
-                      '</button></td>' +
-                  '</tr>';
-
-                      $('.campanha-tbody').append(line).hide().fadeIn('slow');
-
-              });
-    });
-
-    /* method:update domain:@Campanha
-    *
-    */
-    $('.campanha-update-button').click(function(event) {
-         event.preventDefault();
-         $.post("news.core.php", $('.campanha-action-update').serializeArray())
-         .done(function( data ) {
-          var resource = $.parseJSON(data);
-            alert("Campanha Atualizada com Sucesso");
-            location.reload();
-        });
-    });
-
-    /* ================================= @Template Context =====================================*/
-    /* =========================================================================================*/
-    /**
-    * method:link domain:@Template
-    *
-    **/
-    $(document).on("click", '.templates-link', function(event) {
-        event.preventDefault();
-        //fecha bloco de newslleter
-    //    $("#test-template").load('template_block_content.php');
-    //fecha bloco de newslleter
-        //$("#inicial-block-content").hide();
-        //$(".newslleter-block-content").show();
-        //bloco index (default)
-        //alert("vai dar certo");
-
-        //$(".campanha-block-info-inicial").hide();
-        //$("#campanha-responstable").hide();
-        //$(".campanha-tbody").hide();
-
-        //hide message
-        //$(".message-block-info-inicial").hide();
-        //$("#message-responstable").hide();
-        //$(".message-tbody").hide();
-        //$(".campanhas-block-content").show();
-        //$(".template-block-info-inicial").show();
-        //$("#template-responstable").show();
-        //$(".template-tbody").show();
-    //
-    $("#inicial-block-content").hide();
-    $("#newslleter-action").hide();
-    $("#newslleter-responstable").hide();
-    $(".newslleter-block-info-inicial").hide();
-
-    $("#template-responstable").show();
-    $(".template-block-info-inicial").show();
-    $(".template-tbody").show();
-
-    $("#message-responstable").hide();
-    $(".message-block-info-inicial").hide();
-    $(".message-tbody").hide();
-
-    $(".campanha-block-info-inicial").hide();
-    $("#campanha-responstable").hide();
-    $(".campanha-tbody").hide();
-
-    });
-    /* method:persist domain:@Campanha
-    *
-    */
-    $(document).on('click', '#cadastro-template-send',function(event){
-               //ajax post
-              $.post("news.core.php", $('#template-action-form').serializeArray())
-              .done(function( data ) {
-                  var resource = $.parseJSON(data);
-                  var status = "";
-                  if(resource[0].status == "1"){
-                       status = "ATIVO";
-                  }
-                  //view (exibe os dados persistidos em uma tabela)
-                   var line = '<tr> <td style="background-color:#B0C4DE" class="template-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
-                      '<td style="background-color:#B0C4DE" class="template-status-td">' + status + '</td>' +
-                      '<td style="background-color:#B0C4DE" class="template-actions-td">' +
-                      '<a class="template-link-update" href="news.core.php?template_value_id=' + resource[0].id + '">' +
-                      '<button type="button" class="template-update-table-button" class="btn btn-default ">' +
-                         '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
-                      '</button></a>' +
-                       '<button type="button" class="btn btn-default campanha-destroy-action">' +
-                         '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
-                      '</button></td>' +
-                  '</tr>';
-
-                      $('.template-tbody').append(line).hide().fadeIn('slow');
-
-              });
-          });
-
-          /*@Template update Modal
-          *method: carrega dados para o form de update domain:@Template
-          */
-          $(document).on('click',".template-link-update", function(event){
-              event.preventDefault();
-              //mostra form de atualização
-              $("#templateModalUpdate").modal("show");
-
-              $.ajax(this.href, { success: function(data) {
-                  //dados do form
-                  var resource = $.parseJSON(data);
-                  $('.template-title-upd').val(resource[0].title);
-                  $('.template-body-upd').val(resource[0].body_template);
-                  $('.template-id-upd').val(resource[0].id);
-                  },
-                  error: function() {
-                            alert('error');
-                        }
-                  });
-          });
-
-          /* method:update domain:@Template
-          * Método que atualiza as informações do form via post e atualiza a página
-          */
-          $('.template-update-button').click(function(event) {
-               event.preventDefault();
-               $.post("news.core.php", $('.template-action-update').serializeArray())
-               .done(function( data ) {
-                var resource = $.parseJSON(data);
-                  alert("Template Atualizada com Sucesso");
-                  location.reload();
-              });
-          });
-
-          /* ================================= @Message Context =====================================*/
-          /* =========================================================================================*/
-          /**
-          * method:link domain:@Message
-          *
-          **/
-          $(document).on("click", '.message-link', function(event) {
-              event.preventDefault();
-              $("#inicial-block-content").hide();
-              $("#newslleter-action").hide();
-              $("#newslleter-responstable").hide();
-              $(".newslleter-block-info-inicial").hide();
-
-              $("#template-responstable").hide();
-              $(".template-block-info-inicial").hide();
-              $(".template-tbody").hide();
-
-              $("#message-responstable").show();
-              $(".message-block-info-inicial").show();
-              $(".message-tbody").show();
-
-              $(".campanha-block-info-inicial").hide();
-              $("#campanha-responstable").hide();
-              $(".campanha-tbody").hide();
-              //fecha bloco de newslleter
-          //    $("#test-template").load('template_block_content.php');
-          //fecha bloco de newslleter
-        //      $("#inicial-block-content").hide();
-        //      $(".newslleter-block-content").hide();
-              //bloco index (default)
-              //alert("vai dar certo");
-
-              //$(".campanha-block-info-inicial").hide();
-            //  $("#campanha-responstable").hide();
-              //$(".campanha-tbody").hide();
-
-              //$(".campanhas-block-content").show();
-        //      $(".template-block-info-inicial").hide();
-        //      $("#template-responstable").hide();
-        //      $(".template-tbody").hide();
-          //
-              //show message
-        //      $(".message-block-info-inicial").show();
-        //      $("#message-responstable").show();
-        //      $(".message-tbody").show();
-          });
-
-          /* method:persist domain:@Message
-          *
-          */
-          $(document).on('click', '#cadastro-message-send',function(event){
-                     //ajax post
-                    $.post("news.core.php", $('#message-action-form').serializeArray())
-                    .done(function( data ) {
-                        var resource = $.parseJSON(data);
-                        var status = "";
-                        if(resource[0].status == "1"){
-                             status = "ATIVO";
-                        }
-                        //view (exibe os dados persistidos em uma tabela)
-                         var line = '<tr> <td style="background-color:#B0C4DE" class="message-title-td"><span class="glyphicon glyphicon-cloud-download" aria-hidden="true"> </span> ' + resource[0].title + '</td>' +
-                            '<td style="background-color:#B0C4DE" class="message-status-td">' + status + '</td>' +
-                            '<td style="background-color:#B0C4DE" class="message-body-td">' + resource[0].body + '</td>' +
-                            '<td style="background-color:#B0C4DE" class="message-actions-td">' +
-                            '<a class="message-link-update" href="news.core.php?message_value_id=' + resource[0].id + '">' +
-                            '<button type="button" class="message-update-table-button" class="btn btn-default ">' +
-                               '<span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>' +
-                            '</button></a>' +
-                             '<button type="button" class="btn btn-default campanha-destroy-action">' +
-                               '<span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>' +
-                            '</button></td>' +
-                        '</tr>';
-
-                            $('.message-tbody').append(line).hide().fadeIn('slow');
-
-                    });
-                });
-
-                /*@Template update Modal
-                *method: carrega dados para o form de update domain:@Template
-                */
-                $(document).on('click',".message-link-update", function(event){
-                    event.preventDefault();
-                    //mostra form de atualização
-                    $("#messageModalUpdate").modal("show");
-
-                    $.ajax(this.href, { success: function(data) {
-                        //dados do form
-                        var resource = $.parseJSON(data);
-                        $('.message-title-upd').val(resource[0].title);
-                        $('.message-body-upd').val(resource[0].body);
-                        $('.message-id-upd').val(resource[0].id);
-                        },
-                        error: function() {
-                                  alert('error');
-                              }
-                        });
-                });
-
-                /* method:update domain:@Template
-                * Método que atualiza as informações do form via post e atualiza a página
-                */
-                $('.message-update-button').click(function(event) {
-                     event.preventDefault();
-                     $.post("news.core.php", $('.message-action-update').serializeArray())
-                     .done(function( data ) {
-                      var resource = $.parseJSON(data);
-                        alert("Mensagem Atualizada com Sucesso");
-                        location.reload();
-                    });
-                });
-    });
-    </script>
+    <script type="text/javascript" src="http://localhost/wp-content/plugins/newslleter-plugin/js/interaction.js"></script>
 
 </head>
 <style>
@@ -768,7 +215,14 @@ $newslleter = $daon->findAll();
    <form name="newslleter-action" id="newslleter-action" method="post" action="admin.php?page=news.admin.php">
        <h1>Cadastro de newslleter</h1>
        <h4>Título da Newslleter: </h4>
-       <input type="text" name="newslleter-title" value=""><br>
+       <input type="text" name="newslleter-title" value=""><br><br>
+        <h4>Campanha:</h4>
+       <select name="campanha_id">
+           <?php foreach($_campanha as $camp): ?>
+               <option value="<?php echo $camp->id ?>"><?php echo $camp->title ?></option>
+           <?php endforeach; ?>
+       </select>
+       <br><br>
        <h4>Porcentagem total do Envio: </h4>
        <input type="text" name="porcentagem" value=""><br>
        <h4>Adicionar um grupo de Leads: <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="add-grupo">Add</button></h4>
@@ -816,7 +270,10 @@ $newslleter = $daon->findAll();
 <tr>
    <td class="newslleter-title-td"><?php  echo $news->title ?></td>
    <td class="newslleter-status-td"> <?php  if ($news->status == Newslleter::ATIVO):?> ATIVO <?php endif; ?>
-     <?php  if ($news->status == Message::INATIVO):?> INATIVO <?php endif; ?>
+     <?php  if ($news->status == Newslleter::INATIVO):?> INATIVO <?php endif; ?>
+     <?php  if ($news->status == Newslleter::EM_ANDAMENTO):?> EM ANDAMENTO <?php endif; ?>
+     <?php  if ($news->status == Newslleter::ENVIADA):?> ENVIADA <?php endif; ?>
+     <?php  if ($news->status == Newslleter::PROBLEMA_ENVIO):?> PROBLEMA DE ENVIO <?php endif; ?>
    </td>
    <td class="newslleter-actions-td">
        <a class="newslleter-link-update" href="news.core.php?newslleter_value_id=<?php  echo $news->id ?>">
@@ -849,11 +306,20 @@ $newslleter = $daon->findAll();
            <form name="newslleter-action-update" action="news.core.php" class="newslleter-action-update" method="post">
                    Título : <br><br><input type="text" name="newslleter-title-upd" class="newslleter-title-upd" value="">
                    <br><br>
+                   <h4>Campanha:</h4>
+                  <select name="campanha_id">
+                      <?php foreach($_campanha as $camp): ?>
+                          <option value="<?php echo $camp->id ?>"><?php echo $camp->title ?></option>
+                      <?php endforeach; ?>
+                  </select>
                    Porcentagem : <br><br><input type="text" name="newslleter-porcentagem-upd" class="newslleter-porcentagem-upd" value="">
                    <br><br>
-                   <select name="message-status-upd">
+                   <select name="newslleter-status-upd" class="newslleter-status-upd">
                        <option class="option-newslleter-ativo" value="1">ATIVO</option>
                        <option class="option-newslleter-inativo" value="0">INATIVO</option>
+                       <option class="option-newslleter-em_andamento" value="3">EM ANDAMENTO</option>
+                       <option class="option-newslleter-enviada" value="4">ENVIADA</option>
+                       <option class="option-newslleter-problema_envio" value="5">PROBLEMA DE ENVIO</option>
                    </select>
                    <br><br>
                     <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
@@ -1163,6 +629,192 @@ $newslleter = $daon->findAll();
 <!-- end template-block-content  -->
 
 <!-- end template-block-template -->
+<!-- lead-block-template -->
+<section class="lead-block-content">
+<!-- Home template-->
+<div class="lead-block-info-inicial">
+<h1 id="test-lead"> Cadastro de Leads </h1>
+    <form name="lead-action-form" id="lead-action-form" method="post" action="">
+        nome <input type="text" name="lead-nome" class="lead-nome"/><br><br>
+        email <input type="text" name="lead-mail" class="lead-mail"/><br><br>
+        Grupo <select class="" name="lead-grupos_id[]"  multiple>
+            <?php foreach($daog->findAll(5) as $gp): ?>
+                <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
+            <?php endforeach; ?>
+        </select><br><br>
+        empresa <input type="text" name="lead-empresa" class="lead-mail"/><br><br>
+        cargo:<br><br>
+        <select name="lead-cargo"><br>
+            <option class="option-cargo" value="1">DBA</option>
+            <option class="option-cargo" value="2">Analista de Testes</option>
+            <option class="option-cargo" value="3">Analista de Sistema</option>
+            <option class="option-cargo" value="4">Programador</option>
+            <option class="option-cargo" value="5">Web Designer</option>
+            <option class="option-cargo" value="6">Engenheiro de Software</option>
+            <option class="option-cargo" value="7">Analista de Infraestrutura e Redes</option>
+            <option class="option-cargo" value="8">Técnico de Informática</option>
+            <option class="option-cargo" value="9">Professor</option>
+            <option class="option-cargo" value="10">Curioso</option>
+            <option class="option-cargo" value="11">Estudante</option>
+        </select><br><br>
+        site da empresa <input type="text" name="lead-site" class="lead-mail"/><br><br>
+        Sua Area de Atuação<br>
+        <select name="lead-area-atuacao">
+            <option value="1">Agência de Marketing e Publicidade</option>
+            <option value="2">Consultorias e Treinamentos</option>
+            <option value="3">Ecommerce</option>
+            <option value="4">Educação e Ensino</option>
+            <option value="5">Engenharia e Indústria Geral</option>
+            <option value="6">Eventos</option>
+            <option value="7">Financeiro, Jurídico e Serviços Relacionados</option>
+            <option value="8">Hardware e Eletrônicos</option>
+            <option value="9">Imobiliárias</option>
+            <option value="10">Mídia e Comunicação</option>
+            <option value="11">ONGs</option>
+            <option value="12">Saúde e Estética</option>
+            <option value="13">Serviços em Geral</option>
+            <option value="14">Serviços em RH e Coaching</option>
+            <option value="15">Software e Cloud</option>
+            <option value="16">Telecomunicações</option>
+            <option value="17">Turismo e Lazer</option>
+            <option value="18">Varejo</option>
+        </select><br><br>
+        Status: <br><br>
+        <select name="lead-cargo">
+            <option class="option-cargo" value="1">ATIVO</option>
+            <option class="option-cargo" value="2">INATIVO</option>
+            <option class="option-cargo" value="3">DESCADASTRADO</option>
+        </select><br><br>
+        <input type="submit" class="btn btn-primary" value="submit" name="submit">
+        <input type="button" id="cadastro-lead-send" class="btn btn-primary" name="lead" value="add"/>
+        <input type="hidden" name="lead-request-persist"  value="1">
+    </form>
+    <br><br>
+    <h4>Leads Cadastradas</h4><br>
+    <table id="lead-responstable" class="responstable">
+    <thead>
+    <tr>
+    <th>Nome</th>
+    <th>Status</th>
+    <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody class="lead-tbody">
+      <?php
+       foreach($dao->getAll() as $lead):?>
+    <tr>
+        <td class="message-title-td"><?php  echo $lead->name ?></td>
+        <td class="message-status-td"> <?php  if ($lead->status == Leads::active_newslleter):?> ATIVO <?php endif; ?>
+          <?php  if ($lead->status == Leads::inactive):?> INATIVO <?php endif; ?>
+        <?php  if ($lead->status == Leads::canceled):?> CANCELADA <?php endif; ?>
+        <?php  if ($lead->status == Leads::ebook_request):?> EBOOK <?php endif; ?>
+        <?php  if ($lead->status == Leads::msg):?> MENSAGEM FORM CONTATO<?php endif; ?>
+        <?php  if ($lead->status == Leads::modal):?> MODAL <?php endif; ?>
+        </td>
+        <td class="lead-actions-td">
+            <a class="lead-link-update" href="news.core.php?lead_value_id=<?php  echo $lead->id ?>">
+            <button type="button" class="lead-update-table-button" class="btn btn-default ">
+                <span class="glyphicon glyphicon-new-window" aria-hidden="true"> </span>
+            </button>
+            </a>
+                <!--<input type="hidden" value="" name="template-action-request" value="template-update-action"/>-->
+
+        <button type="button" class="btn btn-default lead-destroy-action">
+            <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
+        </button>
+     </td>
+    </tr>
+    <?php endforeach; ?>
+    </form>
+</table>
+
+</div>
+    <!-- Home lead-->
+
+    <!-- Modal Lead (action:update) -->
+    <div class="modal fade" id="leadModalUpdate" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Lead : Atualizando Registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <!-- form update template -->
+            <div id="lead-form-view">
+                <form name="lead-action-update" id="lead-action-form" method="post" action="news.core.php">
+                    nome <input type="text" name="lead-nome" class="lead-nome"/><br><br>
+                    email <input type="text" name="lead-mail" class="lead-mail"/><br><br>
+                    Grupo <select class="selectpicker" name="lead-grupos_id_upd[]"  multiple>
+                        <?php foreach($daog->findAll(5) as $gp): ?>
+                            <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
+                        <?php endforeach; ?>
+                    </select><br><br>
+                    empresa <input type="text" name="lead-empresa" class="lead-mail"/><br><br>
+                    cargo: Status:
+                    <select name="lead-cargo-upd">
+                        <option class="option-cargo" value="1">DBA</option>
+                        <option class="option-cargo" value="2">Analista de Testes</option>
+                        <option class="option-cargo" value="3">Analista de Sistema</option>
+                        <option class="option-cargo" value="4">Programador</option>
+                        <option class="option-cargo" value="5">Web Designer</option>
+                        <option class="option-cargo" value="6">Engenheiro de Software</option>
+                        <option class="option-cargo" value="7">Analista de Infraestrutura e Redes</option>
+                        <option class="option-cargo" value="8">Técnico de Informática</option>
+                        <option class="option-cargo" value="9">Professor</option>
+                        <option class="option-cargo" value="10">Curioso</option>
+                        <option class="option-cargo" value="11">Estudante</option>
+                    </select>
+                    site da empresa <input type="text" name="lead-site" class="lead-mail"/>
+                    Sua Area de Atuação
+                    <select name="lead-area-atuacao-upd">
+                        <option value="Agência de Marketing e Publicidade">Agência de Marketing e Publicidade</option>
+                        <option value="Consultorias e Treinamentos">Consultorias e Treinamentos</option>
+                        <option value="Ecommerce">Ecommerce</option>
+                        <option value="Educação e Ensino">Educação e Ensino</option>
+                        <option value="Engenharia e Indústria Geral">Engenharia e Indústria Geral</option>
+                        <option value="Eventos">Eventos</option>
+                        <option value="Financeiro, Jurídico e Serviços Relacionados">Financeiro, Jurídico e Serviços Relacionados</option>
+                        <option value="Hardware e Eletrônicos">Hardware e Eletrônicos</option>
+                        <option value="Imobiliárias">Imobiliárias</option>
+                        <option value="Mídia e Comunicação">Mídia e Comunicação</option>
+                        <option value="ONGs">ONGs</option>
+                        <option value="Saúde e Estética">Saúde e Estética</option>
+                        <option value="Serviços em Geral">Serviços em Geral</option>
+                        <option value="Serviços em RH e Coaching">Serviços em RH e Coaching</option>
+                        <option value="Software e Cloud">Software e Cloud</option>
+                        <option value="Telecomunicações">Telecomunicações</option>
+                        <option value="Turismo e Lazer">Turismo e Lazer</option>
+                        <option value="Varejo">Varejo</option>
+                    </select>
+                    cargo [option]Status:
+                    <select name="lead-cargo-upd">
+                        <option class="option-cargo" value="1">ATIVO</option>
+                        <option class="option-cargo" value="2">INATIVO</option>
+                        <option class="option-cargo" value="3">DESCADASTRADO</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="ATUALIZAR" name="submit">
+                   <input type="hidden" name="lead-id-upd" class="lead-id-upd" value="">
+                   <br>
+                <input type="button" class="btn btn-primary lead-update-button" name="lead-update-button" value="atualizar"/>
+                </form>
+            </div>
+            <!--  update message form -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- modal lead-->
+</section>
+
+<!-- end lead-block-content  -->
+
+
 <!-- message-block-template -->
 <section class="message-block-content">
 <!-- Home template-->
@@ -1255,12 +907,6 @@ $newslleter = $daon->findAll();
     </div>
     <!-- modal message-->
 </section>
-
-<!-- end message-block-content  -->
-<!-- newslleter-block-template -->
-
-<!-- cadastro Newslleter -->
-
 
 </body>
 </html>

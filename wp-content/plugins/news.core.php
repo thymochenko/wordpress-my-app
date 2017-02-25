@@ -200,7 +200,7 @@ class DaoLeads extends Dao {
     if($this->persistBook($data) ||
     $this->persistModal($data) ||
     $this->persistNewslleter($data) ||
-    $this->persistContact($data)){
+    $this->persistContact($data) || $this->persistAdmin($data)) {
       return true;
     }
     else{
@@ -238,6 +238,58 @@ class DaoLeads extends Dao {
            echo 'Connection failed: ' . $e->getMessage();
          }
     }
+  }
+
+  public function persistAdmin($data){
+      $dateTime = new DateTime();
+      $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+      //@modal
+      if($data['method'] == 'admin'){
+         try {
+           $sth3 = Connection::open($localconnection=true)->prepare("INSERT INTO wp_news_leads
+           (name,email,ip, msg, book_id, status, grupos_id, datecreated, dateupdated, empresa, cargo, site, area_atuacao)
+             VALUES (
+               :name,
+               :email,:ip,:msg,
+               :book_id, :status, :grupos_id, :datecreated, :dateupdated, :empresa, :cargo, :site, :area_atuacao)
+               RETURNING id");
+
+           $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
+           $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
+           $sth3->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
+           $sth3->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
+           $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
+           $sth3->bindValue(':status', Leads::modal , PDO::PARAM_INT);
+           $sth3->bindValue(':grupos_id', $data['grupos_id'] , PDO::PARAM_INT);
+           $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+           $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
+           $sth3->bindValue(':empresa', $data['empresa'], PDO::PARAM_STR);
+           $sth3->bindValue(':cargo', $data['cargo'], PDO::PARAM_INT);
+           $sth3->bindValue(':site', $data['site'], PDO::PARAM_STR);
+           $sth3->bindValue(':area_atuacao', $data['area_atuacao'], PDO::PARAM_INT);
+
+           $sth3->execute();
+
+           $lead_id = $sth3->fetch(PDO::FETCH_ASSOC);
+           $data['persist_id'] = $lead_id;
+           //var_dump($_POST);exit;
+           //insere a id da lead e do grupo na tabela manyToMany
+           $sth2 = Connection::open($localconnection=true)->prepare(
+           "INSERT INTO wp_grupos_leads
+           (grupos_id, leads_id) VALUES (:grupos_id, :leads_id)");
+           //var_dump(count($data['lead_grupo_id']));
+           for($o=0; $o < count($data['lead_grupo_id']);$o++){
+               $sth2->bindValue(':grupos_id', (int)$data['lead_grupo_id'][$o] , PDO::PARAM_INT);
+               $sth2->bindValue(':leads_id', (int)$data['persist_id']['id'] , PDO::PARAM_INT);
+               $sth2->execute();
+           }
+           return true;
+
+
+           } catch (PDOException $e) {
+             echo 'Connection failed: ' . $e->getMessage();
+           }
+      }
   }
   /*
   *@Remember : persistir a chave muitos para muitos grupos_id, leads_id
@@ -303,6 +355,9 @@ class DaoLeads extends Dao {
       $sth2->bindValue(':leads_id', (int)$object[0]->id , PDO::PARAM_INT);
       return ($sth2->execute()) ? true : false;
   }
+
+  //lead_id 562
+  //grupo: 161 - 160
 
   public function persistContact($data){
     $dateTime = new DateTime();
@@ -446,6 +501,18 @@ class DaoLeads extends Dao {
   public function destroy(){
 
   }
+
+  public function findFirst(){
+      $sth = Connection::open($localconnection=true)->prepare(
+      "SELECT * FROM wp_news_leads ORDER BY id DESC LIMIT 1");
+
+      $sth->execute();
+      while($obj = $sth->fetchObject(__CLASS__)) {
+          $objects[] = $obj;
+      }
+
+      return $objects ? $objects : false;
+  }
 }
 
 class DaoGrupos extends Dao {
@@ -495,7 +562,7 @@ class DaoNewslleter extends Dao {
                  $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
                  $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s') , PDO::PARAM_STR);
                  $sth->execute();
-
+                  //RETURNING id
                  $newslleter_id = $sth->fetch(PDO::FETCH_ASSOC);
                  //var_dump($newslleter_id['id']);exit;
                  //persist @Envio
@@ -980,6 +1047,7 @@ class Leads extends Model {
   const ebook_request = 4;
   const msg = 5;
   const modal = 6;
+  const descadastrado = 7;
 
   public function set_name($name){
     $this->data['name'] = (isset($name)) ? filter_var(trim($name), FILTER_SANITIZE_STRING) : null;
@@ -1180,6 +1248,36 @@ class Template extends Model {
 
 class Logs extends Model {}
 
+class LeadsController {
+
+    public static function actionPersist(){
+        if(isset($_POST['lead-request-persist'])){
+            $lead = new Leads();
+            $lead->email = $_POST['lead-mail'];
+            $lead->name = $_POST['lead-nome'];
+            $lead->ip = $_SERVER['REMOTE_ADDR'];
+            $lead->msg ="cadastro.admin";
+            $lead->book_id = 0;
+            $lead->status = Leads::active_newslleter;
+            $lead->date_created = date("Y-m-d H:i:s");
+            $lead->date_updated = date("Y-m-d H:i:s");
+            $lead->empresa = $_POST['lead-empresa'];
+            $lead->cargo = $_POST['lead-cargo'];
+            $lead->site = $_POST['lead-site'];
+            $lead->area_atuacao = $_POST['lead-area-atuacao'];
+            $lead->method = "admin";
+            $lead->lead_grupo_id = $_POST['lead-grupos_id'];
+            $dataProvider = new LeadsDataProvider($lead);
+            //$dataProvider->setReturnType('array');
+            $dao = new DaoLeads();
+            $dao->setDataProvider($dataProvider);
+            $dao->store();
+            $result = $dao->findFirst();
+            echo(json_encode($result));exit;
+        }
+    }
+}
+
 class NewslleterController {
 
     protected static $request;
@@ -1223,8 +1321,8 @@ class NewslleterController {
         $post = self::getRequest();
         $news = new Newslleter();
         $news->title = $post['newslleter-title'];
-        $news->campaign_id = 1;
-        $news->status = 1;
+        $news->campaign_id = $post['campanha_id'];
+        $news->status = Newslleter::EM_ANDAMENTO;
         $news->porcentagem = $post['porcentagem'];
 
         for($z=0; $z < count($post)-1; $z++){
@@ -1254,7 +1352,7 @@ class NewslleterController {
 
     public function actionUpdate(){
         //var_dump($_GET[]);exit;
-        if($_GET['newslleter_value_id']){
+        if(isset($_GET['newslleter_value_id'])){
             $dao = new DaoNewslleter;
             $result = $dao->findById((int)$_GET['newslleter_value_id']);
             echo(json_encode($result)); exit;
@@ -1262,34 +1360,13 @@ class NewslleterController {
     }
 
     public function actionPostUpdate(){
-        if($_POST['newslleter-id-upd']){
-            //var_dump($_POST);exit;
-
+        if(isset($_POST['newslleter-id-upd'])){
             $news = new Newslleter();
             $news->id = $_POST['newslleter-id-upd'];
-            $news->campaign_id = 1;
+            $news->campaign_id = $_POST['campanha_id'];
             $news->title = $_POST['newslleter-title-upd'];
             $news->status = $_POST['newslleter-status-upd'];
             $news->porcentagem = $_POST['newslleter-porcentagem-upd'];
-            /*
-            for($z=0; $z < count($post)-1; $z++){
-               $envio1 = new Envio();
-               $envio1->message_id = $post['message_id_fk'][$z];
-               $envio1->template_id = $post['template_id_fk'][$z];
-               $envio1->status = 1;
-                //periodo:1
-               $periodo1 = new Periodo;
-               $periodo1->data_de_envio_fixo = $post['periodo'][$z];
-                //add Periodo
-               $envio1->addPeriodo($periodo1);
-
-                //add envio a newslleter
-               $news->addEnvio($envio1);
-            }
-            */
-            //var_dump($post['grupos_id']);exit;
-            //$news->addGrupos($post['grupos_id']);
-            //var_dump($news->envio[0]->periodo);exit;
             $dataProvider = new NewslleterDataProvider($news);
             $dao = new DaoNewslleter();
             $dao->setDataProvider($dataProvider);
@@ -1302,7 +1379,7 @@ class NewslleterController {
 
 class CampanhaController {
     public static function actionPersist(){
-        if($_POST["campanha-request-persist"]){
+        if(isset($_POST["campanha-request-persist"])){
             $campanha = new Campanha;
             $campanha->title = $_POST['campanha-title'];
             $campanha->status = Campanha::ATIVO;
@@ -1319,7 +1396,7 @@ class CampanhaController {
 
     public function actionUpdate(){
         //var_dump($_GET[]);exit;
-        if($_GET['campanha_value_id']){
+        if(isset($_GET['campanha_value_id'])){
             $daocampanha = new DaoCampanha;
             $campanhaResult = $daocampanha->findById((int)$_GET['campanha_value_id']);
             echo(json_encode($campanhaResult)); exit;
@@ -1327,7 +1404,7 @@ class CampanhaController {
     }
 
     public function actionPostUpdate(){
-        if($_POST['campanha-id-upd']){
+        if(isset($_POST['campanha-id-upd'])){
             //var_dump($_POST);exit;
             $campanha = new Campanha;
             $campanha->id = (int)$_POST['campanha-id-upd'];
@@ -1347,7 +1424,7 @@ class CampanhaController {
 
 class TemplateController {
     public static function actionPersist(){
-        if($_POST["template-request-persist"]){
+        if(isset($_POST["template-request-persist"])){
             $tpl = new Template;
             $tpl->title = $_POST['template-title'];
             $tpl->body_template = $_POST['template-body'];
@@ -1365,7 +1442,7 @@ class TemplateController {
 
     public function actionLoadDataForm(){
         //var_dump($_GET[]);exit;
-        if($_GET['template_value_id']){
+        if(isset($_GET['template_value_id'])){
             $dao = new DaoTemplate;
             $result = $dao->findById((int)$_GET['template_value_id']);
             echo(json_encode($result));exit;
@@ -1373,7 +1450,7 @@ class TemplateController {
     }
 
     public function actionUpdate(){
-        if($_POST['template-id-upd']){
+        if(isset($_POST['template-id-upd'])){
             //var_dump($_POST);exit;
             $tpl = new Template;
             $tpl->id = (int)$_POST['template-id-upd'];
@@ -1393,7 +1470,7 @@ class TemplateController {
 
 class MessageController {
     public static function actionPersist(){
-        if($_POST["message-request-persist"]){
+        if(isset($_POST["message-request-persist"])){
             $msg = new Message;
             $msg->title = $_POST['message-title'];
             $msg->body = $_POST['message-body'];
@@ -1411,7 +1488,7 @@ class MessageController {
 
     public function actionLoadDataForm(){
         //var_dump($_GET[]);exit;
-        if($_GET['message_value_id']){
+        if(isset($_GET['message_value_id'])){
             $dao = new DaoMessage;
             $result = $dao->findById((int)$_GET['message_value_id']);
             echo(json_encode($result));exit;
@@ -1419,7 +1496,7 @@ class MessageController {
     }
 
     public function actionUpdate(){
-        if($_POST['message-id-upd']){
+        if(isset($_POST['message-id-upd'])){
             //var_dump($_POST);exit;
             $msg = new Message;
             $msg->id = (int)$_POST['message-id-upd'];
@@ -1435,6 +1512,7 @@ class MessageController {
         }
     }
 }
+
 //@Campanha Controller Methods
 CampanhaController::actionPersist();
 CampanhaController::actionUpdate();
@@ -1448,9 +1526,12 @@ MessageController::actionPersist();
 MessageController::actionLoadDataForm();
 MessageController::actionUpdate();
 
-if($_POST['newslleter-title']){
+if(isset($_POST['newslleter-title'])){
     NewslleterController::init($_POST);
     NewslleterController::persitAction();
 }
+
 NewslleterController::actionUpdate();
 NewslleterController::actionPostUpdate();
+//@Leads
+LeadsController::actionPersist();
