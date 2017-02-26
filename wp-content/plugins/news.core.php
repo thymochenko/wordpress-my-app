@@ -458,7 +458,7 @@ class DaoLeads extends Dao {
   }
 
   public function getAll(){
-    $sth = Connection::open($localconnection=true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC LIMIT 3");
+    $sth = Connection::open($localconnection=true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC LIMIT 13");
     $sth->execute();
     while($obj = $sth->fetchObject(__CLASS__)) {
         $objects[] = $obj;
@@ -512,6 +512,22 @@ class DaoLeads extends Dao {
       }
 
       return $objects ? $objects : false;
+  }
+
+  public function findById($id){
+      if(is_integer($id)){
+          $sth = Connection::open($localconnection=true)->prepare(
+          "SELECT id, name, email, site, status, dateupdated, empresa, cargo, area_atuacao
+           FROM wp_news_leads WHERE id = :id ORDER BY id DESC LIMIT 1");
+          $sth->bindValue(":id", $id, PDO::PARAM_INT);
+          $sth->execute();
+
+          while($obj = $sth->fetchObject(__CLASS__)) {
+              $objects[] = $obj;
+          }
+
+          return $objects ? $objects : false;
+      }
   }
 }
 
@@ -1251,7 +1267,7 @@ class Logs extends Model {}
 class LeadsController {
 
     public static function actionPersist(){
-        if(isset($_POST['lead-request-persist'])){
+        if(isset($_POST['lead-request-persist']) && $_POST['lead-request-persist'] != ""){
             $lead = new Leads();
             $lead->email = $_POST['lead-mail'];
             $lead->name = $_POST['lead-nome'];
@@ -1274,6 +1290,15 @@ class LeadsController {
             $dao->store();
             $result = $dao->findFirst();
             echo(json_encode($result));exit;
+        }
+    }
+
+    public function actionUpdate(){
+        //var_dump($_GET[]);exit;
+        if(isset($_GET['lead_value_id'])){
+            $dao = new DaoLeads;
+            $result = $dao->findById((int)$_GET['lead_value_id']);
+            echo(json_encode($result)); exit;
         }
     }
 }
@@ -1535,3 +1560,4 @@ NewslleterController::actionUpdate();
 NewslleterController::actionPostUpdate();
 //@Leads
 LeadsController::actionPersist();
+LeadsController::actionUpdate();

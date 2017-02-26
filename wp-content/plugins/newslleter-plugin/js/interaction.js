@@ -668,9 +668,11 @@ $(document).on('click', '#cadastro-template-send',function(event){
                             $.ajax(this.href, { success: function(data) {
                                 //dados do form
                                 var resource = $.parseJSON(data);
-                                $('.message-title-upd').val(resource[0].title);
-                                $('.message-body-upd').val(resource[0].body);
-                                $('.message-id-upd').val(resource[0].id);
+                                $('.lead-name-upd').val(resource[0].name);
+                                $('.lead-mail-upd').val(resource[0].email);
+                                $('.lead-empresa-upd').val(resource[0].empresa);
+                                $('.lead-site-upd').val(resource[0].site);
+                                $('.lead-id-upd').val(resource[0].id);
                                 },
                                 error: function() {
                                           alert('error');
