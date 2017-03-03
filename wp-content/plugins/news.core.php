@@ -517,14 +517,14 @@ class DaoLeads extends Dao {
            dateupdated = :dateupdated, empresa = :empresa, cargo = :cargo, site = :site, area_atuacao = :area_atuacao
            WHERE id = :id RETURNING id
            ");
-                
+
                 $sth3->bindValue(':id', $data["id"], PDO::PARAM_INT);
                 $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
                 $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
                 $sth3->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
                 $sth3->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
                 $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
-                $sth3->bindValue(':status', (int)$data['status'], PDO::PARAM_INT);
+                $sth3->bindValue(':status', (int) $data['status'], PDO::PARAM_INT);
                 $sth3->bindValue(':grupos_id', 1, PDO::PARAM_INT);
                 $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
                 $sth3->bindValue(':empresa', $data['empresa'], PDO::PARAM_STR);
@@ -647,14 +647,16 @@ class DaoNewslleter extends Dao {
             //var_dump($data['envio'][0]->message_id); exit;
 
             for ($i = 0; $i < count($data['envio']); $i++) {
-                $sth1->bindValue(':template_id', (int) $data['envio'][$i]->template_id, PDO::PARAM_INT);
-                $sth1->bindValue(':message_id', (int) $data['envio'][$i]->message_id, PDO::PARAM_INT);
-                $sth1->bindValue(':status', (int) $data['envio'][$i]->status, PDO::PARAM_INT);
-                $sth1->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-                $sth1->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
-                $sth1->bindValue(':log_id', 1, PDO::PARAM_INT);
-                $sth1->execute();
-                $envio_id[] = $sth1->fetch(PDO::FETCH_ASSOC);
+                if ($data['envio'][$i]->template_id != "" && $data['envio'][$i]->message_id != "" && $data['envio'][$i]->status != "") {
+                    $sth1->bindValue(':template_id', (int) $data['envio'][$i]->template_id, PDO::PARAM_INT);
+                    $sth1->bindValue(':message_id', (int) $data['envio'][$i]->message_id, PDO::PARAM_INT);
+                    $sth1->bindValue(':status', (int) $data['envio'][$i]->status, PDO::PARAM_INT);
+                    $sth1->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+                    $sth1->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+                    $sth1->bindValue(':log_id', 1, PDO::PARAM_INT);
+                    $sth1->execute();
+                    $envio_id[] = $sth1->fetch(PDO::FETCH_ASSOC);
+                }
             }
 
             //var_dump($envio_id);exit;
@@ -743,7 +745,39 @@ class DaoNewslleter extends Dao {
         while ($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
         }
-        return $objects ? $objects : false;
+
+        $sth1 = Connection::get($localconnection = true)->prepare(
+                "SELECT n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
+                . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate "
+                . " FROM wp_envio_news AS e"
+                . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
+                . "INNER JOIN wp_news_newslleter AS n ON (e.newslleter_id = n.id)"
+                . "INNER JOIN wp_news_messages AS  m ON (env.message_id = m.id)"
+                . "INNER JOIN wp_news_template AS  t ON (env.template_id = t.id)"
+                . " WHERE e.newslleter_id = :newslleter_id");
+
+        //var_dump($objects);
+        //var_dump($objects);
+
+        for ($j = 0; $j < count($objects); $j++) {
+
+            $sth1->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
+            $sth1->execute();
+            //            $obj = $sth1->fetchObject("stdClass");
+            while ($obj = $sth1->fetchObject(__CLASS__)) {
+                $objects_fkey_envio[] = $obj;
+            }
+
+            if ($objects_fkey_envio[$j]->news_id == $objects_fkey_envio[$j]->newslleter_id_fk) {
+                $collection[] = $objects_fkey_envio;
+                unset($objects_fkey_envio);
+            }
+        }
+
+        //var_dump($objects_fkey_envio);
+        // var_dump($collection);
+
+        return $collection ? $collection : false;
     }
 
     public function findFirst() {
