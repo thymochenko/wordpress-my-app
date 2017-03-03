@@ -2,6 +2,7 @@
 
 //declare(strict_types=1);
 class DataProvider {
+
     protected $nl, $dataType, $transformedData;
 
     public function __construct($object) {
@@ -56,6 +57,7 @@ abstract class Model {
             return $this->data[$prop];
         }
     }
+
 }
 
 final class Connection {
@@ -75,7 +77,6 @@ final class Connection {
         "username" => "postgres",
         "password" => "silvia25"
     );
-    
     static $DATABASE_CONF_REMOTE = array(
         "dbname" => "wordpress",
         "host" => "wordpress.clo6jnwupfzu.us-west-2.rds.amazonaws.com",
@@ -83,7 +84,9 @@ final class Connection {
         "password" => "silvia25"
     );
 
-    final public function __construct() { }
+    final public function __construct() {
+        
+    }
 
     public static function get() {
         if (isset(self::$conn)) {
@@ -269,7 +272,7 @@ class DaoLeads extends Dao {
                 $sth3->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
                 $sth3->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
                 $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
-                $sth3->bindValue(':status', Leads::modal, PDO::PARAM_INT);
+                $sth3->bindValue(':status', $data['status'], PDO::PARAM_INT);
                 $sth3->bindValue(':grupos_id', $data['grupos_id'], PDO::PARAM_INT);
                 $sth3->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
                 $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
@@ -465,7 +468,7 @@ class DaoLeads extends Dao {
     }
 
     public function getAll() {
-        $sth = Connection::open($localconnection = true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC LIMIT 13");
+        $sth = Connection::open($localconnection = true)->prepare("SELECT * FROM wp_news_leads ORDER by id DESC LIMIT 3");
         $sth->execute();
         while ($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
@@ -502,7 +505,53 @@ class DaoLeads extends Dao {
     }
 
     public function update() {
-        
+        $dateTime = new DateTime();
+        $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+        $data = $this->nlDataProvider->getData();
+
+        if ($data['method'] == 'admin') {
+            try {
+                $sth3 = Connection::open($localconnection = true)->prepare("UPDATE wp_news_leads
+           SET name = :name, email = :email, ip = :ip, msg = :msg, book_id = :book_id, status = :status, grupos_id = :grupos_id, 
+           dateupdated = :dateupdated, empresa = :empresa, cargo = :cargo, site = :site, area_atuacao = :area_atuacao
+           WHERE id = :id RETURNING id
+           ");
+                
+                $sth3->bindValue(':id', $data["id"], PDO::PARAM_INT);
+                $sth3->bindValue(':name', $data["name"], PDO::PARAM_STR);
+                $sth3->bindValue(':email', $data["email"], PDO::PARAM_STR);
+                $sth3->bindValue(':ip', $data["ip"], PDO::PARAM_STR);
+                $sth3->bindValue(':msg', $data['msg'], PDO::PARAM_STR);
+                $sth3->bindValue(':book_id', 0, PDO::PARAM_INT);
+                $sth3->bindValue(':status', (int)$data['status'], PDO::PARAM_INT);
+                $sth3->bindValue(':grupos_id', 1, PDO::PARAM_INT);
+                $sth3->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+                $sth3->bindValue(':empresa', $data['empresa'], PDO::PARAM_STR);
+                $sth3->bindValue(':cargo', $data['cargo'], PDO::PARAM_INT);
+                $sth3->bindValue(':site', $data['site'], PDO::PARAM_STR);
+                $sth3->bindValue(':area_atuacao', $data['area_atuacao'], PDO::PARAM_INT);
+
+                $sth3->execute();
+
+                $lead_id = $sth3->fetch(PDO::FETCH_ASSOC);
+                $data['persist_id'] = $lead_id;
+                //var_dump($_POST);exit;
+                //insere a id da lead e do grupo na tabela manyToMany
+                $sth2 = Connection::open($localconnection = true)->prepare(
+                        "UPDATE wp_grupos_leads
+          SET  grupos_id = :grupos_id, leads_id = :leads_id WHERE grupos_id = :grupos_id AND leads_id = :leads_id");
+                //var_dump(count($data['lead_grupo_id']));
+                for ($o = 0; $o < count($data['lead_grupo_id']); $o++) {
+                    $sth2->bindValue(':grupos_id', (int) $data['lead_grupo_id'][$o], PDO::PARAM_INT);
+                    $sth2->bindValue(':leads_id', (int) $data['persist_id']['id'], PDO::PARAM_INT);
+                    $sth2->execute();
+                }
+                return true;
+            } catch (PDOException $e) {
+                echo 'Connection failed: ' . $e->getMessage();
+            }
+        }
     }
 
     public function destroy() {
@@ -1309,6 +1358,35 @@ class LeadsController {
         }
     }
 
+    public static function actionPostUpdate() {
+        if (isset($_POST['lead-request-update']) && $_POST['lead-request-update'] != "") {
+            $lead = new Leads();
+            $lead->id = $_POST['lead-id-upd'];
+            $lead->email = $_POST['lead-mail-upd'];
+            $lead->name = $_POST['lead-name-upd'];
+            $lead->ip = $_SERVER['REMOTE_ADDR'];
+            $lead->msg = "cadastro.admin";
+            $lead->book_id = 0;
+            $lead->status = $_POST['lead-status-upd'];
+            $lead->date_created = date("Y-m-d H:i:s");
+            $lead->date_updated = date("Y-m-d H:i:s");
+            $lead->empresa = $_POST['lead-empresa-upd'];
+            $lead->cargo = $_POST['lead-cargo-upd'];
+            $lead->site = $_POST['lead-site-upd'];
+            $lead->area_atuacao = $_POST['lead-area-atuacao-upd'];
+            $lead->method = "admin";
+            $lead->lead_grupo_id = $_POST['lead-grupos_id-upd'];
+            $dataProvider = new LeadsDataProvider($lead);
+            //$dataProvider->setReturnType('array');
+            $dao = new DaoLeads();
+            $dao->setDataProvider($dataProvider);
+            $dao->update();
+            $result = $dao->findFirst();
+            echo(json_encode($result));
+            exit;
+        }
+    }
+
     public function actionUpdate() {
         //var_dump($_GET[]);exit;
         if (isset($_GET['lead_value_id'])) {
@@ -1597,3 +1675,4 @@ NewslleterController::actionPostUpdate();
 //@Leads
 LeadsController::actionPersist();
 LeadsController::actionUpdate();
+LeadsController::actionPostUpdate();

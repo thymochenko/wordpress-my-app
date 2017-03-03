@@ -744,7 +744,7 @@ $newslleter = $daon->findAll();
           <div class="modal-body">
               <!-- form update template -->
             <div id="lead-form-view">
-                <form name="lead-action-update" id="lead-action-update" method="post" action="">
+                <form name="lead-action-update" class="lead-action-update" method="post" action="">
                     nome <input type="text" name="lead-name-upd" class="lead-name-upd"/><br><br>
                     email <input type="text" name="lead-mail-upd" class="lead-mail-upd"/><br><br>
                     Grupo <select class="" name="lead-grupos_id-upd[]"  multiple>
@@ -790,10 +790,10 @@ $newslleter = $daon->findAll();
                         <option value="18">Varejo</option>
                     </select><br><br>
                     Status: <br><br>
-                    <select name="lead-cargo-upd">
-                        <option class="option-cargo" value="1">ATIVO</option>
-                        <option class="option-cargo" value="2">INATIVO</option>
-                        <option class="option-cargo" value="3">DESCADASTRADO</option>
+                    <select name="lead-status-upd" class="lead-status-upd">
+                        <option class="" value="1">ATIVO</option>
+                        <option class="" value="2">INATIVO</option>
+                        <option class="" value="3">DESCADASTRADO</option>
                     </select><br><br>
                     <input type="submit" class="btn btn-primary" value="submit" name="submit">
                     <input type="button" id="lead-update-button" class="btn btn-primary" name="lead" value="add"/>
