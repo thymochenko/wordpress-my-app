@@ -207,6 +207,7 @@ $newslleter = $daon->findAll();
             </tbody>
         </table>
     </div>
+    
     <!-- block inicial -->
 
     <section class="newslleter-block-content">
@@ -286,24 +287,35 @@ $newslleter = $daon->findAll();
                 for ($x = 0; $x < count($newslleter); $x++):
                     ?>
                     <tr>
+                        <?php if($newslleter[$x][0]->status != ""): ?>
                         <td class="newslleter-title-td"><?php echo $newslleter[$x][0]->newslleter_title ?></td>
                         <td class="newslleter-status-td"> <?php if ($newslleter[$x][0]->status == Newslleter::ATIVO): ?> ATIVO <?php endif; ?>
                             <?php if ($newslleter[$x][0]->status == Newslleter::INATIVO): ?> INATIVO <?php endif; ?>
                             <?php if ($newslleter[$x][0]->status == Newslleter::EM_ANDAMENTO): ?> EM ANDAMENTO <?php endif; ?>
                             <?php if ($newslleter[$x][0]->status == Newslleter::ENVIADA): ?> ENVIADA <?php endif; ?>
-    <?php if ($newslleter[$x][$c]->status == Newslleter::PROBLEMA_ENVIO): ?> PROBLEMA DE ENVIO <?php endif; ?>
-                        
+    <?php if ($newslleter[$x][0]->status == Newslleter::PROBLEMA_ENVIO): ?> PROBLEMA DE ENVIO <?php endif; ?>
+                
                         </td>
                          <td>
-                             Mensagens : <?php 
+                             Mensagens : <br>total de mensagens (<?php echo count($newslleter[$x]); ?>) 
+                                 <br>
+                                 <?php 
                          for ($c = 0; $c < count($newslleter[$x]); $c++):?>
-                            <b> {<?php echo $newslleter[$x][$c]->message_title ?>}  </b>             
+                            <b> [<?php echo $newslleter[$x][$c]->message_title ?>]  </b>             
                              <?php endfor; ?>
                             
-                               <br>Templates  : <?php 
-                         for ($c = 0; $c < count($newslleter[$x]); $c++):?>
-                            <b> {<?php echo $newslleter[$x][$c]->template_title ?>}  </b>             
+                              <br><br>Templates : <br>total de templates (<?php echo count($newslleter[$x]); ?>) <br> 
+                        <?php for ($c = 0; $c < count($newslleter[$x]); $c++):?>
+                            <b> [<?php echo $newslleter[$x][$c]->template_title ?>]  </b>     
+                            
                              <?php endfor; ?>
+                            
+                                                          <br><br> Periodo : <br>total de periodos (<?php echo count($newslleter[$x]); ?>) <br> 
+                        <?php for ($c = 0; $c < count($newslleter[$x]); $c++):?>
+                            <b> [<?php echo $newslleter[$x][$c]->data_de_envio_fixo ?>]<br>  </b>     
+                            
+                             <?php endfor; ?>
+                            
                          </td>
                         <td class="newslleter-actions-td">
                             <a class="newslleter-link-update" href="news.core.php?newslleter_value_id=<?php echo $newslleter[$x][0]->id ?>">
@@ -317,6 +329,7 @@ $newslleter = $daon->findAll();
                                 <span class="glyphicon glyphicon-fire" aria-hidden="true"> </span>
                             </button>
                         </td>
+                        <?php endif; ?>
                     </tr>
                
 <?php endfor; ?>

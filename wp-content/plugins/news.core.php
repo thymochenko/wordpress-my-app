@@ -671,6 +671,7 @@ class DaoNewslleter extends Dao {
                 $sth2->execute();
                 $periodo_id[] = $sth2->fetch(PDO::FETCH_ASSOC);
             }
+            // var_dump($_POST);exit;
             //var_dump($periodo_id);exit;
             //@grupos_news
             $sth3 = Connection::get($localconnection = true)->prepare(
@@ -684,32 +685,46 @@ class DaoNewslleter extends Dao {
                 $sth3->execute();
             }
 
-            //var_dump($envio_id);exit;
-            //@envio_news
-            $sth4 = Connection::get($localconnection = true)->prepare(
-                    'INSERT INTO wp_envio_news (envio_id,newslleter_id)
-                  VALUES (:envio_id, :newslleter_id)');
-
-            //$data['envios'] vem de um select dos envios persistidos
-            for ($a = 0; $a < count($data['envio']); $a++) {
-                $sth4->bindValue(':envio_id', (int) $envio_id[$a]['id'], PDO::PARAM_INT);
-                $sth4->bindValue(':newslleter_id', (int) $newslleter_id['id'], PDO::PARAM_INT);
-                $sth4->execute();
-            }
-
-            $sth5 = Connection::get($localconnection = true)->prepare(
-                    'INSERT INTO wp_envio_periodo (envio_id,periodo_id)
-                   VALUES (:envio_id, :periodo_id)');
-
-            for ($y = 0; $y < count($data['envio']); $y++) {
-                $sth5->bindValue(':envio_id', (int) $envio_id[$y]['id'], PDO::PARAM_INT);
-                $sth5->bindValue(':periodo_id', (int) $periodo_id[$y]['id'], PDO::PARAM_INT);
-                $sth5->execute();
-            }
-            return true;
+            self::storeEnvioFkTables($data, $envio_id, $periodo_id, $newslleter_id);
+            
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
+    }
+
+    public static function storeEnvioFkTables($data, $envio_id, $periodo_id, $newslleter_id) {
+        // var_dump($envio_id[0]['id']);exit;
+
+        $sth4 = Connection::open($localconnection = true)->prepare(
+                'INSERT INTO wp_envio_news (envio_id, newslleter_id)
+                  VALUES (:envio_id, :newslleter_id)');
+
+        $count = 0;
+        foreach ($data['envio'] as $k => $date) {
+            if ($envio_id[$count]['id'] != "" && $envio_id[$count]['id'] != null && $newslleter_id['id'] != "") {
+
+                $sth4->bindValue(':envio_id', (int) $envio_id[$count]['id'], PDO::PARAM_INT);
+                $sth4->bindValue(':newslleter_id', (int) $newslleter_id['id'], PDO::PARAM_INT);
+                //sleep(1);
+                //if(count($data['envio']) <)
+                $sth4->execute();
+                $count++;
+            }
+        }
+
+        $sth5 = Connection::open($localconnection = true)->prepare(
+                'INSERT INTO wp_envio_periodo (envio_id,periodo_id)
+                   VALUES (:envio_id, :periodo_id)');
+
+
+        for ($y = 0; $y < count($data['envio']); $y++) {
+            $sth5->bindValue(':envio_id', (int) $envio_id[$y]['id'], PDO::PARAM_INT);
+            $sth5->bindValue(':periodo_id', (int) $periodo_id[$y]['id'], PDO::PARAM_INT);
+            //break;
+             $sth5->execute();
+        }
+        
+        return true;
     }
 
     public function update() {
@@ -745,17 +760,31 @@ class DaoNewslleter extends Dao {
         while ($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
         }
-
-        $sth1 = Connection::get($localconnection = true)->prepare(
-                "SELECT n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
-                . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate "
+        
+       // var_dump($objects);exit;
+        /*
+         *  "SELECT n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
+                . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
                 . " FROM wp_envio_news AS e"
                 . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
                 . "INNER JOIN wp_news_newslleter AS n ON (e.newslleter_id = n.id)"
                 . "INNER JOIN wp_news_messages AS  m ON (env.message_id = m.id)"
                 . "INNER JOIN wp_news_template AS  t ON (env.template_id = t.id)"
+                . "INNER JOIN wp_envio_periodo AS p ON (env.id = p.envio_id)"
+                . "INNER JOIN wp_news_periodo AS np ON (p.periodo_id = np.id)"
                 . " WHERE e.newslleter_id = :newslleter_id");
-
+         */
+        $sth1 = Connection::get($localconnection = true)->prepare(
+             "SELECT n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
+                . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
+                . " FROM wp_envio_news AS e"
+                . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
+                . "INNER JOIN wp_news_newslleter AS n ON (e.newslleter_id = n.id)"
+                . "INNER JOIN wp_news_messages AS  m ON (env.message_id = m.id)"
+                . "INNER JOIN wp_news_template AS  t ON (env.template_id = t.id)"
+                . "INNER JOIN wp_envio_periodo AS p ON (env.id = p.envio_id)"
+                . "INNER JOIN wp_news_periodo AS np ON (p.periodo_id = np.id)"
+                . " WHERE e.newslleter_id = :newslleter_id");
         //var_dump($objects);
         //var_dump($objects);
 
@@ -767,7 +796,7 @@ class DaoNewslleter extends Dao {
             while ($obj = $sth1->fetchObject(__CLASS__)) {
                 $objects_fkey_envio[] = $obj;
             }
-
+            
             if ($objects_fkey_envio[$j]->news_id == $objects_fkey_envio[$j]->newslleter_id_fk) {
                 $collection[] = $objects_fkey_envio;
                 unset($objects_fkey_envio);
