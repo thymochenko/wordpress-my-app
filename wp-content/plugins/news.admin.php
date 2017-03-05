@@ -284,16 +284,17 @@ $newslleter = $daon->findAll();
                   public 'btemplate' => string 'Template' (length=8)
                  */
                 //var_dump($newslleter);
+                
                 for ($x = 0; $x < count($newslleter); $x++):
                     ?>
                     <tr>
                         <?php if($newslleter[$x][0]->status != ""): ?>
                         <td class="newslleter-title-td"><?php echo $newslleter[$x][0]->newslleter_title ?></td>
-                        <td class="newslleter-status-td"> <?php if ($newslleter[$x][0]->status == Newslleter::ATIVO): ?> ATIVO <?php endif; ?>
-                            <?php if ($newslleter[$x][0]->status == Newslleter::INATIVO): ?> INATIVO <?php endif; ?>
-                            <?php if ($newslleter[$x][0]->status == Newslleter::EM_ANDAMENTO): ?> EM ANDAMENTO <?php endif; ?>
-                            <?php if ($newslleter[$x][0]->status == Newslleter::ENVIADA): ?> ENVIADA <?php endif; ?>
-    <?php if ($newslleter[$x][0]->status == Newslleter::PROBLEMA_ENVIO): ?> PROBLEMA DE ENVIO <?php endif; ?>
+                        <td class="newslleter-status-td"> <?php if ($newslleter[$x][0]->news_status == Newslleter::ATIVO): ?> ATIVO <?php endif; ?>
+                            <?php if ($newslleter[$x][0]->news_status == Newslleter::INATIVO): ?> INATIVO <?php endif; ?>
+                            <?php if ($newslleter[$x][0]->news_status == Newslleter::EM_ANDAMENTO): ?> EM ANDAMENTO <?php endif; ?>
+                            <?php if ($newslleter[$x][0]->news_status == Newslleter::ENVIADA): ?> ENVIADA <?php endif; ?>
+    <?php if ($newslleter[$x][0]->news_status == Newslleter::PROBLEMA_ENVIO): ?> PROBLEMA DE ENVIO <?php endif; ?>
                 
                         </td>
                          <td>

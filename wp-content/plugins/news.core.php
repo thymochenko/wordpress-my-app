@@ -665,7 +665,7 @@ class DaoNewslleter extends Dao {
             $sth2 = Connection::get($localconnection = true)->prepare(
                     'INSERT INTO wp_news_periodo (data_de_envio_fixo)
                   VALUES (:data_de_envio_fixo) RETURNING id');
-            //var_dump($data['envio'][0]->periodo[0]->data_de_envio_fixo);exit;
+ //           var_dump($data['envio'][0]->periodo[0]->data_de_envio_fixo);exit;
             for ($x = 0; $x < count($data['envio']); $x++) {
                 $sth2->bindValue(':data_de_envio_fixo', $data['envio'][$x]->periodo[0]->data_de_envio_fixo, PDO::PARAM_STR);
                 $sth2->execute();
@@ -775,7 +775,7 @@ class DaoNewslleter extends Dao {
                 . " WHERE e.newslleter_id = :newslleter_id");
          */
         $sth1 = Connection::get($localconnection = true)->prepare(
-             "SELECT n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
+             "SELECT n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
                 . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
                 . " FROM wp_envio_news AS e"
                 . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
