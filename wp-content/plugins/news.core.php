@@ -754,26 +754,13 @@ class DaoNewslleter extends Dao {
 
     public function findAll() {
         $sth = Connection::open($localconnection = true)->prepare(
-                "SELECT * FROM wp_news_newslleter ORDER BY id DESC LIMIT 3");
+                "SELECT * FROM wp_news_newslleter ORDER BY id DESC LIMIT 5");
 
         $sth->execute();
         while ($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
         }
-        
-       // var_dump($objects);exit;
-        /*
-         *  "SELECT n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
-                . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
-                . " FROM wp_envio_news AS e"
-                . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
-                . "INNER JOIN wp_news_newslleter AS n ON (e.newslleter_id = n.id)"
-                . "INNER JOIN wp_news_messages AS  m ON (env.message_id = m.id)"
-                . "INNER JOIN wp_news_template AS  t ON (env.template_id = t.id)"
-                . "INNER JOIN wp_envio_periodo AS p ON (env.id = p.envio_id)"
-                . "INNER JOIN wp_news_periodo AS np ON (p.periodo_id = np.id)"
-                . " WHERE e.newslleter_id = :newslleter_id");
-         */
+  
         $sth1 = Connection::get($localconnection = true)->prepare(
              "SELECT n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
                 . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
@@ -1714,8 +1701,8 @@ class MessageController {
     }
 
 }
-
-//@Campanha Controller Methods
+if($_POST || $_GET){
+ //@Campanha Controller Methods
 CampanhaController::actionPersist();
 CampanhaController::actionUpdate();
 CampanhaController::actionPostUpdate();
@@ -1739,3 +1726,5 @@ NewslleterController::actionPostUpdate();
 LeadsController::actionPersist();
 LeadsController::actionUpdate();
 LeadsController::actionPostUpdate();
+   
+}
