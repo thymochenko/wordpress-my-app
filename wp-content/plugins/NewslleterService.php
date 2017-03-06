@@ -53,22 +53,7 @@ class NewslleterService {
             $objects[] = $obj;
         }
 
-
-        /*
-         *         $sth1 = Connection::get($localconnection = true)->prepare(
-          "SELECT g.name AS grupo_name,m.body AS message_body, n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
-          . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
-          . " FROM wp_envio_news AS e"
-          . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
-          . "INNER JOIN wp_news_newslleter AS n ON (e.newslleter_id = n.id)"
-          . "INNER JOIN wp_news_messages AS  m ON (env.message_id = m.id)"
-          . "INNER JOIN wp_news_template AS  t ON (env.template_id = t.id)"
-          . "INNER JOIN wp_envio_periodo AS p ON (env.id = p.envio_id)"
-          . "INNER JOIN wp_news_periodo AS np ON (p.periodo_id = np.id)"
-          . "INNER JOIN wp_grupos_news AS  gn ON (n.id = gn.newslleter_id)"
-          . "INNER JOIN wp_grupos AS g ON (gn.grupos_id = g.id)"
-          . " WHERE e.newslleter_id = :newslleter_id");
-         */
+        //bloco 1: dados da news
         $sth1 = Connection::get($localconnection = true)->prepare(
                 "SELECT m.body AS message_body, n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
                 . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
@@ -80,8 +65,8 @@ class NewslleterService {
                 . "INNER JOIN wp_envio_periodo AS p ON (env.id = p.envio_id)"
                 . "INNER JOIN wp_news_periodo AS np ON (p.periodo_id = np.id)"
                 . " WHERE e.newslleter_id = :newslleter_id");
-        //var_dump($objects);
-        //var_dump($objects);
+
+        //bloco 2: dados da lead
         $sth2 = Connection::get($localconnection = true)->prepare(
                 "SELECT gl.leads_id, l.name AS lead_name, l.email "
                 . " FROM wp_envio_news AS e "
@@ -92,28 +77,41 @@ class NewslleterService {
                 . "INNER JOIN wp_news_leads AS l ON (l.id = gl.leads_id) "
                 . " WHERE e.newslleter_id = :newslleter_id");
 
-        for ($j = 0; $j < count($objects); $j++) {
+        //bloco 3: dados dos grupos
+        $sth3 = Connection::get($localconnection = true)->prepare(
+                "SELECT g.name, g.tags"
+                . " FROM  wp_news_newslleter AS n "
+                . "INNER JOIN wp_grupos_news AS  gn ON (n.id = gn.newslleter_id)"
+                . "INNER JOIN wp_grupos AS g ON (gn.grupos_id = g.id)"
+                . " WHERE n.id = :newslleter_id");
 
+        for ($j = 0; $j < count($objects); $j++) {
             $sth1->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
             $sth1->execute();
-            
+
             $sth2->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
             $sth2->execute();
-            
+
+            $sth3->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
+            $sth3->execute();
             //@envio
             while ($obj = $sth1->fetchObject("stdClass")) {
                 $collection[$j] = $obj;
             }
-            
-            //@grupos
+
+            //@leads
             while ($obj = $sth2->fetchObject("stdClass")) {
                 $collection[$j]->leads[] = $obj;
+                $collection[$j]->total_leads = count($collection[$j]->leads);
             }
-            
-            
+
+            //@grupos
+            while ($obj = $sth3->fetchObject("stdClass")) {
+                $collection[$j]->grupos[] = $obj;
+            }
         }
-        
-         var_dump($collection);
+
+        var_dump($collection);
 
 
 
