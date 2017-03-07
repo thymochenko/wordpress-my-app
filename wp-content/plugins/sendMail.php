@@ -29,8 +29,8 @@ $client = SesClient::factory(array(
    ),
     'region' => REGION,
     'credentials' => array(
-       'key'    => 'AKIAINWYNETGTDK4SQNA',
-       'secret' => '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',
+       'key'    => '',
+       'secret' => ' ',
    )
 ));
 

@@ -681,7 +681,7 @@ $newslleter = $daon->findAll();
                             nome <input type="text" name="lead-nome" class="lead-nome"/><br><br>
                             email <input type="text" name="lead-mail" class="lead-mail"/><br><br>
                             Grupo <select class="" name="lead-grupos_id[]"  multiple>
-                                <?php foreach ($daog->findAll(5) as $gp): ?>
+                                <?php foreach ($daog->findAll(8) as $gp): ?>
                                     <option value="<?php echo $gp->id ?>"><?php echo $gp->name ?></option>
                                 <?php endforeach; ?>
                             </select><br><br>

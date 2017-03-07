@@ -27,7 +27,7 @@ define('REGION', 'us-west-2');
 use Aws\Ses\SesClient;
 
 class NewslleterService {
-
+    const SENDER = "henkosato5@gmail.com";
     //put your code here
 
     public function __construct() {
@@ -38,13 +38,18 @@ class NewslleterService {
                     ),
                     'region' => REGION,
                     'credentials' => array(
-                        'key' => 'AKIAINWYNETGTDK4SQNA',
-                        'secret' => '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',
+                        'key' => '',
+                        'secret' => '',
                     )
         ));
 
         $sth = Connection::open($localconnection = true)->prepare(
-                "SELECT * FROM wp_news_newslleter ORDER BY id DESC LIMIT 3");
+                "SELECT  * "
+                . " FROM wp_envio_news AS e"
+                . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
+                . "INNER JOIN wp_news_newslleter AS n ON (e.newslleter_id = n.id)"
+                . " ORDER BY n.id DESC LIMIT 3"
+        );
 
         $sth->execute();
         $count = 0;
@@ -53,6 +58,7 @@ class NewslleterService {
             $objects[] = $obj;
         }
 
+        //var_dump($objects);
         //bloco 1: dados da news
         $sth1 = Connection::get($localconnection = true)->prepare(
                 "SELECT m.body AS message_body, n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
@@ -64,7 +70,7 @@ class NewslleterService {
                 . "INNER JOIN wp_news_template AS  t ON (env.template_id = t.id)"
                 . "INNER JOIN wp_envio_periodo AS p ON (env.id = p.envio_id)"
                 . "INNER JOIN wp_news_periodo AS np ON (p.periodo_id = np.id)"
-                . " WHERE e.newslleter_id = :newslleter_id");
+                . " ORDER BY n.id DESC LIMIT 3");
 
         //bloco 2: dados da lead
         $sth2 = Connection::get($localconnection = true)->prepare(
@@ -85,20 +91,24 @@ class NewslleterService {
                 . "INNER JOIN wp_grupos AS g ON (gn.grupos_id = g.id)"
                 . " WHERE n.id = :newslleter_id");
 
-        for ($j = 0; $j < count($objects); $j++) {
-            $sth1->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
-            $sth1->execute();
+        //@envio
+        $sth1->execute();
+        while ($obj = $sth1->fetchObject("stdClass")) {
+            $collection[] = $obj;
+        }
 
-            $sth2->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
+        // var_dump($collection);  
+
+        for ($j = 0; $j < count($objects); $j++) {
+
+            $sth2->bindValue(':newslleter_id', $collection[$j]->id, PDO::PARAM_STR);
             $sth2->execute();
 
-            $sth3->bindValue(':newslleter_id', $objects[$j]->id, PDO::PARAM_STR);
+            $sth3->bindValue(':newslleter_id', $collection[$j]->id, PDO::PARAM_STR);
             $sth3->execute();
-            //@envio
-            while ($obj = $sth1->fetchObject("stdClass")) {
-                $collection[$j] = $obj;
-            }
 
+
+            //var_dump($collection);
             //@leads
             while ($obj = $sth2->fetchObject("stdClass")) {
                 $collection[$j]->leads[] = $obj;
@@ -109,20 +119,34 @@ class NewslleterService {
             while ($obj = $sth3->fetchObject("stdClass")) {
                 $collection[$j]->grupos[] = $obj;
             }
+
+            // var_dump($collection[$j]);
         }
-
-        var_dump($collection);
-
-
-
+        //var_dump($collection);
+        //var_dump($collection);
         //seleciona se existe algum envio para o dia
         $dateNow = new DateTime("now");
         for ($x = 0; $x < count($collection); $x++) {
             $date = new DateTime($collection[$x]->data_de_envio_fixo);
             if ($dateNow->format("Y-m-d") == $date->format('Y-m-d')) {
-                var_dump($collection[$x]);
+                $request = array();
+                $request['Source'] = self::SENDER;
+                for ($a = 0; $a < count($collection[$x]->leads); $a++) {
+                    //echo $collection[$x]->leads[$a]->email;
+                   $request['Destination']['ToAddresses'] = array($collection[$x]->leads[$a]->email);
+                    $request['Message']['Subject']['Data'] = $collection[$x]->message_title;
+                    $request['Message']['Body']['Text']['Data'] = $collection[$x]->message_body;
+                    try {
+                       $result = $client->sendEmail($request);
+                        $messageId = $result->get('MessageId');
+                        echo("Email sent! Message ID: $messageId" . "\n");
+                    } catch (Exception $e) {
+                        echo("The email was not sent. Error message: ");
+                        echo($e->getMessage() . "\n");
+                    }
+                }
             } else {
-                
+//                   var_dump($collection[$x]);
             }
         }
 
@@ -138,15 +162,6 @@ class NewslleterService {
         $request['Destination']['ToAddresses'] = array($recipientTo);
         $request['Message']['Subject']['Data'] = $subject;
         $request['Message']['Body']['Text']['Data'] = $body;
-
-        try {
-            // $result = $client->sendEmail($request);
-            // $messageId = $result->get('MessageId');
-            //echo("Email sent! Message ID: $messageId" . "\n");
-        } catch (Exception $e) {
-            echo("The email was not sent. Error message: ");
-            echo($e->getMessage() . "\n");
-        }
     }
 
 }
