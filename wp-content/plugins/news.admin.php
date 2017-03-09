@@ -888,6 +888,7 @@ $newslleter = $daon->findAll();
                                     <td class="message-title-td"><?php echo $msg->title ?></td>
                                     <td class="message-status-td"> <?php if ($msg->status == Message::ATIVO): ?> ATIVO <?php endif; ?>
     <?php if ($msg->status == Message::INATIVO): ?> INATIVO <?php endif; ?>
+    <?php if ($msg->status == Message::VISUALIZADA): ?> VISUALIZADA <?php endif; ?>
 
                                     </td>
                                     <td class="message-body-td"><?php echo $msg->body ?></td>

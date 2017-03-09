@@ -27,7 +27,9 @@ define('REGION', 'us-west-2');
 use Aws\Ses\SesClient;
 
 class NewslleterService {
+
     const SENDER = "henkosato5@gmail.com";
+
     //put your code here
 
     public function __construct() {
@@ -61,7 +63,7 @@ class NewslleterService {
         //var_dump($objects);
         //bloco 1: dados da news
         $sth1 = Connection::get($localconnection = true)->prepare(
-                "SELECT m.body AS message_body, n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
+                "SELECT m.id AS message_id, m.body AS message_body, n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
                 . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
                 . " FROM wp_envio_news AS e"
                 . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
@@ -119,7 +121,6 @@ class NewslleterService {
             while ($obj = $sth3->fetchObject("stdClass")) {
                 $collection[$j]->grupos[] = $obj;
             }
-
             // var_dump($collection[$j]);
         }
         //var_dump($collection);
@@ -128,16 +129,17 @@ class NewslleterService {
         $dateNow = new DateTime("now");
         for ($x = 0; $x < count($collection); $x++) {
             $date = new DateTime($collection[$x]->data_de_envio_fixo);
+
             if ($dateNow->format("Y-m-d") == $date->format('Y-m-d')) {
                 $request = array();
                 $request['Source'] = self::SENDER;
+                $collection[$x]->message_body .= '<img src="http://localhost/wp-content/plugins/news.core.php?message_mail_value_id=' . $collection[$x]->message_id . '"/>';
+                $request['Message']['Subject']['Data'] = $collection[$x]->message_title;
                 for ($a = 0; $a < count($collection[$x]->leads); $a++) {
-                    //echo $collection[$x]->leads[$a]->email;
-                   $request['Destination']['ToAddresses'] = array($collection[$x]->leads[$a]->email);
-                    $request['Message']['Subject']['Data'] = $collection[$x]->message_title;
-                    $request['Message']['Body']['Text']['Data'] = $collection[$x]->message_body;
+                    $request['Destination']['ToAddresses'] = array($collection[$x]->leads[$a]->email);
+                    $request['Message']['Body']['Html']['Data'] = $collection[$x]->message_body;
                     try {
-                       $result = $client->sendEmail($request);
+                        $result = $client->sendEmail($request);
                         $messageId = $result->get('MessageId');
                         echo("Email sent! Message ID: $messageId" . "\n");
                     } catch (Exception $e) {
@@ -146,7 +148,7 @@ class NewslleterService {
                     }
                 }
             } else {
-//                   var_dump($collection[$x]);
+                //var_dump($collection[$x]);
             }
         }
 

@@ -665,7 +665,7 @@ class DaoNewslleter extends Dao {
             $sth2 = Connection::get($localconnection = true)->prepare(
                     'INSERT INTO wp_news_periodo (data_de_envio_fixo)
                   VALUES (:data_de_envio_fixo) RETURNING id');
- //           var_dump($data['envio'][0]->periodo[0]->data_de_envio_fixo);exit;
+            //           var_dump($data['envio'][0]->periodo[0]->data_de_envio_fixo);exit;
             for ($x = 0; $x < count($data['envio']); $x++) {
                 $sth2->bindValue(':data_de_envio_fixo', $data['envio'][$x]->periodo[0]->data_de_envio_fixo, PDO::PARAM_STR);
                 $sth2->execute();
@@ -686,7 +686,6 @@ class DaoNewslleter extends Dao {
             }
 
             self::storeEnvioFkTables($data, $envio_id, $periodo_id, $newslleter_id);
-            
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
@@ -721,9 +720,9 @@ class DaoNewslleter extends Dao {
             $sth5->bindValue(':envio_id', (int) $envio_id[$y]['id'], PDO::PARAM_INT);
             $sth5->bindValue(':periodo_id', (int) $periodo_id[$y]['id'], PDO::PARAM_INT);
             //break;
-             $sth5->execute();
+            $sth5->execute();
         }
-        
+
         return true;
     }
 
@@ -760,9 +759,9 @@ class DaoNewslleter extends Dao {
         while ($obj = $sth->fetchObject(__CLASS__)) {
             $objects[] = $obj;
         }
-  
+
         $sth1 = Connection::get($localconnection = true)->prepare(
-             "SELECT n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
+                "SELECT n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
                 . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
                 . " FROM wp_envio_news AS e"
                 . " INNER JOIN wp_news_envio AS env ON (e.envio_id = env.id)"
@@ -783,7 +782,7 @@ class DaoNewslleter extends Dao {
             while ($obj = $sth1->fetchObject(__CLASS__)) {
                 $objects_fkey_envio[] = $obj;
             }
-            
+
             if ($objects_fkey_envio[$j]->news_id == $objects_fkey_envio[$j]->newslleter_id_fk) {
                 $collection[] = $objects_fkey_envio;
                 unset($objects_fkey_envio);
@@ -938,6 +937,32 @@ class DaoMessage extends Dao {
             }
 
             return $objects ? $objects : false;
+        }
+    }
+
+    public function registraAbertura($id) {
+        try {
+            //recebe os dados de um dataProvider
+            if (is_integer($id)) {
+                $collection = $this->findById($id);
+                if ($collection[0]->id) {
+                    $dateTime = new DateTime();
+                    $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+                    $sth = Connection::open($localconnection = true)->prepare(
+                            "UPDATE wp_news_messages
+                              SET  status = :status, dateupdated = :dateupdated
+                             WHERE id = :id
+                     ");
+                    $sth->bindValue(':status', Message::VISUALIZADA, PDO::PARAM_INT);
+                    $sth->bindValue(':id', (int) $collection[0]->id, PDO::PARAM_INT);
+                    $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+
+                    return ($sth->execute()) ? $collection : false;
+                }
+            }
+        } catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
         }
     }
 
@@ -1227,6 +1252,7 @@ class Message extends Model {
 
     const ATIVO = 1;
     const INATIVO = 0;
+    const VISUALIZADA = 2;
 
     public function set_title($title) {
         $this->data['title'] = (isset($title)) ? strip_tags(trim($title)) : null;
@@ -1237,7 +1263,7 @@ class Message extends Model {
     }
 
     public function set_body($body) {
-        $this->data['body'] = (isset($body)) ? strip_tags($body) : null;
+        $this->data['body'] = (isset($body)) ? $body : null;
     }
 
     public function get_body() {
@@ -1681,6 +1707,18 @@ class MessageController {
             exit;
         }
     }
+    
+    
+    public function actionObservaAbertura() {
+        //var_dump($_GET[]);exit;
+        if (isset($_GET['message_mail_value_id'])) {
+            $dao = new DaoMessage;
+            $result = $dao->registraAbertura((int) $_GET['message_mail_value_id']);
+            echo(json_encode($result));
+            exit;
+        }
+    }    
+
 
     public function actionUpdate() {
         if (isset($_POST['message-id-upd'])) {
@@ -1701,30 +1739,31 @@ class MessageController {
     }
 
 }
-if($_POST || $_GET){
- //@Campanha Controller Methods
-CampanhaController::actionPersist();
-CampanhaController::actionUpdate();
-CampanhaController::actionPostUpdate();
+
+if ($_POST || $_GET) {
+    //@Campanha Controller Methods
+    CampanhaController::actionPersist();
+    CampanhaController::actionUpdate();
+    CampanhaController::actionPostUpdate();
 //@Template Controller Methods
-TemplateController::actionPersist();
-TemplateController::actionLoadDataForm();
-TemplateController::actionUpdate();
+    TemplateController::actionPersist();
+    TemplateController::actionLoadDataForm();
+    TemplateController::actionUpdate();
 //@Message Controller Methods
-MessageController::actionPersist();
-MessageController::actionLoadDataForm();
-MessageController::actionUpdate();
+    MessageController::actionPersist();
+    MessageController::actionLoadDataForm();
+    MessageController::actionUpdate();
+    MessageController::actionObservaAbertura();
+    
+    if (isset($_POST['newslleter-title'])) {
+        NewslleterController::init($_POST);
+        NewslleterController::persitAction();
+    }
 
-if (isset($_POST['newslleter-title'])) {
-    NewslleterController::init($_POST);
-    NewslleterController::persitAction();
-}
-
-NewslleterController::actionUpdate();
-NewslleterController::actionPostUpdate();
+    NewslleterController::actionUpdate();
+    NewslleterController::actionPostUpdate();
 //@Leads
-LeadsController::actionPersist();
-LeadsController::actionUpdate();
-LeadsController::actionPostUpdate();
-   
+    LeadsController::actionPersist();
+    LeadsController::actionUpdate();
+    LeadsController::actionPostUpdate();
 }

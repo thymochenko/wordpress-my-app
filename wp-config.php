@@ -16,7 +16,9 @@
 
 // ** Heroku Postgres settings - from Heroku Environment ** //
 define( 'ADMIN_COOKIE_PATH', '/wp-admin' ); //Added by Hide My Wordpress
-$db = parse_url($_ENV["DATABASE_URL"]);
+
+
+$db = parse_url($_ENV["DATABASE_URL"]);
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
@@ -58,8 +60,8 @@ define('SECURE_AUTH_SALT',      getenv('SECURE_AUTH_SALT'));
 define('LOGGED_IN_SALT',        getenv('LOGGED_IN_SALT'));
 define('NONCE_SALT',            getenv('NONCE_SALT'));
 //user aws timocabralcarvalho group bucketgroup 
-define('AWS_ACCESS_KEY_ID',     "AKIAIWEZHRHPABIH2DPA");
-define('AWS_SECRET_ACCESS_KEY', "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");
+define('AWS_ACCESS_KEY_ID',     "");
+define('AWS_SECRET_ACCESS_KEY', "");
 // https://677914266604.signin.aws.amazon.com/console 
 //arn:aws:iam::677914266604:user/timocabral 
 /**#@-*/
