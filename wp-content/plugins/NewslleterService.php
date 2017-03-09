@@ -40,7 +40,7 @@ class NewslleterService {
                     ),
                     'region' => REGION,
                     'credentials' => array(
-                        'key' => '',
+                        'key' => ' ',
                         'secret' => '',
                     )
         ));
@@ -129,7 +129,7 @@ class NewslleterService {
         $dateNow = new DateTime("now");
         for ($x = 0; $x < count($collection); $x++) {
             $date = new DateTime($collection[$x]->data_de_envio_fixo);
-
+            
             if ($dateNow->format("Y-m-d") == $date->format('Y-m-d')) {
                 $request = array();
                 $request['Source'] = self::SENDER;
@@ -139,6 +139,7 @@ class NewslleterService {
                     $request['Destination']['ToAddresses'] = array($collection[$x]->leads[$a]->email);
                     $request['Message']['Body']['Html']['Data'] = $collection[$x]->message_body;
                     try {
+                        
                         $result = $client->sendEmail($request);
                         $messageId = $result->get('MessageId');
                         echo("Email sent! Message ID: $messageId" . "\n");

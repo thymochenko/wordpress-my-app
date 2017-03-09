@@ -79,9 +79,9 @@ final class Connection {
     );
     static $DATABASE_CONF_REMOTE = array(
         "dbname" => "wordpress",
-        "host" => "wordpress.clo6jnwupfzu.us-west-2.rds.amazonaws.com",
-        "username" => "postgres",
-        "password" => "silvia25"
+        "host" => "",
+        "username" => "",
+        "password" => ""
     );
 
     final public function __construct() {

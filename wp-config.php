@@ -59,7 +59,7 @@ define('AUTH_SALT',             getenv('AUTH_SALT'));
 define('SECURE_AUTH_SALT',      getenv('SECURE_AUTH_SALT'));
 define('LOGGED_IN_SALT',        getenv('LOGGED_IN_SALT'));
 define('NONCE_SALT',            getenv('NONCE_SALT'));
-//user aws timocabralcarvalho group bucketgroup 
+//user aws timocabralcarvalho group bucketgroup (S3) 
 define('AWS_ACCESS_KEY_ID',     "");
 define('AWS_SECRET_ACCESS_KEY', "");
 // https://677914266604.signin.aws.amazon.com/console 
