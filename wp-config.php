@@ -67,8 +67,7 @@ define('AWS_SECRET_ACCESS_KEY', "");
 /**#@-*/
 
 /**
- * AKIAJKAMMM4T4B4MZ6DQ
-qLl7I95wmpwDsP8Rq+wfd/3Vldw0gPDebbeNg56T Hide 
+ * * 
  * WordPress Database Table prefix.
  *
  * You can have multiple installations in one database if you give each a unique

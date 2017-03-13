@@ -382,7 +382,7 @@ $newslleter = $daon->findAll();
                 </div>
             </div>
 
-            <!-- grupos -->
+            <!-- grupos (Modal)-->
             <!--  -->
             <div class="modal fade" id="myModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -394,6 +394,18 @@ $newslleter = $daon->findAll();
                             </button>
                         </div>
                         <div class="modal-body">
+                            <h3>Cadastro de grupo</h3>
+                            <form name="grupos-persist-action" class="grupos-persist-action" 
+                                  action="news.core.php" method="post">
+                               Nome : <br> <input type="text" name="grupos-name" class="grupos-name">
+                               <br>Tags:<br> <input type="text" name="grupos-tags" class="grupos-tags"><br><br>
+                              <input type="hidden" name="grupos-request-persist">
+                               <input type="button" class="btn btn-primary" name="grupo" id="grupo-persist" value="cadastrar"/>
+                            </form>
+                            <br>
+                            <br>
+                            <hr>
+                            <h3>Adicionar Grupo a Newslleter</h3>
                             <form name="grupos-action" action="news.admin.php" id="grupos-action" method="post">
                                 <?php foreach ($grupos as $g): ?>
                                     <input type="checkbox" name="grupos" id="check-grupo" value="<?php echo $g->id; ?>:<?php echo $g->name; ?>">
@@ -864,8 +876,10 @@ $newslleter = $daon->findAll();
                         <h1 id="test-template"> Cadastro de Mensagens </h1>
                         <h4>Titulo da Messagem</h4>
                         <form name="message-action-form" id="message-action-form" method="post" action="admin.php?page=news.admin.php">
-                            <input type="text" name="message-title" value=""><br>
-                            <br>Corpo da Mensagem <br><textarea name="message-body"></textarea><br><br>
+                            <input type="text" name="message-title" value=""><br><br>
+                            <?php include "text_editor.php"; ?>
+                           <br>Corpo da Mensagem <br><textarea id="summernote" name="message-body"></textarea><br><br>
+                            
                             <input type="submit" class="btn btn-primary" value="submit" name="submit">
                             <input type="button" id="cadastro-message-send" class="btn btn-primary" name="message" value="add"/>
                             <input type="hidden" name="message-request-persist"  value="1">

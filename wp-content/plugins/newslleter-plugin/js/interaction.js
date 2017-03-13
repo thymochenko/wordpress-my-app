@@ -659,8 +659,8 @@ $(function () {
                 });
     });
 
-    /*@Template update Modal
-     *method: carrega dados para o form de update domain:@Template
+    /*@Lead update Modal
+     *method: carrega dados para o form de update domain:@Lead
      */
     $(document).on('click', ".lead-link-update", function (event) {
         event.preventDefault();
@@ -777,7 +777,7 @@ $(function () {
         });
     });
 
-    /* method:update domain:@Template
+    /* method:update domain:@Lead
      * Método que atualiza as informações do form via post e atualiza a página
      */
     $('#lead-update-button').click(function (event) {
@@ -788,6 +788,23 @@ $(function () {
                     var resource = $.parseJSON(data);
                     alert("Lead (" + resource[0].name + ") Atualizada com Sucesso");
                     location.reload();
+                });
+    });
+    
+    /***************************@grupos**************************************/
+    
+    /* method:update domain:@Grupo
+     * Método que atualiza as informações do form via post e atualiza a página
+     */
+    $('#grupo-persist').click(function (event) {
+        event.preventDefault();
+        $.post("http://localhost/wp-content/plugins/news.core.php", $('.grupos-persist-action').serializeArray())
+                .done(function (data) {
+                    alert(data);
+                    var resource = $.parseJSON(data);
+                    alert("Grupo (" + resource[0].name + ") Inserido com Sucesso");
+                    var str = '<input type="checkbox" name="grupos" id="check-grupo" value="' + resource[0].id + ':' +resource[0].name +'">' + resource[0].name + '<br>';
+                    $('#grupos-action').append(str);
                 });
     });
 });

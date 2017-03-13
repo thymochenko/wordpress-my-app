@@ -65,10 +65,10 @@ final class Connection {
     protected static $conn;
     /*
       const DATABASE_CONF = [
-      "dbname"=>"d3e7040odgf0s7",
-      "host"=>"ec2-204-236-218-242.compute-1.amazonaws.com",
-      "username"=>"rjikommzhlyatb",
-      "password"=> "7c3ae88652c3ea9b27612a5009163c2c1b86fab876efd9231bfa84f958955cb4"
+      "dbname"=>"",
+      "host"=>"",
+      "username"=>"",
+      "password"=> ""
       ];
      */
     static $DATABASE_CONF = array(
@@ -202,6 +202,14 @@ class CampanhaDataProvider extends DataProvider {
 
 }
 
+class LogsDataProvider extends DataProvider {
+
+    public function __construct($object) {
+        parent::__construct($object);
+    }
+
+}
+
 class DaoLeads extends Dao {
 
     protected $wpdb, $nlDataProvider, $conn;
@@ -296,6 +304,14 @@ class DaoLeads extends Dao {
                     $sth2->bindValue(':leads_id', (int) $data['persist_id']['id'], PDO::PARAM_INT);
                     $sth2->execute();
                 }
+                //log
+                $log = new Logs;
+                $log->log = array('data' => $data);
+                $dataProvider = new LogsDataProvider($log);
+                $dao = new DaoLogs();
+                $dao->setDataProvider($dataProvider);
+                $dao->persist();
+
                 return true;
             } catch (PDOException $e) {
                 echo 'Connection failed: ' . $e->getMessage();
@@ -590,6 +606,32 @@ class DaoLeads extends Dao {
 
 class DaoGrupos extends Dao {
 
+    public function persist() {
+        try {
+            //recebe os dados de um dataProvider
+            $dateTime = new DateTime();
+            $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+            $data = $this->nlDataProvider->getData();
+
+            $sth = Connection::open($localconnection = true)->prepare(
+                    "INSERT INTO wp_grupos (name,status,datecreated,dateupdated, tags)
+          VALUES (
+            :name,:status,:datecreated,:dateupdated, :tags)
+         ");
+
+            $sth->bindValue(':name', $data['name'], PDO::PARAM_STR);
+            $sth->bindValue(':status', $data['status'], PDO::PARAM_STR);
+            $sth->bindValue(':datecreated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $sth->bindValue(':dateupdated', $dateTime->format('Y-m-d H:i:s'), PDO::PARAM_STR);
+            $sth->bindValue(':tags', json_encode($data['tags']), PDO::PARAM_STR);
+
+            return ($sth->execute()) ? true : false;
+        } catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
     public function findAll($limit = null) {
         if (isset($limit)) {
             $sth = Connection::open($localconnection = true)
@@ -606,6 +648,18 @@ class DaoGrupos extends Dao {
         }
 
         return $objects;
+    }
+
+    public function findFirst() {
+        $sth = Connection::open($localconnection = true)->prepare(
+                "SELECT * FROM wp_grupos ORDER BY id DESC LIMIT 1");
+
+        $sth->execute();
+        while ($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+
+        return $objects ? $objects : false;
     }
 
 }
@@ -637,6 +691,7 @@ class DaoNewslleter extends Dao {
             $sth->execute();
             //RETURNING id
             $newslleter_id = $sth->fetch(PDO::FETCH_ASSOC);
+
             //var_dump($newslleter_id['id']);exit;
             //persist @Envio
             $sth1 = Connection::get($localconnection = true)->prepare('INSERT INTO wp_news_envio
@@ -685,7 +740,26 @@ class DaoNewslleter extends Dao {
                 $sth3->execute();
             }
 
+            foreach ($data['grupos'] as $grupo) {
+                $grupos[] = array('grupo' => $grupo);
+            }
+
+            foreach ($data['envio'] as $envio) {
+                //var_dump($envio);
+                if ($envio->message_id != null) {
+                    $messages[] = array('envio:message_id' => $envio->message_id);
+                }
+            }
+
             self::storeEnvioFkTables($data, $envio_id, $periodo_id, $newslleter_id);
+
+            //logs
+            $log = new Logs;
+            $log->log = array('data' => $data, 'grupos' => $grupos, 'messages' => $messages);
+            $dataProvider = new LogsDataProvider($log);
+            $dao = new DaoLogs();
+            $dao->setDataProvider($dataProvider);
+            $dao->persist();
         } catch (PDOException $e) {
             echo 'Connection failed: ' . $e->getMessage();
         }
@@ -760,6 +834,8 @@ class DaoNewslleter extends Dao {
             $objects[] = $obj;
         }
 
+        //var_dump($objects);
+
         $sth1 = Connection::get($localconnection = true)->prepare(
                 "SELECT n.status as news_status, n.id, e.newslleter_id, e.envio_id, env.template_id, env.message_id,  env.status, env.datecreated, n.title AS newslleter_title, "
                 . " m.title AS message_title, t.title AS template_title, t.body_template AS btemplate, np.data_de_envio_fixo "
@@ -782,6 +858,8 @@ class DaoNewslleter extends Dao {
             while ($obj = $sth1->fetchObject(__CLASS__)) {
                 $objects_fkey_envio[] = $obj;
             }
+
+            //  var_dump($objects_fkey_envio);
 
             if ($objects_fkey_envio[$j]->news_id == $objects_fkey_envio[$j]->newslleter_id_fk) {
                 $collection[] = $objects_fkey_envio;
@@ -1177,6 +1255,55 @@ class DaoCampanha extends Dao {
 
 }
 
+class DaoLogs extends Dao {
+
+    public function persist() {
+        try {
+            $dateTime = new DateTime();
+            $dateTime->setTimeZone(new DateTimeZone('America/Fortaleza'));
+
+            $data = $this->nlDataProvider->getData();
+            $sth = Connection::open($localconnection = true)->prepare(
+                    "INSERT INTO wp_news_logs (log,title,description)
+            VALUES (
+              :log,:title,:description)
+           ");
+            //$dateTime->format('Y-m-d H:i:s')
+            $sth->bindValue(':log', $data['log'], PDO::PARAM_STR);
+            $sth->bindValue(':title', "class:  " . __CLASS__ . " method: " . __FUNCTION__, PDO::PARAM_STR);
+            $sth->bindValue(':description', " ", PDO::PARAM_STR);
+            return ($sth->execute()) ? true : false;
+        } catch (PDOException $e) {
+            echo 'Connection failed: ' . $e->getMessage();
+        }
+    }
+
+    public function findFirst() {
+        $sth = Connection::open($localconnection = true)->prepare(
+                "SELECT * FROM wp_news_logs ORDER BY id DESC LIMIT 1");
+
+        $sth->execute();
+        while ($obj = $sth->fetchObject(__CLASS__)) {
+            $objects[] = $obj;
+        }
+
+        return $objects ? $objects : false;
+    }
+
+}
+
+class Logs extends Model {
+
+    public function get_log() {
+        return $this->data['log'];
+    }
+
+    public function set_log($log) {
+        $this->data['log'] = json_encode($log);
+    }
+
+}
+
 class Leads extends Model {
 
     const active_newslleter = 1;
@@ -1289,7 +1416,14 @@ class Grupos extends Model {
     protected $datecreated, $dateupdated;
     protected $tags = 'json';
     protected $status;
-
+    
+    public function set_tags($tags){
+        $this->data['tags'] = explode(",", $tags);
+    }
+    
+    public function get_tags(){
+        return $this->data['tags'];
+    }
 }
 
 class Newslleter extends Model {
@@ -1398,10 +1532,6 @@ class Template extends Model {
         return $this->data['body_template'];
     }
 
-}
-
-class Logs extends Model {
-    
 }
 
 class LeadsController {
@@ -1707,8 +1837,7 @@ class MessageController {
             exit;
         }
     }
-    
-    
+
     public function actionObservaAbertura() {
         //var_dump($_GET[]);exit;
         if (isset($_GET['message_mail_value_id'])) {
@@ -1717,8 +1846,7 @@ class MessageController {
             echo(json_encode($result));
             exit;
         }
-    }    
-
+    }
 
     public function actionUpdate() {
         if (isset($_POST['message-id-upd'])) {
@@ -1740,6 +1868,25 @@ class MessageController {
 
 }
 
+class GruposController {
+
+    public static function actionPersist() {
+        if (isset($_POST["grupos-request-persist"])) {
+            $grupo = new Grupos;
+            $grupo->name = $_POST['grupos-name'];
+            $grupo->tags = $_POST['grupos-tags'];
+            $grupo->status = 1;
+            $dataProvider = new GruposDataProvider($grupo);
+            $dao = new DaoGrupos();
+            $dao->setDataProvider($dataProvider);
+            $dao->persist();
+            $result = $dao->findFirst();
+            echo(json_encode($result));
+            exit;
+        }
+    }
+}
+
 if ($_POST || $_GET) {
     //@Campanha Controller Methods
     CampanhaController::actionPersist();
@@ -1754,7 +1901,7 @@ if ($_POST || $_GET) {
     MessageController::actionLoadDataForm();
     MessageController::actionUpdate();
     MessageController::actionObservaAbertura();
-    
+
     if (isset($_POST['newslleter-title'])) {
         NewslleterController::init($_POST);
         NewslleterController::persitAction();
@@ -1766,4 +1913,6 @@ if ($_POST || $_GET) {
     LeadsController::actionPersist();
     LeadsController::actionUpdate();
     LeadsController::actionPostUpdate();
+    
+    GruposController::actionPersist();
 }
